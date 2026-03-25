@@ -1,39 +1,165 @@
-'use strict';
+const menuGrid = document.getElementById("menu-grid");
+const chipsWrap = document.getElementById("categoryChips");
+const searchInput = document.getElementById("searchInput");
+const emptyState = document.getElementById("emptyState");
 
-document.addEventListener('DOMContentLoaded', () => {
-  const dropdowns = document.querySelectorAll('.dropdown');
+const body = document.body;
+const themeToggle = document.getElementById("themeToggle");
+const themeToggleSidebar = document.getElementById("themeToggleSidebar");
 
-  dropdowns.forEach((drop) => {
-    const btn = drop.querySelector('.dropbtn');
-    if (!btn) return;
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const openSidebarBtn = document.getElementById("openSidebar");
+const closeSidebarBtn = document.getElementById("closeSidebar");
 
-    btn.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+let activeCategory = "All";
+let searchTerm = "";
 
-      drop.classList.toggle('open');
+function getCategories(items) {
+  return ["All", ...new Set(menuItems.map(item => item.category))];
+}
 
-      dropdowns.forEach((other) => {
-        if (other !== drop) other.classList.remove('open');
-      });
+function createChips() {
+  const categories = getCategories(menuItems);
+
+  chipsWrap.innerHTML = categories
+    .map(category => `
+      <button class="${category === activeCategory ? "chip active" : "chip"}" data-category="${category}">
+        ${category}
+      </button>
+    `)
+    .join("");
+
+  chipsWrap.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      activeCategory = chip.dataset.category;
+      createChips();
+      renderMenu();
     });
   });
+}
 
-  document.addEventListener('click', () => {
-    dropdowns.forEach((drop) => drop.classList.remove('open'));
+function filterMenu() {
+  return menuItems.filter(item => {
+    const categoryMatch = activeCategory === "All" || item.category === activeCategory;
+    const term = searchTerm.trim().toLowerCase();
+    const text = `${item.name} ${item.category} ${item.description} ${item.tag}`.toLowerCase();
+    const searchMatch = !term || text.includes(term);
+    return categoryMatch && searchMatch;
   });
+}
 
-  const searchInput = document.getElementById('page-search');
+function createCard(item) {
+  return `
+    <article class="menu-card reveal-card">
+      <div class="menu-thumb">
+        ${item.image ? `<img src="${item.image}" alt="${item.name}" class="menu-image">` : ""}
+        <span class="thumb-badge">${item.category}</span>
+      </div>
 
-  if (searchInput) {
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase();
-      const contentItems = document.querySelectorAll('.searchable');
+      <div class="menu-body">
+        <div class="menu-meta">
+          <span class="menu-category">${item.category}</span>
+          <span class="menu-price">${item.price}</span>
+        </div>
 
-      contentItems.forEach((item) => {
-        const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(query) ? '' : 'none';
-      });
-    });
+        <h4 class="menu-name">${item.name}</h4>
+        <p class="menu-desc">${item.description}</p>
+
+        <div class="menu-footer">
+          <span class="menu-tag">${item.tag}</span>
+          <a class="menu-order-btn" href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer">
+            Order
+          </a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderMenu() {
+  if (!menuGrid) return;
+
+  const filtered = filterMenu();
+
+  if (!filtered.length) {
+    menuGrid.innerHTML = "";
+    if (emptyState) emptyState.classList.remove("hidden");
+    return;
   }
+
+  if (emptyState) emptyState.classList.add("hidden");
+  menuGrid.innerHTML = filtered.map(createCard).join("");
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".reveal-card").forEach(card => {
+      card.classList.add("is-visible");
+    });
+  });
+}
+
+function applyTheme(theme) {
+  const isLight = theme === "light";
+  body.classList.toggle("light-mode", isLight);
+  localStorage.setItem("caramel-theme", theme);
+  syncThemeButtons(theme);
+}
+
+function syncThemeButtons(theme) {
+  document.querySelectorAll("[data-theme-btn]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.themeBtn === theme);
+  });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem("caramel-theme") || "dark";
+  applyTheme(savedTheme);
+}
+
+function handleThemeToggle(container) {
+  if (!container) return;
+
+  container.addEventListener("click", event => {
+    const button = event.target.closest("[data-theme-btn]");
+    if (!button) return;
+    applyTheme(button.dataset.themeBtn);
+  });
+}
+
+function openSidebar() {
+  if (!sidebar || !sidebarOverlay) return;
+  sidebar.classList.add("open");
+  sidebarOverlay.classList.add("show");
+}
+
+function closeSidebar() {
+  if (!sidebar || !sidebarOverlay) return;
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("show");
+}
+
+if (searchInput) {
+  searchInput.addEventListener("input", e => {
+    searchTerm = e.target.value;
+    renderMenu();
+  });
+}
+
+if (openSidebarBtn) openSidebarBtn.addEventListener("click", openSidebar);
+if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", closeSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+document.querySelectorAll(".sidebar-nav a").forEach(link => {
+  link.addEventListener("click", closeSidebar);
 });
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSidebar();
+});
+
+handleThemeToggle(themeToggle);
+handleThemeToggle(themeToggleSidebar);
+
+createChips();
+renderMenu();
+initTheme();
