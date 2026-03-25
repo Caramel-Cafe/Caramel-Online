@@ -1852,3 +1852,29 @@ body.light-mode .sidebar-nav a {
   display: none !important;
   pointer-events: none !important;
 }
+.quantity-stepper {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  gap: 8px;
+  align-items: center;
+}
+
+.qty-btn {
+  min-height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qty-btn:active {
+  transform: scale(0.98);
+}
+
+.quantity-stepper input {
+  text-align: center;
+}
