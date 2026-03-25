@@ -16,18 +16,24 @@ let activeCategory = "All";
 let searchTerm = "";
 
 function getCategories(items) {
-  return ["All", ...new Set(menuItems.map(item => item.category))];
+  return ["All", ...new Set(items.map(item => item.category))];
 }
 
 function createChips() {
   const categories = getCategories(menuItems);
 
   chipsWrap.innerHTML = categories
-    .map(category => `
-      <button class="${category === activeCategory ? "chip active" : "chip"}" data-category="${category}">
-        ${category}
-      </button>
-    `)
+    .map(
+      (category, index) => `
+        <button
+          class="${category === activeCategory ? "chip active" : "chip"}"
+          data-category="${category}"
+          style="animation-delay:${index * 0.04}s"
+        >
+          ${category}
+        </button>
+      `
+    )
     .join("");
 
   chipsWrap.querySelectorAll(".chip").forEach(chip => {
@@ -49,11 +55,10 @@ function filterMenu() {
   });
 }
 
-function createCard(item) {
+function createCard(item, index) {
   return `
-    <article class="menu-card reveal-card">
+    <article class="menu-card tilt-card" style="transition-delay:${Math.min(index * 35, 240)}ms">
       <div class="menu-thumb">
-        ${item.image ? `<img src="${item.image}" alt="${item.name}" class="menu-image">` : ""}
         <span class="thumb-badge">${item.category}</span>
       </div>
 
@@ -78,23 +83,23 @@ function createCard(item) {
 }
 
 function renderMenu() {
-  if (!menuGrid) return;
-
   const filtered = filterMenu();
 
   if (!filtered.length) {
     menuGrid.innerHTML = "";
-    if (emptyState) emptyState.classList.remove("hidden");
+    emptyState.classList.remove("hidden");
     return;
   }
 
-  if (emptyState) emptyState.classList.add("hidden");
-  menuGrid.innerHTML = filtered.map(createCard).join("");
+  emptyState.classList.add("hidden");
+  menuGrid.innerHTML = filtered.map((item, index) => createCard(item, index)).join("");
 
   requestAnimationFrame(() => {
-    document.querySelectorAll(".reveal-card").forEach(card => {
-      card.classList.add("is-visible");
+    document.querySelectorAll(".menu-card").forEach((card, index) => {
+      setTimeout(() => card.classList.add("is-visible"), index * 35);
     });
+
+    initTiltCards();
   });
 }
 
@@ -127,27 +132,92 @@ function handleThemeToggle(container) {
 }
 
 function openSidebar() {
-  if (!sidebar || !sidebarOverlay) return;
   sidebar.classList.add("open");
   sidebarOverlay.classList.add("show");
 }
 
 function closeSidebar() {
-  if (!sidebar || !sidebarOverlay) return;
   sidebar.classList.remove("open");
   sidebarOverlay.classList.remove("show");
 }
 
-if (searchInput) {
-  searchInput.addEventListener("input", e => {
-    searchTerm = e.target.value;
-    renderMenu();
+function initReveal() {
+  const revealEls = document.querySelectorAll(".reveal");
+
+  if (!("IntersectionObserver" in window)) {
+    revealEls.forEach(el => el.classList.add("is-in-view"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in-view");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "0px 0px -40px 0px"
+    }
+  );
+
+  revealEls.forEach(el => observer.observe(el));
+}
+
+function initTiltCards() {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion) return;
+
+  const tiltCards = document.querySelectorAll(".tilt-card");
+
+  tiltCards.forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const rotateX = ((y / rect.height) - 0.5) * -8;
+      const rotateY = ((x / rect.width) - 0.5) * 10;
+
+      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
   });
 }
 
-if (openSidebarBtn) openSidebarBtn.addEventListener("click", openSidebar);
-if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", closeSidebar);
-if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+function initMagneticButtons() {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion) return;
+
+  document.querySelectorAll(".magnetic").forEach(button => {
+    button.addEventListener("mousemove", e => {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      button.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px)`;
+    });
+
+    button.addEventListener("mouseleave", () => {
+      button.style.transform = "";
+    });
+  });
+}
+
+searchInput.addEventListener("input", e => {
+  searchTerm = e.target.value;
+  renderMenu();
+});
+
+openSidebarBtn.addEventListener("click", openSidebar);
+closeSidebarBtn.addEventListener("click", closeSidebar);
+sidebarOverlay.addEventListener("click", closeSidebar);
 
 document.querySelectorAll(".sidebar-nav a").forEach(link => {
   link.addEventListener("click", closeSidebar);
@@ -163,3 +233,5 @@ handleThemeToggle(themeToggleSidebar);
 createChips();
 renderMenu();
 initTheme();
+initReveal();
+initMagneticButtons();
