@@ -15,7 +15,7 @@ const menuItems = [
     tag: "Creamy"
   },
   {
-    category: "Coffee",
+    category: "Juice",
     name: "Latte",
     price: "7,500 UGX",
     description: "Velvety milk with espresso for a mellow and premium sip.",
