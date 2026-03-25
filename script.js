@@ -4,6 +4,14 @@ const searchInput = document.getElementById("searchInput");
 const emptyState = document.getElementById("emptyState");
 const mobileCategoryChips = document.getElementById("mobileCategoryChips");
 const mobileBottomNav = document.getElementById("mobileBottomNav");
+const orderFormModal = document.getElementById("orderFormModal");
+const orderFormBackdrop = document.getElementById("orderFormBackdrop");
+const orderFormSummary = document.getElementById("orderFormSummary");
+const orderQuantity = document.getElementById("orderQuantity");
+const orderAccompaniment = document.getElementById("orderAccompaniment");
+const orderNote = document.getElementById("orderNote");
+const continueOrderBtn = document.getElementById("continueOrderBtn");
+const closeOrderFormBtn = document.getElementById("closeOrderForm");
 const orderContacts = [
   { name: "Aca", number: "256794417777" },
   { name: "Mun", number: "256759859795" },
@@ -91,6 +99,8 @@ const orderPickerText = document.getElementById("orderPickerText");
 const closeOrderPickerBtn = document.getElementById("closeOrderPicker");
 
 let selectedOrderItem = null;
+let preparedOrderDetails = null;
+
 
 function openOrderPicker(item) {
   selectedOrderItem = item;
@@ -99,7 +109,10 @@ function openOrderPicker(item) {
     <strong>Item:</strong> ${item.name}<br>
     <strong>Category:</strong> ${item.category}<br>
     <strong>Price:</strong> ${item.price}<br>
-    <strong>Description:</strong> ${item.description}<br><br>
+    <strong>Quantity:</strong> ${item.quantity}<br>
+    <strong>Accompaniment:</strong> ${item.accompaniment}<br>
+    <strong>Description:</strong> ${item.description}<br>
+    <strong>Special instructions:</strong> ${item.note || "None"}<br><br>
     Choose who should handle this order.
   `;
 
@@ -131,7 +144,10 @@ function openOrderPicker(item) {
         `Item: ${selectedOrderItem.name}\n` +
         `Category: ${selectedOrderItem.category}\n` +
         `Price: ${selectedOrderItem.price}\n` +
-        `Description: ${selectedOrderItem.description}`
+        `Quantity: ${selectedOrderItem.quantity}\n` +
+        `Accompaniment: ${selectedOrderItem.accompaniment}\n` +
+        `Description: ${selectedOrderItem.description}\n` +
+        `Special instructions: ${selectedOrderItem.note || "None"}`
       );
 
       window.open(`https://wa.me/${number}?text=${message}`, "_blank");
@@ -140,9 +156,50 @@ function openOrderPicker(item) {
   });
 }
 
+
 function closeOrderPicker() {
   orderPicker.classList.add("hidden");
   orderPickerBackdrop.classList.add("hidden");
+}
+
+function openOrderForm(item) {
+  selectedOrderItem = item;
+  preparedOrderDetails = null;
+
+  orderFormSummary.innerHTML = `
+    <strong>Item:</strong> ${item.name}<br>
+    <strong>Category:</strong> ${item.category}<br>
+    <strong>Price:</strong> ${item.price}<br>
+    <strong>Description:</strong> ${item.description}
+  `;
+
+  orderQuantity.value = 1;
+  orderAccompaniment.value = "None";
+  orderNote.value = "";
+
+  orderFormModal.classList.remove("hidden");
+  orderFormBackdrop.classList.remove("hidden");
+}
+
+function closeOrderForm() {
+  orderFormModal.classList.add("hidden");
+  orderFormBackdrop.classList.add("hidden");
+}
+
+function continueOrderFlow() {
+  const quantity = orderQuantity.value || "1";
+  const accompaniment = orderAccompaniment.value || "None";
+  const note = orderNote.value.trim();
+
+  preparedOrderDetails = {
+    ...selectedOrderItem,
+    quantity,
+    accompaniment,
+    note
+  };
+
+  closeOrderForm();
+  openOrderPicker(preparedOrderDetails);
 }
 
 function createCard(item) {
@@ -183,6 +240,10 @@ function createCard(item) {
 orderPickerBackdrop?.addEventListener("click", closeOrderPicker);
 closeOrderPickerBtn?.addEventListener("click", closeOrderPicker);
 
+continueOrderBtn?.addEventListener("click", continueOrderFlow);
+orderFormBackdrop?.addEventListener("click", closeOrderForm);
+closeOrderFormBtn?.addEventListener("click", closeOrderForm);
+
 function renderMenu() {
   const filtered = filterMenu();
 
@@ -197,7 +258,7 @@ function renderMenu() {
 
 document.querySelectorAll(".order-trigger").forEach(btn => {
   btn.addEventListener("click", () => {
-    openOrderPicker({
+    openOrderForm({
       name: btn.dataset.item,
       category: btn.dataset.category,
       price: btn.dataset.price,
