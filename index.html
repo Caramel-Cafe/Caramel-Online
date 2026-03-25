@@ -233,16 +233,11 @@
   </div>
 </label>
 
-    <label class="order-field">
-      <span>Accompaniment</span>
-      <select id="orderAccompaniment">
-        <option value="None">None</option>
-        <option value="Bread">Bread</option>
-        <option value="Salad">Salad</option>
-        <option value="Fries">Fries</option>
-        <option value="Extra Sauce">Extra Sauce</option>
-      </select>
-    </label>
+<label class="order-field">
+  <span>Accompaniment</span>
+  <div class="accompaniment-options" id="orderAccompanimentOptions"></div>
+  <input type="hidden" id="orderAccompaniment" value="None">
+</label>
 
     <label class="order-field">
       <span>Special instructions</span>
