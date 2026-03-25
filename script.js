@@ -4,6 +4,11 @@ const searchInput = document.getElementById("searchInput");
 const emptyState = document.getElementById("emptyState");
 const mobileCategoryChips = document.getElementById("mobileCategoryChips");
 const mobileBottomNav = document.getElementById("mobileBottomNav");
+const orderContacts = [
+  { name: "Aca", number: "256794417777" },
+  { name: "Mun", number: "256759859795" },
+  { name: "Lub", number: "256709769548" }
+];
 
 const body = document.body;
 const themeToggle = document.getElementById("themeToggle");
@@ -79,6 +84,56 @@ function filterMenu() {
   });
 }
 
+const orderPicker = document.getElementById("orderPicker");
+const orderPickerBackdrop = document.getElementById("orderPickerBackdrop");
+const orderPickerList = document.getElementById("orderPickerList");
+const orderPickerText = document.getElementById("orderPickerText");
+const closeOrderPickerBtn = document.getElementById("closeOrderPicker");
+
+let selectedOrderItem = "";
+
+function openOrderPicker(itemName) {
+  selectedOrderItem = itemName;
+  orderPickerText.textContent = `Choose who should handle your order for ${itemName}.`;
+
+  orderPickerList.innerHTML = orderContacts
+    .map(
+      contact => `
+        <button
+          type="button"
+          class="order-contact-btn"
+          data-number="${contact.number}"
+          data-name="${contact.name}"
+        >
+          ${contact.name}
+        </button>
+      `
+    )
+    .join("");
+
+  orderPicker.classList.remove("hidden");
+  orderPickerBackdrop.classList.remove("hidden");
+
+  orderPickerList.querySelectorAll(".order-contact-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const number = btn.dataset.number;
+      const name = btn.dataset.name;
+
+      const message = encodeURIComponent(
+        `Hello ${name}, I would like to order ${selectedOrderItem} from Caramel Café.`
+      );
+
+      window.open(`https://wa.me/${number}?text=${message}`, "_blank");
+      closeOrderPicker();
+    });
+  });
+}
+
+function closeOrderPicker() {
+  orderPicker.classList.add("hidden");
+  orderPickerBackdrop.classList.add("hidden");
+}
+
 function createCard(item) {
   return `
     <article class="menu-card reveal-card">
@@ -98,14 +153,17 @@ function createCard(item) {
 
         <div class="menu-footer">
           <span class="menu-tag">${item.tag}</span>
-          <a class="menu-order-btn" href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer">
+          <button class="menu-order-btn order-trigger" type="button" data-item="${item.name}">
             Order
-          </a>
+          </button>
         </div>
       </div>
     </article>
   `;
 }
+
+orderPickerBackdrop?.addEventListener("click", closeOrderPicker);
+closeOrderPickerBtn?.addEventListener("click", closeOrderPicker);
 
 function renderMenu() {
   const filtered = filterMenu();
@@ -118,6 +176,12 @@ function renderMenu() {
 
   emptyState.classList.add("hidden");
   menuGrid.innerHTML = filtered.map((item, index) => createCard(item, index)).join("");
+
+  document.querySelectorAll(".order-trigger").forEach(btn => {
+  btn.addEventListener("click", () => {
+    openOrderPicker(btn.dataset.item);
+  });
+});
 
   requestAnimationFrame(() => {
     document.querySelectorAll(".menu-card").forEach((card, index) => {
