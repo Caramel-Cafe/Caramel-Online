@@ -315,6 +315,7 @@ body.light-mode .theme-toggle {
   background: rgba(255,255,255,0.1);
 }
 
+
 .hamburger-btn {
   position: fixed;
   top: calc(14px + env(safe-area-inset-top, 0px));
@@ -331,29 +332,72 @@ body.light-mode .theme-toggle {
   height: 52px;
   margin: 0;
   padding: 0;
-  border: none;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.9);
-  color: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+    var(--surface-2);
+
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .hamburger-btn span {
   display: block;
   width: 22px;
   height: 2px;
-  background: currentColor;
   border-radius: 999px;
-}
-@media (max-width: 640px) {
-  .topbar-left {
-    padding-left: 60px;
-  }
+  background: currentColor;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
 
+.hamburger-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.hamburger-btn:hover span:nth-child(1) {
+  transform: translateX(-2px);
+}
+
+.hamburger-btn:hover span:nth-child(3) {
+  transform: translateX(2px);
+}
+
+.hamburger-btn:active {
+  transform: scale(0.98);
+}
+
+body.light-mode .hamburger-btn {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.55)),
+    var(--surface-2);
+  box-shadow:
+    0 10px 24px rgba(123, 78, 48, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+@media (max-width: 640px) {
+  .hamburger-btn {
+    width: 48px;
+    height: 48px;
+    top: calc(12px + env(safe-area-inset-top, 0px));
+    left: calc(12px + env(safe-area-inset-left, 0px));
+  }
+
+  .hamburger-btn span {
+    width: 20px;
+  }
+}
 
 .theme-toggle {
   display: inline-flex;
