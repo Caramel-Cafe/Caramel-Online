@@ -1,92 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Caramel Café Menu</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #fff8f3;
-      color: #333;
-    }
-
-    header {
-      background: linear-gradient(135deg, #6b3e26, #c08b5c);
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-      border-bottom-left-radius: 30px;
-      border-bottom-right-radius: 30px;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    header p {
-      margin-top: 8px;
-      opacity: 0.9;
-    }
-
-    .container {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    h2 {
-      margin-top: 30px;
-      color: #6b3e26;
-    }
-
-    .menu-item {
-      background: white;
-      padding: 15px;
-      margin-top: 12px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .menu-item h3 {
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .price {
-      font-weight: bold;
-      color: #c08b5c;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: 30px;
-      font-size: 14px;
-      color: #777;
-    }
-
-    .btn {
-      display: block;
-      text-align: center;
-      margin: 25px auto;
-      padding: 12px;
-      width: 200px;
-      background: #25D366;
-      color: white;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
-</head>
-
 <body>
 
 <header>
@@ -94,58 +5,13 @@
   <p>Delicious drinks & bites</p>
 </header>
 
-<div class="container">
-
-  <h2>☕ Coffee</h2>
-
-  <div class="menu-item">
-    <h3>Espresso</h3>
-    <span class="price">5,000 UGX</span>
-  </div>
-
-  <div class="menu-item">
-    <h3>Cappuccino</h3>
-    <span class="price">7,000 UGX</span>
-  </div>
-
-  <div class="menu-item">
-    <h3>Latte</h3>
-    <span class="price">7,500 UGX</span>
-  </div>
-
-  <h2>🥤 Fresh Juice</h2>
-
-  <div class="menu-item">
-    <h3>Mango Juice</h3>
-    <span class="price">6,000 UGX</span>
-  </div>
-
-  <div class="menu-item">
-    <h3>Passion Juice</h3>
-    <span class="price">6,000 UGX</span>
-  </div>
-
-  <h2>🍔 Food</h2>
-
-  <div class="menu-item">
-    <h3>Chicken Burger</h3>
-    <span class="price">12,000 UGX</span>
-  </div>
-
-  <div class="menu-item">
-    <h3>Fries</h3>
-    <span class="price">5,000 UGX</span>
-  </div>
-
-  <a class="btn" href="https://wa.me/256700000000" target="_blank">
-    Order on WhatsApp
-  </a>
-
-</div>
+<div class="container" id="menu"></div>
 
 <footer>
   © 2026 Caramel Café
 </footer>
 
+<script src="menu.js"></script>
+<script src="script.js"></script>
+
 </body>
-</html>
