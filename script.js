@@ -90,11 +90,18 @@ const orderPickerList = document.getElementById("orderPickerList");
 const orderPickerText = document.getElementById("orderPickerText");
 const closeOrderPickerBtn = document.getElementById("closeOrderPicker");
 
-let selectedOrderItem = "";
+let selectedOrderItem = null;
 
-function openOrderPicker(itemName) {
-  selectedOrderItem = itemName;
-  orderPickerText.textContent = `Choose who should handle your order for ${itemName}.`;
+function openOrderPicker(item) {
+  selectedOrderItem = item;
+
+  orderPickerText.innerHTML = `
+    <strong>Item:</strong> ${item.name}<br>
+    <strong>Category:</strong> ${item.category}<br>
+    <strong>Price:</strong> ${item.price}<br>
+    <strong>Description:</strong> ${item.description}<br><br>
+    Choose who should handle this order.
+  `;
 
   orderPickerList.innerHTML = orderContacts
     .map(
@@ -120,7 +127,11 @@ function openOrderPicker(itemName) {
       const name = btn.dataset.name;
 
       const message = encodeURIComponent(
-        `Hello ${name}, I would like to order ${selectedOrderItem} from Caramel Café.`
+        `Hello ${name}, I would like to order:\n\n` +
+        `Item: ${selectedOrderItem.name}\n` +
+        `Category: ${selectedOrderItem.category}\n` +
+        `Price: ${selectedOrderItem.price}\n` +
+        `Description: ${selectedOrderItem.description}`
       );
 
       window.open(`https://wa.me/${number}?text=${message}`, "_blank");
@@ -153,9 +164,16 @@ function createCard(item) {
 
         <div class="menu-footer">
           <span class="menu-tag">${item.tag}</span>
-          <button class="menu-order-btn order-trigger" type="button" data-item="${item.name}">
-            Order
-          </button>
+<button
+  class="menu-order-btn order-trigger"
+  type="button"
+  data-item="${item.name}"
+  data-category="${item.category}"
+  data-price="${item.price}"
+  data-description="${item.description}"
+>
+  Order
+</button>
         </div>
       </div>
     </article>
@@ -177,12 +195,16 @@ function renderMenu() {
   emptyState.classList.add("hidden");
   menuGrid.innerHTML = filtered.map((item, index) => createCard(item, index)).join("");
 
-  document.querySelectorAll(".order-trigger").forEach(btn => {
+document.querySelectorAll(".order-trigger").forEach(btn => {
   btn.addEventListener("click", () => {
-    openOrderPicker(btn.dataset.item);
+    openOrderPicker({
+      name: btn.dataset.item,
+      category: btn.dataset.category,
+      price: btn.dataset.price,
+      description: btn.dataset.description
+    });
   });
 });
-
   requestAnimationFrame(() => {
     document.querySelectorAll(".menu-card").forEach((card, index) => {
       setTimeout(() => card.classList.add("is-visible"), index * 35);
