@@ -55,10 +55,11 @@ function filterMenu() {
   });
 }
 
-function createCard(item, index) {
+function createCard(item) {
   return `
-    <article class="menu-card tilt-card" style="transition-delay:${Math.min(index * 35, 240)}ms">
+    <article class="menu-card reveal-card">
       <div class="menu-thumb">
+        ${item.image ? `<img src="${item.image}" alt="${item.name}" class="menu-image">` : ""}
         <span class="thumb-badge">${item.category}</span>
       </div>
 
