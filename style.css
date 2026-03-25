@@ -1759,3 +1759,84 @@ body.light-mode .sidebar-nav a {
 .order-picker-text strong {
   color: var(--text);
 }
+.order-form-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 10, 18, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 100018;
+}
+
+.order-form-modal {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(92vw, 440px);
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+    var(--surface-2);
+  color: var(--text);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100019;
+}
+
+.order-form-backdrop.hidden,
+.order-form-modal.hidden {
+  display: none;
+}
+
+.order-form-summary {
+  margin: 0 0 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.order-form-summary strong {
+  color: var(--text);
+}
+
+.order-form-fields {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.order-field {
+  display: grid;
+  gap: 6px;
+}
+
+.order-field span {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.order-field input,
+.order-field select,
+.order-field textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  padding: 12px 14px;
+  font: inherit;
+  outline: none;
+}
+
+.order-field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.order-continue-btn {
+  width: 100%;
+  min-height: 48px;
+}
