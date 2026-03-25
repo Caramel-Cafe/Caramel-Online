@@ -17,18 +17,64 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="page-shell">
+  <aside class="sidebar-overlay" id="sidebarOverlay"></aside>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-badge">C</div>
+        <div>
+          <p class="brand-kicker">Caramel Café</p>
+          <h2>Menu Panel</h2>
+        </div>
+      </div>
+
+      <button class="icon-btn" id="closeSidebar" aria-label="Close menu">✕</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#top">Home</a>
+      <a href="#menu-area">Browse Menu</a>
+      <a href="#contact">Contact</a>
+      <a href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer">WhatsApp Order</a>
+    </nav>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Appearance</p>
+      <button class="theme-toggle sidebar-theme-toggle" id="themeToggleSidebar" type="button">
+        <span class="theme-pill active" data-theme-btn="dark">Dark</span>
+        <span class="theme-pill" data-theme-btn="light">Light</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="page-shell" id="top">
     <header class="hero">
       <nav class="topbar">
-        <div class="brand">
-          <div class="brand-badge">C</div>
-          <div>
-            <p class="brand-kicker">Caramel Café</p>
-            <h1>Digital Menu</h1>
+        <div class="topbar-left">
+          <button class="icon-btn hamburger-btn" id="openSidebar" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <div class="brand">
+            <div class="brand-badge">C</div>
+            <div>
+              <p class="brand-kicker">Caramel Café</p>
+              <h1>Digital Menu</h1>
+            </div>
           </div>
         </div>
 
-        <a class="topbar-btn" href="#menu-grid">Browse Menu</a>
+        <div class="topbar-actions">
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+            <span class="theme-pill active" data-theme-btn="dark">Dark</span>
+            <span class="theme-pill" data-theme-btn="light">Light</span>
+          </button>
+
+          <a class="topbar-btn" href="#menu-grid">Browse Menu</a>
+        </div>
       </nav>
 
       <div class="hero-grid">
@@ -81,7 +127,7 @@
       </div>
     </header>
 
-    <main class="content">
+    <main class="content" id="menu-area">
       <section class="controls">
         <div class="section-heading">
           <p class="eyebrow">Explore</p>
