@@ -1750,3 +1750,12 @@ body.light-mode .sidebar-nav a {
 .order-contact-btn:active {
   transform: scale(0.98);
 }
+.order-picker-text {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.order-picker-text strong {
+  color: var(--text);
+}
