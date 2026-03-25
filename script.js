@@ -9,6 +9,7 @@ const orderFormBackdrop = document.getElementById("orderFormBackdrop");
 const orderFormSummary = document.getElementById("orderFormSummary");
 const orderQuantity = document.getElementById("orderQuantity");
 const orderAccompaniment = document.getElementById("orderAccompaniment");
+const orderAccompanimentOptions = document.getElementById("orderAccompanimentOptions");
 const orderNote = document.getElementById("orderNote");
 const continueOrderBtn = document.getElementById("continueOrderBtn");
 const closeOrderFormBtn = document.getElementById("closeOrderForm");
@@ -105,6 +106,37 @@ function syncMobileCategoryChips() {
   });
 }
 
+function renderAccompanimentOptions(category) {
+  const options = getAccompaniments(category);
+
+  if (!orderAccompanimentOptions || !orderAccompaniment) return;
+
+  orderAccompanimentOptions.innerHTML = options
+    .map(option => `
+      <button
+        type="button"
+        class="accompaniment-chip ${option === "None" ? "active" : ""}"
+        data-value="${option}"
+      >
+        ${option}
+      </button>
+    `)
+    .join("");
+
+  orderAccompaniment.value = "None";
+
+  orderAccompanimentOptions.querySelectorAll(".accompaniment-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      orderAccompanimentOptions.querySelectorAll(".accompaniment-chip").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      chip.classList.add("active");
+      orderAccompaniment.value = chip.dataset.value;
+    });
+  });
+}
+
 function filterMenu() {
   return menuItems.filter(item => {
     const categoryMatch = activeCategory === "All" || item.category === activeCategory;
@@ -197,13 +229,7 @@ function openOrderForm(item) {
   `;
 
   orderQuantity.value = 1;
-  const options = getAccompaniments(item.category);
-
-orderAccompaniment.innerHTML = options
-  .map(option => `<option value="${option}">${option}</option>`)
-  .join("");
-
-orderAccompaniment.value = "None";
+renderAccompanimentOptions(item.category);
   orderNote.value = "";
 
   orderFormModal.classList.remove("hidden");
