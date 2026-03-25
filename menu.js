@@ -4,7 +4,8 @@ const menuItems = [
     name: "Espresso",
     price: "5,000 UGX",
     description: "Rich, bold, and smooth with a concentrated coffee finish.",
-    tag: "Hot favorite"
+    tag: "Hot favorite",
+    image: "images/espresso.jpg"
   },
   {
     category: "Coffee",
