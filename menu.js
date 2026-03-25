@@ -8,7 +8,7 @@ const menuItems = [
     image: "images/espresso.jpg"
   },
   {
-    category: "Coffee",
+    category: "Burger",
     name: "Cappuccino",
     price: "7,000 UGX",
     description: "Balanced espresso, steamed milk, and soft foam on top.",
