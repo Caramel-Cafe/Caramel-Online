@@ -24,12 +24,8 @@ function createChips() {
 
   chipsWrap.innerHTML = categories
     .map(
-      (category, index) => `
-        <button
-          class="${category === activeCategory ? "chip active" : "chip"}"
-          data-category="${category}"
-          style="animation-delay:${index * 0.04}s"
-        >
+      category => `
+        <button class="${category === activeCategory ? "chip active" : "chip"}" data-category="${category}">
           ${category}
         </button>
       `
@@ -55,9 +51,9 @@ function filterMenu() {
   });
 }
 
-function createCard(item, index) {
+function createCard(item) {
   return `
-    <article class="menu-card tilt-card" style="transition-delay:${Math.min(index * 35, 240)}ms">
+    <article class="menu-card reveal-card">
       <div class="menu-thumb">
         <span class="thumb-badge">${item.category}</span>
       </div>
@@ -92,14 +88,12 @@ function renderMenu() {
   }
 
   emptyState.classList.add("hidden");
-  menuGrid.innerHTML = filtered.map((item, index) => createCard(item, index)).join("");
+  menuGrid.innerHTML = filtered.map(createCard).join("");
 
   requestAnimationFrame(() => {
-    document.querySelectorAll(".menu-card").forEach((card, index) => {
-      setTimeout(() => card.classList.add("is-visible"), index * 35);
+    document.querySelectorAll(".reveal-card").forEach(card => {
+      card.classList.add("is-visible");
     });
-
-    initTiltCards();
   });
 }
 
@@ -141,75 +135,6 @@ function closeSidebar() {
   sidebarOverlay.classList.remove("show");
 }
 
-function initReveal() {
-  const revealEls = document.querySelectorAll(".reveal");
-
-  if (!("IntersectionObserver" in window)) {
-    revealEls.forEach(el => el.classList.add("is-in-view"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in-view");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.12,
-      rootMargin: "0px 0px -40px 0px"
-    }
-  );
-
-  revealEls.forEach(el => observer.observe(el));
-}
-
-function initTiltCards() {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReducedMotion) return;
-
-  const tiltCards = document.querySelectorAll(".tilt-card");
-
-  tiltCards.forEach(card => {
-    card.addEventListener("mousemove", e => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const rotateX = ((y / rect.height) - 0.5) * -8;
-      const rotateY = ((x / rect.width) - 0.5) * 10;
-
-      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "";
-    });
-  });
-}
-
-function initMagneticButtons() {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReducedMotion) return;
-
-  document.querySelectorAll(".magnetic").forEach(button => {
-    button.addEventListener("mousemove", e => {
-      const rect = button.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      button.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px)`;
-    });
-
-    button.addEventListener("mouseleave", () => {
-      button.style.transform = "";
-    });
-  });
-}
-
 searchInput.addEventListener("input", e => {
   searchTerm = e.target.value;
   renderMenu();
@@ -233,5 +158,3 @@ handleThemeToggle(themeToggleSidebar);
 createChips();
 renderMenu();
 initTheme();
-initReveal();
-initMagneticButtons();
