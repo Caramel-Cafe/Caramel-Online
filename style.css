@@ -1878,3 +1878,36 @@ body.light-mode .sidebar-nav a {
 .quantity-stepper input {
   text-align: center;
 }
+.accompaniment-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.accompaniment-chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  padding: 10px 14px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.accompaniment-chip:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+
+.accompaniment-chip.active {
+  background: linear-gradient(135deg, rgba(255, 203, 146, 0.18), rgba(212, 154, 97, 0.2));
+  border-color: rgba(255, 203, 146, 0.28);
+  color: var(--text);
+  box-shadow: 0 8px 22px rgba(212, 154, 97, 0.15);
+}
+
+.accompaniment-chip:active {
+  transform: scale(0.98);
+}
