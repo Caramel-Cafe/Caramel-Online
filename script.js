@@ -20,6 +20,13 @@ const orderContacts = [
   { name: "Naalya", number: "256781800800" },
   { name: "Kansanga", number: "256709410410" }
 ];
+const accompanimentOptions = {
+  Coffee: ["None", "No sugar", "Extra hot", "Oat milk", "Takeaway"],
+  Burger: ["None", "Fries", "Salad", "Extra sauce", "Takeaway"],
+  Pizza: ["None", "Extra cheese", "Chili flakes", "Ketchup", "Takeaway"],
+  Juice: ["None", "No ice", "Less sugar", "Takeaway"],
+  Default: ["None", "Takeaway"]
+};
 
 const body = document.body;
 const themeToggle = document.getElementById("themeToggle");
@@ -66,6 +73,9 @@ function createChips() {
   });
 }
 
+function getAccompaniments(category) {
+  return accompanimentOptions[category] || accompanimentOptions.Default;
+}
 function syncMobileCategoryChips() {
   if (!mobileCategoryChips || !chipsWrap) return;
 
@@ -177,7 +187,13 @@ function openOrderForm(item) {
   `;
 
   orderQuantity.value = 1;
-  orderAccompaniment.value = "None";
+  const options = getAccompaniments(item.category);
+
+orderAccompaniment.innerHTML = options
+  .map(option => `<option value="${option}">${option}</option>`)
+  .join("");
+
+orderAccompaniment.value = "None";
   orderNote.value = "";
 
   orderFormModal.classList.remove("hidden");
