@@ -215,5 +215,21 @@
 
   <script src="menu.js"></script>
   <script src="script.js"></script>
+
+<div class="order-picker-backdrop hidden" id="orderPickerBackdrop"></div>
+
+<div class="order-picker hidden" id="orderPicker">
+  <div class="order-picker-head">
+    <h3>Choose who should take this order</h3>
+    <button type="button" class="icon-btn" id="closeOrderPicker" aria-label="Close order picker">✕</button>
+  </div>
+
+  <p class="order-picker-text" id="orderPickerText">
+    Select a staff member to continue on WhatsApp.
+  </p>
+
+  <div class="order-picker-list" id="orderPickerList"></div>
+</div>
+  
 </body>
 </html>
