@@ -224,10 +224,14 @@
   <div class="order-form-summary" id="orderFormSummary"></div>
 
   <div class="order-form-fields">
-    <label class="order-field">
-      <span>Quantity</span>
-      <input type="number" id="orderQuantity" min="1" value="1">
-    </label>
+<label class="order-field">
+  <span>Quantity</span>
+  <div class="quantity-stepper">
+    <button type="button" class="qty-btn" id="qtyMinus">−</button>
+    <input type="number" id="orderQuantity" min="1" value="1">
+    <button type="button" class="qty-btn" id="qtyPlus">+</button>
+  </div>
+</label>
 
     <label class="order-field">
       <span>Accompaniment</span>
