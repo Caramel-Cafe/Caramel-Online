@@ -213,19 +213,42 @@
     </footer>
   </div>
 
-<div class="order-picker-backdrop hidden" id="orderPickerBackdrop"></div>
+<div class="order-form-backdrop hidden" id="orderFormBackdrop"></div>
 
-<div class="order-picker hidden" id="orderPicker">
+<div class="order-form-modal hidden" id="orderFormModal">
   <div class="order-picker-head">
-    <h3>Choose who should take this order</h3>
-    <button type="button" class="icon-btn" id="closeOrderPicker" aria-label="Close order picker">✕</button>
+    <h3>Customize your order</h3>
+    <button type="button" class="icon-btn" id="closeOrderForm" aria-label="Close order form">✕</button>
   </div>
 
-  <p class="order-picker-text" id="orderPickerText">
-    Select a staff member to continue on WhatsApp.
-  </p>
+  <div class="order-form-summary" id="orderFormSummary"></div>
 
-  <div class="order-picker-list" id="orderPickerList"></div>
+  <div class="order-form-fields">
+    <label class="order-field">
+      <span>Quantity</span>
+      <input type="number" id="orderQuantity" min="1" value="1">
+    </label>
+
+    <label class="order-field">
+      <span>Accompaniment</span>
+      <select id="orderAccompaniment">
+        <option value="None">None</option>
+        <option value="Bread">Bread</option>
+        <option value="Salad">Salad</option>
+        <option value="Fries">Fries</option>
+        <option value="Extra Sauce">Extra Sauce</option>
+      </select>
+    </label>
+
+    <label class="order-field">
+      <span>Special instructions</span>
+      <textarea id="orderNote" rows="4" placeholder="Optional note..."></textarea>
+    </label>
+  </div>
+
+  <button type="button" class="menu-order-btn order-continue-btn" id="continueOrderBtn">
+    Continue
+  </button>
 </div>
   
 <script src="menu.js" defer></script>
