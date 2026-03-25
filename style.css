@@ -53,17 +53,15 @@ html {
 }
 
 body {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(212, 154, 97, 0.18), transparent 32%),
-    radial-gradient(circle at top right, rgba(92, 141, 255, 0.14), transparent 30%),
-    linear-gradient(180deg, var(--bg) 0%, #091423 38%, var(--bg) 100%);
-  min-height: 100vh;
-  min-height: 100svh;
-  transition: background var(--transition-slow), color var(--transition-mid);
+  background: linear-gradient(180deg, #fffdf8 0%, #fff9f2 55%, #fff7ef 100%);
+  color: #3b2f2b;
+  font-family: var(--fontFamily-dm_sans);
+  font-size: var(--fontSize-body-4);
+  font-weight: var(--weight-regular);
+  line-height: var(--lineHeight-5);
   overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
 }
 
 body.light-mode {
