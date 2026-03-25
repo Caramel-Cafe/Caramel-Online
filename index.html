@@ -250,7 +250,20 @@
     Continue
   </button>
 </div>
-  
+  <div class="order-picker-backdrop hidden" id="orderPickerBackdrop"></div>
+
+<div class="order-picker hidden" id="orderPicker">
+  <div class="order-picker-head">
+    <h3>Choose who should take this order</h3>
+    <button type="button" class="icon-btn" id="closeOrderPicker" aria-label="Close order picker">✕</button>
+  </div>
+
+  <p class="order-picker-text" id="orderPickerText">
+    Select who should continue with this order.
+  </p>
+
+  <div class="order-picker-list" id="orderPickerList"></div>
+</div>
 <script src="menu.js" defer></script>
 <script src="script.js" defer></script>
 </body>
