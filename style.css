@@ -335,6 +335,21 @@ body.light-mode .theme-toggle {
   transform: translateX(2px);
 }
 
+.hamburger-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 1100;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 640px) {
+  .hamburger-btn {
+    top: 12px;
+    left: 12px;
+  }
+}
+
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -830,6 +845,27 @@ body.light-mode .menu-card {
   background: linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent);
   transform: translateX(-100%) rotate(8deg);
   transition: transform 1s ease;
+}
+
+.menu-thumb {
+  height: clamp(160px, 18vw, 220px);
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.menu-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
 }
 
 .menu-card:hover .menu-thumb::before {
