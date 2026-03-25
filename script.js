@@ -28,6 +28,8 @@ const accompanimentOptions = {
   Default: ["None", "Takeaway"]
 };
 
+const qtyMinus = document.getElementById("qtyMinus");
+const qtyPlus = document.getElementById("qtyPlus");
 const body = document.body;
 const themeToggle = document.getElementById("themeToggle");
 const themeToggleSidebar = document.getElementById("themeToggleSidebar");
@@ -44,7 +46,15 @@ function getCategories(items) {
   return ["All", ...new Set(items.map(item => item.category))];
 }
 
+qtyMinus?.addEventListener("click", () => {
+  const current = parseInt(orderQuantity.value || "1", 10);
+  orderQuantity.value = Math.max(1, current - 1);
+});
 
+qtyPlus?.addEventListener("click", () => {
+  const current = parseInt(orderQuantity.value || "1", 10);
+  orderQuantity.value = current + 1;
+});
 
 function createChips() {
   const categories = getCategories(menuItems);
