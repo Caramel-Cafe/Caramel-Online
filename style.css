@@ -1840,3 +1840,15 @@ body.light-mode .sidebar-nav a {
   width: 100%;
   min-height: 48px;
 }
+.hidden {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.order-form-backdrop.hidden,
+.order-form-modal.hidden,
+.order-picker-backdrop.hidden,
+.order-picker.hidden {
+  display: none !important;
+  pointer-events: none !important;
+}
