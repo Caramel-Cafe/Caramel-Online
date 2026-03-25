@@ -13,9 +13,12 @@ const orderNote = document.getElementById("orderNote");
 const continueOrderBtn = document.getElementById("continueOrderBtn");
 const closeOrderFormBtn = document.getElementById("closeOrderForm");
 const orderContacts = [
-  { name: "Aca", number: "256794417777" },
-  { name: "Mun", number: "256759859795" },
-  { name: "Lub", number: "256709769548" }
+  { name: "Acacia", number: "256794417777" },
+  { name: "Munyonyo", number: "256759859795" },
+  { name: "Lubowa", number: "256709769548" },
+  { name: "Ntinda", number: "256766550001" },
+  { name: "Naalya", number: "256781800800" },
+  { name: "Kansanga", number: "256709410410" }
 ];
 
 const body = document.body;
@@ -158,8 +161,8 @@ function openOrderPicker(item) {
 
 
 function closeOrderPicker() {
-  orderPicker.classList.add("hidden");
-  orderPickerBackdrop.classList.add("hidden");
+  orderPicker?.classList.add("hidden");
+  orderPickerBackdrop?.classList.add("hidden");
 }
 
 function openOrderForm(item) {
@@ -182,8 +185,8 @@ function openOrderForm(item) {
 }
 
 function closeOrderForm() {
-  orderFormModal.classList.add("hidden");
-  orderFormBackdrop.classList.add("hidden");
+  orderFormModal?.classList.add("hidden");
+  orderFormBackdrop?.classList.add("hidden");
 }
 
 function continueOrderFlow() {
@@ -199,7 +202,10 @@ function continueOrderFlow() {
   };
 
   closeOrderForm();
-  openOrderPicker(preparedOrderDetails);
+
+  setTimeout(() => {
+    openOrderPicker(preparedOrderDetails);
+  }, 50);
 }
 
 function createCard(item) {
