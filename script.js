@@ -56,12 +56,49 @@ const closeCartBtn = document.getElementById("closeCartBtn");
 const checkoutCartBtn = document.getElementById("checkoutCartBtn");
 const cartDrawerBackdrop = document.querySelector(".cart-drawer-backdrop");
 
-let activeCategory = "All";
-let searchTerm = "";
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let activeMenuGroup = "Breakfast Menu";
+
+const menuGroups = {
+  "Breakfast Menu": ["Breakfast Menu"],
+
+  "Main Menu": [
+    "Starters",
+    "Fresh Salads",
+    "Main Course (chicken)",
+    "Main Course (beef)",
+    "Main Course (fish)",
+    "Habesha",
+    "Pasta",
+    "Burgers",
+    "Sandwich",
+    "Pizzeria",
+    "Bakery",
+    "Cookies",
+    "Pastries"
+  ],
+
+  "Kids Menu": ["Kids Menu"],
+
+  "Drinks Menu": [
+    "Coffee",
+    "Tea",
+    "Smoothies",
+    "Fresh Juice",
+    "Mojitos",
+    "Milkshake",
+    "Soft Drinks",
+    "Mocktails",
+    "Cocktails"
+  ]
+};
 
 function getCategories(items) {
-  return ["All", ...new Set(items.map(item => item.category))];
+  const allowedCategories = menuGroups[activeMenuGroup] || [];
+  const visibleCategories = items
+    .map(item => item.category)
+    .filter(category => allowedCategories.includes(category));
+
+  return ["All", ...new Set(visibleCategories)];
 }
 
 qtyMinus?.addEventListener("click", () => {
@@ -174,12 +211,16 @@ function renderAccompanimentOptions(category) {
 }
 
 function filterMenu() {
+  const allowedCategories = menuGroups[activeMenuGroup] || [];
+
   return menuItems.filter(item => {
+    const menuMatch = allowedCategories.includes(item.category);
     const categoryMatch = activeCategory === "All" || item.category === activeCategory;
     const term = searchTerm.trim().toLowerCase();
-    const text = `${item.name} ${item.category} ${item.description} ${item.tag}`.toLowerCase();
+    const text = `${item.name} ${item.category} ${item.description} ${item.tag || ""}`.toLowerCase();
     const searchMatch = !term || text.includes(term);
-    return categoryMatch && searchMatch;
+
+    return menuMatch && categoryMatch && searchMatch;
   });
 }
 
@@ -436,8 +477,21 @@ function initMobileBottomNav() {
     link.addEventListener("click", () => {
       links.forEach(item => item.classList.remove("active"));
       link.classList.add("active");
+
+      activeMenuGroup = link.dataset.menuGroup;
+      activeCategory = "All";
+
+      createChips();
+      renderMenu();
+      syncMobileCategoryChips();
+
+      document.getElementById("menu-area")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     });
   });
+}
 
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
