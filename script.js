@@ -39,6 +39,14 @@ const sidebar = document.getElementById("sidebar");
 const sidebarOverlay = document.getElementById("sidebarOverlay");
 const openSidebarBtn = document.getElementById("openSidebar");
 const closeSidebarBtn = document.getElementById("closeSidebar");
+const itemPopup = document.getElementById("itemPopup");
+const popupImage = document.getElementById("popupImage");
+const popupName = document.getElementById("popupName");
+const popupPrice = document.getElementById("popupPrice");
+const popupDesc = document.getElementById("popupDesc");
+const popupOrderBtn = document.getElementById("popupOrderBtn");
+const popupClose = document.querySelector(".popup-close");
+const popupBackdrop = document.querySelector(".item-popup-backdrop");
 
 let activeCategory = "All";
 let searchTerm = "";
@@ -56,6 +64,25 @@ qtyPlus?.addEventListener("click", () => {
   const current = parseInt(orderQuantity.value || "1", 10);
   orderQuantity.value = current + 1;
 });
+
+function openItemPopup(item) {
+  popupImage.src = item.image;
+  popupName.textContent = item.name;
+  popupPrice.textContent = item.price;
+  popupDesc.textContent = item.description;
+
+  itemPopup.classList.remove("hidden");
+
+  popupOrderBtn.onclick = () => {
+    openOrderForm(item); // your existing function
+    closeItemPopup();
+  };
+}
+function closeItemPopup() {
+  itemPopup.classList.add("hidden");
+}
+popupClose.addEventListener("click", closeItemPopup);
+popupBackdrop.addEventListener("click", closeItemPopup);
 
 function createChips() {
   const categories = getCategories(menuItems);
@@ -267,7 +294,7 @@ function continueOrderFlow() {
 function createCard(item) {
   return `
     <article class="menu-card reveal-card">
-      <div class="menu-thumb">
+      <div class="menu-card" data-name="${item.name}">
         ${item.image ? `<img src="${item.image}" alt="${item.name}" class="menu-image">` : ""}
         ${item.tag ? `<span class="menu-badge">${item.tag}</span>` : ""}
         <span class="thumb-badge">${item.category}</span>
