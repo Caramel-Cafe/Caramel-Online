@@ -186,8 +186,9 @@ function openOrderPicker(item) {
     )
     .join("");
 
-  orderPicker.classList.remove("hidden");
-  orderPickerBackdrop.classList.remove("hidden");
+orderPicker.classList.remove("hidden");
+orderPickerBackdrop.classList.remove("hidden");
+lockBodyScroll();
 
   orderPickerList.querySelectorAll(".order-contact-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -215,6 +216,7 @@ function openOrderPicker(item) {
 function closeOrderPicker() {
   orderPicker?.classList.add("hidden");
   orderPickerBackdrop?.classList.add("hidden");
+  unlockBodyScroll();
 }
 
 function openOrderForm(item) {
@@ -229,16 +231,18 @@ function openOrderForm(item) {
   `;
 
   orderQuantity.value = 1;
-renderAccompanimentOptions(item.category);
+  renderAccompanimentOptions(item.category);
   orderNote.value = "";
 
   orderFormModal.classList.remove("hidden");
   orderFormBackdrop.classList.remove("hidden");
+  lockBodyScroll();
 }
 
 function closeOrderForm() {
   orderFormModal?.classList.add("hidden");
   orderFormBackdrop?.classList.add("hidden");
+  unlockBodyScroll();
 }
 
 function continueOrderFlow() {
@@ -361,14 +365,24 @@ function handleThemeToggle(container) {
   });
 }
 
+function lockBodyScroll() {
+  document.body.style.overflow = "hidden";
+}
+
+function unlockBodyScroll() {
+  document.body.style.overflow = "";
+}
+
 function openSidebar() {
   sidebar.classList.add("open");
   sidebarOverlay.classList.add("show");
+  lockBodyScroll();
 }
 
 function closeSidebar() {
   sidebar.classList.remove("open");
   sidebarOverlay.classList.remove("show");
+  unlockBodyScroll();
 }
 
 function initMobileBottomNav() {
