@@ -434,6 +434,20 @@ function initMobileBottomNav() {
     });
   });
 
+cartFab?.addEventListener("click", openCart);
+closeCartBtn?.addEventListener("click", closeCart);
+cartDrawerBackdrop?.addEventListener("click", closeCart);
+checkoutCartBtn?.addEventListener("click", checkoutCart);
+
+cartItems?.addEventListener("click", event => {
+  const button = event.target.closest("[data-action]");
+  if (!button) return;
+
+  const action = button.dataset.action;
+  const index = Number(button.dataset.index);
+  handleCartAction(action, index);
+});
+
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
     const topSection = document.getElementById("top");
@@ -500,6 +514,121 @@ function initTiltCards() {
       card.style.transform = "";
     });
   });
+}
+
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function updateCartUI() {
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  cartCount.textContent = totalCount;
+  cartTotalItems.textContent = totalCount;
+
+  if (totalCount > 0) {
+    cartFab.classList.remove("hidden");
+  } else {
+    cartFab.classList.add("hidden");
+  }
+
+  if (!cart.length) {
+    cartItems.innerHTML = `<p>Your cart is empty.</p>`;
+    return;
+  }
+
+  cartItems.innerHTML = cart.map((item, index) => `
+    <div class="cart-item">
+      <img src="${item.image || ""}" alt="${item.name}">
+      <div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-meta">
+          ${item.price}<br>
+          ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
+          ${item.note ? `Note: ${item.note}` : ""}
+        </div>
+
+        <div class="cart-item-actions">
+          <button class="cart-qty-btn" type="button" data-action="decrease" data-index="${index}">-</button>
+          <span>${item.quantity}</span>
+          <button class="cart-qty-btn" type="button" data-action="increase" data-index="${index}">+</button>
+          <button class="cart-remove-btn" type="button" data-action="remove" data-index="${index}">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function addToCart(item) {
+  const existingIndex = cart.findIndex(cartItem =>
+    cartItem.name === item.name &&
+    cartItem.accompaniment === item.accompaniment &&
+    cartItem.note === item.note
+  );
+
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += item.quantity;
+  } else {
+    cart.push({ ...item });
+  }
+
+  saveCart();
+  updateCartUI();
+}
+
+function openCart() {
+  cartDrawer.classList.remove("hidden");
+  lockBodyScroll();
+}
+
+function closeCart() {
+  cartDrawer.classList.add("hidden");
+  unlockBodyScroll();
+}
+
+function handleCartAction(action, index) {
+  const item = cart[index];
+  if (!item) return;
+
+  if (action === "increase") {
+    item.quantity += 1;
+  }
+
+  if (action === "decrease") {
+    item.quantity -= 1;
+    if (item.quantity <= 0) {
+      cart.splice(index, 1);
+    }
+  }
+
+  if (action === "remove") {
+    cart.splice(index, 1);
+  }
+
+  saveCart();
+  updateCartUI();
+}
+
+function checkoutCart() {
+  if (!cart.length) return;
+
+  closeCart();
+
+  const combinedOrder = {
+    name: "Cart Order",
+    category: "Multiple Items",
+    price: "",
+    description: cart.map(item =>
+      `Item: ${item.name}
+Category: ${item.category}
+Price: ${item.price}
+Quantity: ${item.quantity}
+${item.accompaniment ? `Accompaniment: ${item.accompaniment}` : ""}
+${item.note ? `Special instructions: ${item.note}` : ""}`
+    ).join("\n\n")
+  };
+
+  openOrderPicker(combinedOrder);
 }
 
 function initMagneticButtons() {
