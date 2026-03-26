@@ -22,11 +22,14 @@ const orderContacts = [
   { name: "Kansanga", number: "256709410410" }
 ];
 const accompanimentOptions = {
-  Coffee: ["None", "No sugar", "Extra hot", "Oat milk", "Takeaway"],
-  Burger: ["None", "Fries", "Salad", "Extra sauce", "Takeaway"],
-  Pizza: ["None", "Extra cheese", "Chili flakes", "Ketchup", "Takeaway"],
-  Juice: ["None", "No ice", "Less sugar", "Takeaway"],
-  Default: ["None", "Takeaway"]
+  Coffee: ["None", "Sugar", "Honey", "Sweetener" ],
+  Tea: ["None", "Sugar", "Honey", "Sweetener" ],
+  Hot: ["None", "Sugar", "Honey", "Sweetener" ],
+  Burger: ["None", "Fries", "Salad"],
+  Burger: ["None", "Fries", "Salad"],
+  Burger: ["Spaghetti", "Penne"],
+  Juice: ["None", "No ice", "Takeaway"],
+  Default: ["Eat In", "Takeaway"]
 };
 
 const qtyMinus = document.getElementById("qtyMinus");
