@@ -533,12 +533,12 @@ function updateCartUI() {
       <img src="${item.image || ""}" alt="${item.name}">
       <div>
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-meta">
-          ${item.price}<br>
-          ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
-          ${item.note ? `Note: ${item.note}` : ""}
-        </div>
-
+<div class="cart-item-meta">
+  ${item.category ? `${item.category}<br>` : ""}
+  ${item.price}<br>
+  ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
+  ${item.note ? `Note: ${item.note}` : ""}
+</div>
         <div class="cart-item-actions">
           <button class="cart-qty-btn" type="button" data-action="decrease" data-index="${index}">-</button>
           <span>${item.quantity}</span>
