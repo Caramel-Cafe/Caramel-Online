@@ -11,6 +11,7 @@ const menuItems = [
     name: "FARMERS BREAKFAST",
     price: "UGX 32,000",
     description: "Spanish omelette is served with our curried creamy spinach, avocado slice, house gourmet bread, bread, and fresh homemade jam.",
+    tag: "Best Seller",
     image: "images/Farmers Breakfast.webp"
   },
   {
