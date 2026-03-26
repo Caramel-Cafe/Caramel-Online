@@ -495,7 +495,6 @@ function initMobileBottomNav() {
     });
   });
 }
-}
 
 function initReveal() {
   const revealEls = document.querySelectorAll(".reveal");
