@@ -697,6 +697,318 @@ const menuItems = [
     price: "UGX 21,000",
     description: "",
     image: "images/NO DRINKS.webp"
-  }
+  },
+  // ================= MILKSHAKE =================
+{
+  category: "Milkshake",
+  name: "Oreo Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Vanilla Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Chocolate Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Cookies Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Unicorn Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Strawberry Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Brownie Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Strataciatella Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Coconut Milkshake",
+  price: "UGX 22,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+
+// ================= SOFT DRINKS =================
+{
+  category: "Soft Drinks",
+  name: "Coca Cola",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Coke Zero",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Fanta",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Soda Water",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Sprite",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Stony",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Tonic Water",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Red Bull",
+  price: "UGX 11,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Krest",
+  price: "UGX 5,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+
+// ================= MOCKTAILS =================
+{
+  category: "Mocktails",
+  name: "Material Girl",
+  price: "UGX 21,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Cranberry Pucker",
+  price: "UGX 21,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Passionate Girl",
+  price: "UGX 21,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Cool Down",
+  price: "UGX 17,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Virgin Strawberry Daiquiri",
+  price: "UGX 21,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Virgin Captain Colada",
+  price: "UGX 21,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Material Boy",
+  price: "UGX 21,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Mango Pucker",
+  price: "UGX 21,000",
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+
+// ================= BAKERY =================
+{
+  category: "Bakery",
+  name: "Sweet Bread",
+  price: "UGX 9,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Cramique Bread",
+  price: "UGX 13,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Brown Bread",
+  price: "UGX 8,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "White Bread",
+  price: "UGX 8,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Baguette Bread",
+  price: "UGX 7,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Sunflower Bread",
+  price: "UGX 10,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Gluten free Bread",
+  price: "UGX 17,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+
+// ================= COOKIES =================
+{
+  category: "Cookies",
+  name: "Mimo cookies",
+  price: "UGX 8,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Cookies",
+  name: "Healthy Cookies",
+  price: "UGX 10,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Cookies",
+  name: "Ginger Cookies",
+  price: "UGX 13,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Cookies",
+  name: "Choco Chip Cookies",
+  price: "UGX 10,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Cookies",
+  name: "Butter Cookies",
+  price: "UGX 8,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Cookies",
+  name: "Nut Cookies Uno",
+  price: "UGX 3,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Cookies",
+  name: "Chocochip Cookies Uno",
+  price: "UGX 3,000",
+  description: "",
+  image: "images/No Bread.webp"
+},
+
+// ================= PASTRIES =================
+{
+  category: "Pastries",
+  name: "BLACK FOREST CAKE",
+  price: "Slice UGX 17,000 / Full UGX 125,000",
+  description: "",
+  image: ""
+},
+{
+  category: "Pastries",
+  name: "BLUEBERRY CHEESE CAKE",
+  price: "Slice UGX 18,000 / Full UGX 135,000",
+  description: "",
+  image: ""
+},
+{
+  category: "Pastries",
+  name: "CARAMEL CHEESE CAKE",
+  price: "Slice UGX 18,000 / Full UGX 135,000",
+  description: "",
+  image: ""
+}
   
 ];
