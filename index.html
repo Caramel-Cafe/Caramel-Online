@@ -213,6 +213,33 @@
     </footer>
   </div>
 
+  <button id="cartFab" class="cart-fab hidden" type="button">
+  🛒 Cart (<span id="cartCount">0</span>)
+</button>
+
+<div id="cartDrawer" class="cart-drawer hidden">
+  <div class="cart-drawer-backdrop"></div>
+
+  <div class="cart-drawer-panel">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button id="closeCartBtn" class="cart-close" type="button">&times;</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="cart-footer">
+      <div class="cart-summary">
+        <strong>Total Items:</strong>
+        <span id="cartTotalItems">0</span>
+      </div>
+      <button id="checkoutCartBtn" class="primary-btn" type="button">
+        Checkout on WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="order-form-backdrop hidden" id="orderFormBackdrop"></div>
 
 <div class="order-form-modal hidden" id="orderFormModal">
