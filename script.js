@@ -55,6 +55,9 @@ const cartTotalItems = document.getElementById("cartTotalItems");
 const closeCartBtn = document.getElementById("closeCartBtn");
 const checkoutCartBtn = document.getElementById("checkoutCartBtn");
 const cartDrawerBackdrop = document.querySelector(".cart-drawer-backdrop");
+let activeCategory = "All";
+let searchTerm = "";
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let activeMenuGroup = "Breakfast Menu";
 
@@ -492,23 +495,6 @@ function initMobileBottomNav() {
     });
   });
 }
-
-  window.addEventListener("scroll", () => {
-    const scrollY = window.scrollY;
-    const topSection = document.getElementById("top");
-    const menuSection = document.getElementById("menu-area");
-    const contactSection = document.getElementById("contact");
-
-    links.forEach(item => item.classList.remove("active"));
-
-    if (contactSection && scrollY >= contactSection.offsetTop - 120) {
-      mobileBottomNav.querySelector('[href="#contact"]')?.classList.add("active");
-    } else if (menuSection && scrollY >= menuSection.offsetTop - 120) {
-      mobileBottomNav.querySelector('[href="#menu-area"]')?.classList.add("active");
-    } else if (topSection) {
-      mobileBottomNav.querySelector('[href="#top"]')?.classList.add("active");
-    }
-  });
 }
 
 function initReveal() {
