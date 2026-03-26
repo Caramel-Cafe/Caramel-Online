@@ -680,7 +680,7 @@ function initMagneticButtons() {
   });
 }
 
-menuGrid.addEventListener("click", (event) => {
+menuGrid?.addEventListener("click", (event) => {
   // ADD TO CART
   const addBtn = event.target.closest(".add-cart-trigger");
   if (addBtn) {
