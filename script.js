@@ -269,6 +269,7 @@ function createCard(item) {
     <article class="menu-card reveal-card">
       <div class="menu-thumb">
         ${item.image ? `<img src="${item.image}" alt="${item.name}" class="menu-image">` : ""}
+        ${item.tag ? `<span class="menu-badge">${item.tag}</span>` : ""}
         <span class="thumb-badge">${item.category}</span>
       </div>
 
