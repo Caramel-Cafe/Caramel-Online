@@ -263,6 +263,23 @@
 
   <div class="order-picker-list" id="orderPickerList"></div>
 </div>
+  <div id="itemPopup" class="item-popup hidden">
+  <div class="item-popup-backdrop"></div>
+
+  <div class="item-popup-content">
+    <button class="popup-close">&times;</button>
+
+    <img id="popupImage" src="" alt="">
+
+    <h3 id="popupName"></h3>
+    <p id="popupPrice"></p>
+    <p id="popupDesc"></p>
+
+    <div class="popup-actions">
+      <button id="popupOrderBtn" class="primary-btn">Order Now</button>
+    </div>
+  </div>
+</div>
 <script src="menu.js" defer></script>
 <script src="script.js" defer></script>
 </body>
