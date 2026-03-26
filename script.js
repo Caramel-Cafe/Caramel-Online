@@ -320,16 +320,30 @@ function createCard(item) {
 
         <div class="menu-footer">
           <span class="menu-tag">${item.tag || ""}</span>
-          <button
-            class="menu-order-btn order-trigger"
-            type="button"
-            data-item="${item.name}"
-            data-category="${item.category}"
-            data-price="${item.price}"
-            data-description="${item.description}"
-          >
-            Order
-          </button>
+          <div style="display:grid; gap:8px; width:100%;">
+            <button
+              class="menu-order-btn add-cart-trigger"
+              type="button"
+              data-item="${item.name}"
+              data-category="${item.category}"
+              data-price="${item.price}"
+              data-description="${item.description}"
+              data-image="${item.image || ""}"
+            >
+              Add to Cart
+            </button>
+
+            <button
+              class="menu-order-btn order-trigger"
+              type="button"
+              data-item="${item.name}"
+              data-category="${item.category}"
+              data-price="${item.price}"
+              data-description="${item.description}"
+            >
+              Order
+            </button>
+          </div>
         </div>
       </div>
     </article>
@@ -353,18 +367,8 @@ function renderMenu() {
   }
 
   emptyState.classList.add("hidden");
-  menuGrid.innerHTML = filtered.map((item, index) => createCard(item, index)).join("");
+  menuGrid.innerHTML = filtered.map(item => createCard(item)).join("");
 
-document.querySelectorAll(".order-trigger").forEach(btn => {
-  btn.addEventListener("click", () => {
-    openOrderForm({
-      name: btn.dataset.item,
-      category: btn.dataset.category,
-      price: btn.dataset.price,
-      description: btn.dataset.description
-    });
-  });
-});
   requestAnimationFrame(() => {
     document.querySelectorAll(".menu-card").forEach((card, index) => {
       setTimeout(() => card.classList.add("is-visible"), index * 35);
@@ -373,6 +377,7 @@ document.querySelectorAll(".order-trigger").forEach(btn => {
     initTiltCards();
   });
 }
+  
 
 function applyTheme(theme) {
   const isLight = theme === "light";
@@ -433,20 +438,6 @@ function initMobileBottomNav() {
       link.classList.add("active");
     });
   });
-
-cartFab?.addEventListener("click", openCart);
-closeCartBtn?.addEventListener("click", closeCart);
-cartDrawerBackdrop?.addEventListener("click", closeCart);
-checkoutCartBtn?.addEventListener("click", checkoutCart);
-
-cartItems?.addEventListener("click", event => {
-  const button = event.target.closest("[data-action]");
-  if (!button) return;
-
-  const action = button.dataset.action;
-  const index = Number(button.dataset.index);
-  handleCartAction(action, index);
-});
 
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
@@ -650,14 +641,59 @@ function initMagneticButtons() {
   });
 }
 
-searchInput.addEventListener("input", e => {
+menuGrid.addEventListener("click", (event) => {
+  // ADD TO CART
+  const addBtn = event.target.closest(".add-cart-trigger");
+  if (addBtn) {
+    const item = {
+      name: addBtn.dataset.item,
+      category: addBtn.dataset.category,
+      price: addBtn.dataset.price,
+      description: addBtn.dataset.description,
+      image: addBtn.dataset.image,
+      quantity: 1,
+      accompaniment: "",
+      note: ""
+    };
+
+    addToCart(item);
+    return;
+  }
+
+  // ORDER BUTTON
+  const orderBtn = event.target.closest(".order-trigger");
+  if (orderBtn) {
+    openOrderForm({
+      name: orderBtn.dataset.item,
+      category: orderBtn.dataset.category,
+      price: orderBtn.dataset.price,
+      description: orderBtn.dataset.description
+    });
+  }
+});
+
+cartFab?.addEventListener("click", openCart);
+closeCartBtn?.addEventListener("click", closeCart);
+cartDrawerBackdrop?.addEventListener("click", closeCart);
+checkoutCartBtn?.addEventListener("click", checkoutCart);
+
+cartItems?.addEventListener("click", event => {
+  const button = event.target.closest("[data-action]");
+  if (!button) return;
+
+  const action = button.dataset.action;
+  const index = Number(button.dataset.index);
+  handleCartAction(action, index);
+});
+
+searchInput?.addEventListener("input", e => {
   searchTerm = e.target.value;
   renderMenu();
 });
 
-openSidebarBtn.addEventListener("click", openSidebar);
-closeSidebarBtn.addEventListener("click", closeSidebar);
-sidebarOverlay.addEventListener("click", closeSidebar);
+openSidebarBtn?.addEventListener("click", openSidebar);
+closeSidebarBtn?.addEventListener("click", closeSidebar);
+sidebarOverlay?.addEventListener("click", closeSidebar);
 
 document.querySelectorAll(".sidebar-nav a").forEach(link => {
   link.addEventListener("click", closeSidebar);
@@ -677,3 +713,5 @@ initTheme();
 initReveal();
 initMagneticButtons();
 initMobileBottomNav();
+
+updateCartUI();
