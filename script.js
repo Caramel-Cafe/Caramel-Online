@@ -81,8 +81,8 @@ function openItemPopup(item) {
 function closeItemPopup() {
   itemPopup.classList.add("hidden");
 }
-popupClose.addEventListener("click", closeItemPopup);
-popupBackdrop.addEventListener("click", closeItemPopup);
+popupClose?.addEventListener("click", closeItemPopup);
+popupBackdrop?.addEventListener("click", closeItemPopup);
 
 function createChips() {
   const categories = getCategories(menuItems);
@@ -277,12 +277,12 @@ function continueOrderFlow() {
   const accompaniment = orderAccompaniment.value || "None";
   const note = orderNote.value.trim();
 
-  preparedOrderDetails = {
-    ...selectedOrderItem,
-    quantity,
-    accompaniment,
-    note
-  };
+preparedOrderDetails = {
+  ...selectedOrderItem,
+  quantity,
+  accompaniment,
+  note
+};
 
   closeOrderForm();
 
@@ -294,7 +294,7 @@ function continueOrderFlow() {
 function createCard(item) {
   return `
     <article class="menu-card reveal-card">
-      <div class="menu-card" data-name="${item.name}">
+      <div class="menu-thumb">
         ${item.image ? `<img src="${item.image}" alt="${item.name}" class="menu-image">` : ""}
         ${item.tag ? `<span class="menu-badge">${item.tag}</span>` : ""}
         <span class="thumb-badge">${item.category}</span>
@@ -310,17 +310,17 @@ function createCard(item) {
         <p class="menu-desc">${item.description}</p>
 
         <div class="menu-footer">
-          <span class="menu-tag">${item.tag}</span>
-<button
-  class="menu-order-btn order-trigger"
-  type="button"
-  data-item="${item.name}"
-  data-category="${item.category}"
-  data-price="${item.price}"
-  data-description="${item.description}"
->
-  Order
-</button>
+          <span class="menu-tag">${item.tag || ""}</span>
+          <button
+            class="menu-order-btn order-trigger"
+            type="button"
+            data-item="${item.name}"
+            data-category="${item.category}"
+            data-price="${item.price}"
+            data-description="${item.description}"
+          >
+            Order
+          </button>
         </div>
       </div>
     </article>
