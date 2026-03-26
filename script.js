@@ -47,9 +47,18 @@ const popupDesc = document.getElementById("popupDesc");
 const popupOrderBtn = document.getElementById("popupOrderBtn");
 const popupClose = document.querySelector(".popup-close");
 const popupBackdrop = document.querySelector(".item-popup-backdrop");
+const cartFab = document.getElementById("cartFab");
+const cartCount = document.getElementById("cartCount");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartItems = document.getElementById("cartItems");
+const cartTotalItems = document.getElementById("cartTotalItems");
+const closeCartBtn = document.getElementById("closeCartBtn");
+const checkoutCartBtn = document.getElementById("checkoutCartBtn");
+const cartDrawerBackdrop = document.querySelector(".cart-drawer-backdrop");
 
 let activeCategory = "All";
 let searchTerm = "";
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function getCategories(items) {
   return ["All", ...new Set(items.map(item => item.category))];
