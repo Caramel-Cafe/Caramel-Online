@@ -384,5 +384,319 @@ const menuItems = [
     price: "UGX 30,000",
     description: "chickpeas, lentils, zucchini, onions, carrots & fresh herbs",
     image: "images/NO FOOD PIC.webp"
+  },
+  // ================= COFFEE =================
+  {
+    category: "Coffee",
+    name: "Espresso",
+    price: "Single UGX 7,000 / Double UGX 9,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Macchiato",
+    price: "Single UGX 8,000 / Double UGX 10,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Cappuccino",
+    price: "Single UGX 12,000 / Double UGX 15,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Flat White",
+    price: "Single UGX 8,000 / Double UGX 9,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Latte",
+    price: "Single UGX 12,000 / Double UGX 13,000",
+    description: "",
+    image: "images/Latte.jpg"
+  },
+  {
+    category: "Coffee",
+    name: "Affogato",
+    price: "UGX 14,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Americano",
+    price: "UGX 10,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Frappuccino",
+    price: "UGX 19,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Baileys Cappuccino",
+    price: "UGX 22,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Caramel Latte",
+    price: "UGX 17,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Hazelnut Latte",
+    price: "UGX 17,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Vanilla Latte",
+    price: "UGX 17,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Cinnamon Latte",
+    price: "UGX 17,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Iced Latte",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/Iced Latte.jpg"
+  },
+  {
+    category: "Coffee",
+    name: "Cafe Mocha",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "White Mocha",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Iced Mocha",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "Hot Chocolate",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/Hot Chocolate.jpg"
+  },
+  {
+    category: "Coffee",
+    name: "House Coffee",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "White Hot Chocolate",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Coffee",
+    name: "A Glass Of Milk",
+    price: "UGX 9,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+
+  // ================= TEA =================
+  {
+    category: "Tea",
+    name: "Black Tea",
+    price: "UGX 10,000",
+    description: "",
+    image: "images/Black Tea.jpg"
+  },
+  {
+    category: "Tea",
+    name: "English Tea",
+    price: "UGX 11,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Dawa Tea",
+    price: "UGX 11,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Turmeric Tea",
+    price: "UGX 11,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Lemon Tea",
+    price: "UGX 11,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Black Tea Spiced",
+    price: "UGX 11,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Iced Tea",
+    price: "UGX 13,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "African or Milk Tea",
+    price: "UGX 12,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Herbal Camomile Tea",
+    price: "UGX 12,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Herbal Earl Grey Tea",
+    price: "UGX 12,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Herbal Green Tea",
+    price: "UGX 12,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Herbal Lemon Tea",
+    price: "UGX 12,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Herbal Peppermint Tea",
+    price: "UGX 12,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Tea",
+    name: "Herbal Freshmint Tea",
+    price: "UGX 12,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+
+  // ================= SMOOTHIES =================
+  {
+    category: "Smoothies",
+    name: "Booster",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Pinacolada",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Mango Madnes",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Tropical",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Super Veggie",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Creamy Butter",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Glowing Skin",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Super Healthy 1",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
+  },
+  {
+    category: "Smoothies",
+    name: "Super Healthy 2",
+    price: "UGX 21,000",
+    description: "",
+    image: "images/NO DRINKS.webp"
   }
+  
 ];
