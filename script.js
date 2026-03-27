@@ -55,6 +55,7 @@ const cartTotalItems = document.getElementById("cartTotalItems");
 const closeCartBtn = document.getElementById("closeCartBtn");
 const checkoutCartBtn = document.getElementById("checkoutCartBtn");
 const cartDrawerBackdrop = document.querySelector(".cart-drawer-backdrop");
+let activeMenuGroup = "Main Menu";
 let activeCategory = "All";
 let searchTerm = "";
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -97,11 +98,7 @@ const menuGroups = {
 
 function getCategories(items) {
   const allowedCategories = menuGroups[activeMenuGroup] || [];
-  const visibleCategories = items
-    .map(item => item.category)
-    .filter(category => allowedCategories.includes(category));
-
-  return ["All", ...new Set(visibleCategories)];
+  return ["All", ...allowedCategories];
 }
 
 qtyMinus?.addEventListener("click", () => {
@@ -138,11 +135,10 @@ function createChips() {
 
   chipsWrap.innerHTML = categories
     .map(
-      (category, index) => `
+      category => `
         <button
           class="${category === activeCategory ? "chip active" : "chip"}"
           data-category="${category}"
-          style="animation-delay:${index * 0.04}s"
         >
           ${category}
         </button>
@@ -488,9 +484,9 @@ function initMobileBottomNav() {
       renderMenu();
       syncMobileCategoryChips();
 
-      document.getElementById("menu-area")?.scrollIntoView({
+      document.getElementById("categoryBar")?.scrollIntoView({
         behavior: "smooth",
-        block: "start"
+        block: "nearest"
       });
     });
   });
