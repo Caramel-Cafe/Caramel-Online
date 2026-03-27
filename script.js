@@ -87,7 +87,8 @@ const mobileNavConfig = [
   { label: "Main", group: "Main Menu" },
   { label: "Drinks", group: "Drinks Menu" },
   { label: "Breakfast", group: "Breakfast Menu" },
-  { label: "Kids", group: "Kids Menu" }
+  { label: "Kids", group: "Kids Menu" },
+  { label: "Bakery", group: "Bakery" }
 ];
 
 const accompanimentOptions = {
