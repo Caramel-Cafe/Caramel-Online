@@ -1404,6 +1404,101 @@ body.light-mode .cart-branch select option {
   background: #ffffff;
   color: #21150d;
 }
+body.light-mode .cart-drawer-backdrop {
+  background: rgba(120, 95, 70, 0.18);
+}
+
+body.light-mode .cart-drawer-panel {
+  background:
+    radial-gradient(circle at top right, rgba(212, 154, 97, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,239,231,0.96));
+  color: #21150d;
+  border-left: 1px solid rgba(97, 67, 45, 0.08);
+  box-shadow: -18px 0 44px rgba(72, 44, 25, 0.12);
+}
+
+body.light-mode .cart-header h3 {
+  color: #21150d;
+}
+
+body.light-mode .cart-close {
+  color: var(--accent);
+}
+
+body.light-mode .cart-item {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.72)),
+    rgba(255,255,255,0.82);
+  border: 1px solid rgba(97, 67, 45, 0.08);
+  box-shadow: 0 8px 24px rgba(72, 44, 25, 0.06);
+}
+
+body.light-mode .cart-item-name {
+  color: #21150d;
+}
+
+body.light-mode .cart-item-meta {
+  color: #6f6259;
+}
+
+body.light-mode .cart-qty-btn,
+body.light-mode .cart-remove-btn {
+  border: 1px solid rgba(97, 67, 45, 0.1);
+  background: rgba(255,255,255,0.82);
+  color: #21150d;
+}
+
+body.light-mode .cart-remove-btn {
+  color: #b14f4f;
+}
+
+body.light-mode .cart-qty-btn:hover,
+body.light-mode .cart-remove-btn:hover {
+  background: rgba(255,255,255,0.96);
+}
+
+body.light-mode .cart-footer {
+  border-top: 1px solid rgba(97, 67, 45, 0.08);
+}
+
+body.light-mode .cart-summary,
+body.light-mode .cart-summary strong,
+body.light-mode .cart-branch label {
+  color: #21150d;
+}
+
+body.light-mode .cart-note-input {
+  border-color: rgba(97, 67, 45, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.82));
+  color: #21150d;
+}
+
+body.light-mode .cart-note-input::placeholder {
+  color: #8a7a6d;
+}
+
+body.light-mode .secondary-btn {
+  background: rgba(255,255,255,0.82);
+  color: #21150d;
+  border-color: rgba(97, 67, 45, 0.08);
+}
+
+body.light-mode .secondary-btn:hover {
+  background: rgba(255,255,255,0.96);
+}
+
+body.light-mode .cart-branch select {
+  border-color: rgba(97, 67, 45, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.82));
+  color: #21150d;
+}
+
+body.light-mode .cart-branch select option {
+  background: #ffffff;
+  color: #21150d;
+}
 
 /* mobile bottom nav */
 .mobile-bottom-nav {
@@ -1533,9 +1628,6 @@ body.light-mode .footer p {
 }
 
 body.light-mode .menu-tag,
-body.light-mode .cart-item-meta {
-  color: #5d5048;
-}
 
 body.light-mode .mobile-category-dropdown {
   background:
