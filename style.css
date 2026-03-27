@@ -1566,6 +1566,34 @@ body.light-mode .cart-branch select option {
   border-color: transparent;
 }
 
+body.light-mode .mobile-category-dropdown {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.88)),
+    rgba(255,255,255,0.94);
+  border: 1px solid rgba(97, 67, 45, 0.08);
+  box-shadow: 0 18px 40px rgba(72, 44, 25, 0.10);
+}
+
+body.light-mode .mobile-category-chip {
+  border: 1px solid rgba(97, 67, 45, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76)),
+    rgba(255,255,255,0.82);
+  color: #21150d;
+}
+
+body.light-mode .mobile-category-chip:hover {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.84)),
+    rgba(255,255,255,0.9);
+}
+
+body.light-mode .mobile-category-chip.active {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #1a120b;
+  border-color: transparent;
+}
+
 /* reveal */
 .reveal {
   opacity: 0;
@@ -1628,12 +1656,6 @@ body.light-mode .footer p {
 }
 
 body.light-mode .menu-tag,
-
-body.light-mode .mobile-category-dropdown {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.88)),
-    rgba(255,255,255,0.94);
-}
 
 /* animations */
 @keyframes floatY {
@@ -1745,6 +1767,29 @@ body.light-mode .mobile-category-dropdown {
   body {
     padding-bottom: 110px;
   }
+
+  body.light-mode .mobile-bottom-nav {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,239,231,0.96));
+  border: 1px solid rgba(97, 67, 45, 0.08);
+  box-shadow: 0 12px 30px rgba(72, 44, 25, 0.10);
+}
+
+body.light-mode .mobile-bottom-link {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.72)),
+    rgba(255,255,255,0.8);
+  color: #21150d;
+  border: 1px solid rgba(97, 67, 45, 0.08);
+}
+
+body.light-mode .mobile-bottom-link.active,
+body.light-mode .mobile-bottom-link:hover {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #1a120b;
+  border-color: transparent;
+}
+  
 }
 
 @media (max-width: 640px) {
