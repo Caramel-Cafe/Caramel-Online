@@ -62,10 +62,7 @@ const menuGroups = {
     "Pasta",
     "Burgers",
     "Sandwich",
-    "Pizzeria",
-    "Bakery",
-    "Cookies",
-    "Pastries"
+    "Pizzeria"
   ],
   "Breakfast Menu": ["Breakfast Menu"],
   "Kids Menu": ["Kids Menu"],
@@ -79,6 +76,10 @@ const menuGroups = {
     "Soft Drinks",
     "Mocktails",
     "Cocktails"
+  ],
+    "Bakery": [
+    "Cookies",
+    "Pastries"
   ]
 };
 
@@ -100,153 +101,6 @@ const accompanimentOptions = {
   Default: ["None", "Takeaway"]
 };
 
-const menuItems = [
-  {
-    name: "Espresso",
-    category: "Coffee",
-    price: 5000,
-    description: "Rich, bold, and smooth with a concentrated coffee finish.",
-    tag: "Hot favorite",
-    image: "images/espresso.jpg"
-  },
-  {
-    name: "Cappuccino",
-    category: "Coffee",
-    price: 7500,
-    description: "Creamy foam and balanced espresso for a soft café classic.",
-    tag: "Popular",
-    image: "images/cappuccino.jpg"
-  },
-  {
-    name: "Iced Latte",
-    category: "Coffee",
-    price: 9000,
-    description: "Cold, smooth espresso with milk over ice.",
-    tag: "Refreshing",
-    image: "images/iced-latte.jpg"
-  },
-  {
-    name: "African Tea",
-    category: "Tea",
-    price: 6000,
-    description: "Comforting spiced tea prepared fresh and served hot.",
-    tag: "Classic",
-    image: "images/african-tea.jpg"
-  },
-  {
-    name: "Mango Juice",
-    category: "Fresh Juice",
-    price: 9000,
-    description: "Fresh tropical mango juice with a naturally sweet finish.",
-    tag: "Fresh",
-    image: "images/mango-juice.jpg"
-  },
-  {
-    name: "Strawberry Smoothie",
-    category: "Smoothies",
-    price: 11000,
-    description: "Creamy blended strawberry smoothie, cool and sweet.",
-    tag: "Best seller",
-    image: "images/strawberry-smoothie.jpg"
-  },
-  {
-    name: "Chicken Burger",
-    category: "Burgers",
-    price: 18000,
-    description: "Juicy chicken burger with crispy lettuce and house sauce.",
-    tag: "Best seller",
-    image: "images/chicken-burger.jpg"
-  },
-  {
-    name: "Beef Burger",
-    category: "Burgers",
-    price: 19000,
-    description: "Tender beef burger layered with sauce and fresh salad.",
-    tag: "Hearty",
-    image: "images/beef-burger.jpg"
-  },
-  {
-    name: "Margherita Pizza",
-    category: "Pizzeria",
-    price: 28000,
-    description: "Classic pizza with cheese, tomato base, and soft crust.",
-    tag: "Cheesy",
-    image: "images/margherita-pizza.jpg"
-  },
-  {
-    name: "Chicken Alfredo Pasta",
-    category: "Pasta",
-    price: 24000,
-    description: "Creamy pasta tossed with tender chicken and rich sauce.",
-    tag: "Creamy",
-    image: "images/chicken-alfredo.jpg"
-  },
-  {
-    name: "Greek Salad",
-    category: "Fresh Salads",
-    price: 16000,
-    description: "Fresh salad with crunchy vegetables and light dressing.",
-    tag: "Healthy",
-    image: "images/greek-salad.jpg"
-  },
-  {
-    name: "Fish Fillet",
-    category: "Main Course (fish)",
-    price: 26000,
-    description: "Golden fish fillet served with a delicious savory finish.",
-    tag: "Chef pick",
-    image: "images/fish-fillet.jpg"
-  },
-  {
-    name: "Chicken Wings",
-    category: "Starters",
-    price: 17000,
-    description: "Tender wings glazed with bold flavor and a juicy bite.",
-    tag: "Starter",
-    image: "images/chicken-wings.jpg"
-  },
-  {
-    name: "Pancake Breakfast",
-    category: "Breakfast Menu",
-    price: 15000,
-    description: "Soft pancakes served warm for a sweet breakfast treat.",
-    tag: "Morning",
-    image: "images/pancakes.jpg"
-  },
-  {
-    name: "Kids Burger",
-    category: "Kids Menu",
-    price: 12000,
-    description: "Small, tasty burger perfect for little appetites.",
-    tag: "Kids",
-    image: "images/kids-burger.jpg"
-  },
-  {
-    name: "Chocolate Cookie",
-    category: "Cookies",
-    price: 4000,
-    description: "Soft baked cookie with rich chocolate flavor.",
-    tag: "Sweet",
-    image: "images/chocolate-cookie.jpg"
-  },
-  {
-    name: "Croissant",
-    category: "Pastries",
-    price: 5500,
-    description: "Buttery and flaky pastry, warm and light.",
-    tag: "Freshly baked",
-    image: "images/croissant.jpg"
-  },
-  {
-    name: "Chocolate Cake Slice",
-    category: "Bakery",
-    price: 8000,
-    description: "Soft chocolate cake slice with a rich dessert finish.",
-    tag: "Dessert",
-    image: "images/chocolate-cake.jpg"
-  }
-];
-
 let activeMenuGroup = "Main Menu";
 let activeCategory = "All";
 let activeMobileButton = null;
@@ -255,7 +109,7 @@ let cart = JSON.parse(localStorage.getItem("caramel-cart")) || [];
 let selectedOrderItem = null;
 
 function formatPrice(value) {
-  return `${Number(value).toLocaleString()} UGX`;
+  return `UGX ${Number(value).toLocaleString()}`;
 }
 
 function getCategoriesForGroup(groupName) {
