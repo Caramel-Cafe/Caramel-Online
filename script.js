@@ -4,6 +4,7 @@ const searchInput = document.getElementById("searchInput");
 const emptyState = document.getElementById("emptyState");
 const mobileCategoryChips = document.getElementById("mobileCategoryChips");
 const mobileCategoryDropdown = document.getElementById("mobileCategoryDropdown");
+let activeBottomButton = null;
 const mobileBottomNav = document.getElementById("mobileBottomNav");
 const orderFormModal = document.getElementById("orderFormModal");
 const orderFormBackdrop = document.getElementById("orderFormBackdrop");
@@ -29,7 +30,7 @@ const accompanimentOptions = {
   Juice: ["None", "No ice", "Less sugar", "Takeaway"],
   Default: ["None", "Takeaway"]
 };
-
+const desktopMenuGroups = document.getElementById("desktopMenuGroups");
 const qtyMinus = document.getElementById("qtyMinus");
 const qtyPlus = document.getElementById("qtyPlus");
 const body = document.body;
@@ -148,6 +149,26 @@ function createChips() {
   chipsWrap.querySelectorAll(".chip").forEach(chip => {
     chip.addEventListener("click", () => {
       activeCategory = chip.dataset.category;
+      createChips();
+      renderMenu();
+      syncMobileCategoryChips();
+    });
+  });
+}
+
+function initDesktopMenuGroups() {
+  if (!desktopMenuGroups) return;
+
+  const buttons = desktopMenuGroups.querySelectorAll(".desktop-menu-group-btn");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      buttons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      activeMenuGroup = button.dataset.menuGroup;
+      activeCategory = "All";
+
       createChips();
       renderMenu();
       syncMobileCategoryChips();
@@ -473,11 +494,13 @@ function initMobileBottomNav() {
 
   links.forEach(link => {
     link.addEventListener("click", () => {
-      const isAlreadyActive = link.classList.contains("active");
+      const sameButton = activeBottomButton === link;
+      const dropdownWasOpen = mobileCategoryDropdown && !mobileCategoryDropdown.classList.contains("hidden");
 
       links.forEach(item => item.classList.remove("active"));
       link.classList.add("active");
 
+      activeBottomButton = link;
       activeMenuGroup = link.dataset.menuGroup;
       activeCategory = "All";
 
@@ -487,13 +510,29 @@ function initMobileBottomNav() {
 
       if (!mobileCategoryDropdown) return;
 
-      if (isAlreadyActive && !mobileCategoryDropdown.classList.contains("hidden")) {
+      const rect = link.getBoundingClientRect();
+      const navRect = mobileBottomNav.getBoundingClientRect();
+
+      mobileCategoryDropdown.style.left = `${rect.left - navRect.left}px`;
+      mobileCategoryDropdown.style.width = `${rect.width}px`;
+
+      if (sameButton && dropdownWasOpen) {
         mobileCategoryDropdown.classList.add("hidden");
       } else {
         mobileCategoryDropdown.classList.remove("hidden");
       }
     });
   });
+
+  document.addEventListener("click", e => {
+    const clickedBottomNav = e.target.closest("#mobileBottomNav");
+    const clickedDropdown = e.target.closest("#mobileCategoryDropdown");
+
+    if (!clickedBottomNav && !clickedDropdown) {
+      mobileCategoryDropdown?.classList.add("hidden");
+    }
+  });
+}
 
   document.addEventListener("click", e => {
     const clickedBottomNav = e.target.closest("#mobileBottomNav");
@@ -760,6 +799,7 @@ syncMobileCategoryChips();
 initTheme();
 initReveal();
 initMagneticButtons();
+initDesktopMenuGroups();
 initMobileBottomNav();
 
 updateCartUI();
