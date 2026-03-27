@@ -1325,13 +1325,18 @@ body.light-mode .glass-soft {
   left: 50%;
   bottom: calc(78px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%) translateY(14px);
+
   width: min(560px, calc(100% - 24px));
   border-radius: 22px;
-  padding: 12px;
+  padding: 14px;
+
+  /* 🔥 DARK GLASS STYLE */
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76)),
-    rgba(255,255,255,0.85);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+    linear-gradient(180deg, rgba(12, 18, 28, 0.96), rgba(8, 12, 20, 0.96));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  backdrop-filter: blur(18px);
+
   z-index: 9998;
   opacity: 0;
   pointer-events: none;
@@ -1350,18 +1355,30 @@ body.light-mode .glass-soft {
   gap: 8px;
 }
 
+.mobile-category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .mobile-category-chip {
-  border: none;
-  background: #f3f3f3;
-  color: #111;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
   padding: 10px 14px;
   border-radius: 999px;
   font-weight: 700;
+  backdrop-filter: blur(10px);
+}
+
+.mobile-category-chip:hover {
+  background: rgba(255,255,255,0.08);
 }
 
 .mobile-category-chip.active {
-  background: #c49b63;
-  color: #111;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #1a120b;
+  border-color: transparent;
 }
 
 /* reveal */
