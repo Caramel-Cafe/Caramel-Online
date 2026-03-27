@@ -534,16 +534,6 @@ function initMobileBottomNav() {
   });
 }
 
-  document.addEventListener("click", e => {
-    const clickedBottomNav = e.target.closest("#mobileBottomNav");
-    const clickedDropdown = e.target.closest("#mobileCategoryDropdown");
-
-    if (!clickedBottomNav && !clickedDropdown) {
-      mobileCategoryDropdown?.classList.add("hidden");
-    }
-  });
-}
-
 function initReveal() {
   const revealEls = document.querySelectorAll(".reveal");
 
