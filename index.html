@@ -231,21 +231,26 @@
 
       <div id="cartItems" class="cart-items"></div>
 
-      <div class="cart-footer">
-        <div class="cart-summary">
-          <div><strong>Total Items:</strong> <span id="cartTotalItems">0</span></div>
-          <div><strong>Total:</strong> <span id="cartTotalPrice">0 UGX</span></div>
-        </div>
-
-        <div class="cart-footer-actions">
-          <button id="clearCartBtn" class="secondary-btn" type="button">Clear Cart</button>
-          <button id="checkoutCartBtn" class="primary-btn" type="button">
-            Checkout on WhatsApp
-          </button>
-        </div>
-      </div>
-    </div>
+<div class="cart-footer">
+  <div class="cart-summary">
+    <div><strong>Total Items:</strong> <span id="cartTotalItems">0</span></div>
+    <div><strong>Total:</strong> <span id="cartTotalPrice">0 UGX</span></div>
   </div>
+
+  <div class="cart-branch">
+    <label for="cartBranchSelect">Branch</label>
+    <select id="cartBranchSelect">
+      <option value="">Select branch</option>
+    </select>
+  </div>
+
+  <div class="cart-footer-actions">
+    <button id="clearCartBtn" class="secondary-btn" type="button">Clear Cart</button>
+    <button id="checkoutCartBtn" class="primary-btn" type="button">
+      Checkout on WhatsApp
+    </button>
+  </div>
+</div>
 
   <!-- Order Modal -->
   <div class="order-form-backdrop hidden" id="orderFormBackdrop"></div>
