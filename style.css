@@ -758,8 +758,8 @@ body.light-mode .glass-soft {
   display: flex;
   gap: 10px;
 
-  flex-wrap: nowrap !important;   /* 🚨 force no wrapping */
-  overflow-x: auto;
+  flex-wrap: nowrap;        /* ✅ force one line */
+  overflow-x: auto;         /* ✅ allow scroll */
   overflow-y: hidden;
 
   white-space: nowrap;
@@ -767,16 +767,11 @@ body.light-mode .glass-soft {
   margin: 0 0 16px;
   padding-bottom: 6px;
 
-  scrollbar-width: none;
+  scrollbar-width: none;    /* Firefox */
 }
 
 .desktop-menu-groups::-webkit-scrollbar {
-  display: none;
-}
-
-.desktop-menu-group-btn {
-  flex: 0 0 auto !important;  /* 🚨 prevents shrinking */
-  min-width: max-content;     /* 🚨 keeps full text */
+  display: none;            /* Chrome */
 }
 
 .desktop-menu-group-btn {
@@ -791,10 +786,6 @@ body.light-mode .glass-soft {
 
 .desktop-menu-groups {
   mask-image: linear-gradient(to right, black 85%, transparent);
-}
-
-.desktop-menu-groups {
-  scroll-behavior: smooth;
 }
 
 .desktop-menu-group-btn.active {
@@ -847,20 +838,17 @@ body.light-mode .glass-soft {
 
 .category-chips {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 10px;
-  align-items: stretch;
 }
 
 .chip {
-  width: 100%;
-  text-align: left;
   border: 1px solid var(--border);
   background: rgba(255,255,255,0.04);
   color: var(--text);
-  padding: 12px 16px;
-  border-radius: 18px;
-  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 500;
 }
 
 .chip:hover {
