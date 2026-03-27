@@ -756,17 +756,35 @@ body.light-mode .glass-soft {
 .desktop-menu-groups {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
+
+  flex-wrap: nowrap;        /* ✅ force one line */
+  overflow-x: auto;         /* ✅ allow scroll */
+  overflow-y: hidden;
+
+  white-space: nowrap;
+
   margin: 0 0 16px;
+  padding-bottom: 6px;
+
+  scrollbar-width: none;    /* Firefox */
+}
+
+.desktop-menu-groups::-webkit-scrollbar {
+  display: none;            /* Chrome */
 }
 
 .desktop-menu-group-btn {
+  flex: 0 0 auto;   /* ✅ prevents shrinking */
   border: 1px solid var(--border);
   background: rgba(255,255,255,0.04);
   color: var(--text);
   border-radius: 999px;
   padding: 10px 16px;
   font-weight: 700;
+}
+
+.desktop-menu-groups {
+  mask-image: linear-gradient(to right, black 85%, transparent);
 }
 
 .desktop-menu-group-btn.active {
