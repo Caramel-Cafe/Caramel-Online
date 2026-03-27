@@ -2543,7 +2543,34 @@ body.light-mode .cart-footer {
   display: none;
 }
 
+.desktop-menu-groups {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 16px;
+}
+
+.desktop-menu-group-btn {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.desktop-menu-group-btn.active {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #1a120b;
+  box-shadow: 0 8px 18px rgba(200, 132, 66, 0.22);
+}
+
 @media (max-width: 820px) {
+  .desktop-menu-groups {
+    display: none;
+  }
+
   .mobile-bottom-nav {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -2595,8 +2622,10 @@ body.light-mode .cart-footer {
   }
 
   .mobile-category-dropdown {
+    position: absolute;
+    bottom: 0;
     pointer-events: auto;
-    border-radius: 20px 20px 16px 16px;
+    border-radius: 18px;
     border: 1px solid var(--border);
     background:
       linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
@@ -2605,17 +2634,30 @@ body.light-mode .cart-footer {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     overflow: hidden;
-    max-height: 52vh;
+    max-height: 50vh;
+    min-width: 180px;
+    transform-origin: bottom center;
+    animation: mobileMenuPopup 0.18s ease;
   }
 
   .mobile-category-dropdown.hidden {
     display: none;
   }
 
+  @keyframes mobileMenuPopup {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
   .mobile-category-list {
     display: grid;
-    gap: 0;
-    max-height: 52vh;
+    max-height: 50vh;
     overflow-y: auto;
   }
 
@@ -2624,11 +2666,11 @@ body.light-mode .cart-footer {
     border: none;
     border-radius: 0;
     text-align: left;
-    padding: 18px 20px;
+    padding: 14px 16px;
     background: transparent;
     border-bottom: 1px solid rgba(255,255,255,0.06);
     color: var(--text);
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     font-weight: 600;
   }
 
@@ -2638,7 +2680,6 @@ body.light-mode .cart-footer {
 
   .mobile-category-list .chip.active {
     background: rgba(212, 154, 97, 0.18);
-    color: var(--text);
   }
 
   .category-chips {
@@ -2650,15 +2691,9 @@ body.light-mode .cart-footer {
   }
 }
 
-@media (max-width: 480px) {
-  .mobile-bottom-link {
-    font-size: 0.74rem;
-    min-height: 44px;
-    padding: 0 4px;
-  }
-
-  .mobile-category-list .chip {
-    padding: 16px 16px;
-    font-size: 0.94rem;
+@media (min-width: 821px) {
+  .mobile-bottom-nav,
+  .mobile-category-wrap {
+    display: none !important;
   }
 }
