@@ -347,7 +347,7 @@ function createCard(item) {
             : ""
         }
         ${item.tag ? `<span class="menu-badge">${item.tag}</span>` : ""}
-        <span class="thumb-badge">${item.category}</span>
+        
       </div>
 
       <div class="menu-body">
