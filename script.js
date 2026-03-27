@@ -24,6 +24,8 @@ const cartDrawer = document.getElementById("cartDrawer");
 const cartItems = document.getElementById("cartItems");
 const cartTotalItems = document.getElementById("cartTotalItems");
 const cartTotalPrice = document.getElementById("cartTotalPrice");
+const cartBranchSelect = document.getElementById("cartBranchSelect");
+let selectedCartBranch = localStorage.getItem("caramel-cart-branch") || "";
 const closeCartBtn = document.getElementById("closeCartBtn");
 const checkoutCartBtn = document.getElementById("checkoutCartBtn");
 const clearCartBtn = document.getElementById("clearCartBtn");
@@ -152,6 +154,26 @@ function handleThemeToggle(container) {
     if (!button) return;
     applyTheme(button.dataset.themeBtn);
   });
+}
+
+function populateCartBranches() {
+  if (!cartBranchSelect) return;
+
+  cartBranchSelect.innerHTML = `
+    <option value="">Select branch</option>
+    ${orderContacts
+      .map(contact => `
+        <option value="${contact.name}" ${selectedCartBranch === contact.name ? "selected" : ""}>
+          ${contact.name}
+        </option>
+      `)
+      .join("")}
+  `;
+}
+
+function saveCartBranch(value) {
+  selectedCartBranch = value;
+  localStorage.setItem("caramel-cart-branch", value);
 }
 
 function openSidebar() {
@@ -461,7 +483,7 @@ function clearCart() {
 function updateCartUI() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPriceValue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+  
   cartCount.textContent = totalItems;
   cartTotalItems.textContent = totalItems;
   cartTotalPrice.textContent = formatPrice(totalPriceValue);
@@ -508,6 +530,7 @@ cartItems.innerHTML = cart
     </div>
   `)
   .join("");
+  populateCartBranches();
 }
 
 function updateCartNote(index, value) {
@@ -620,10 +643,19 @@ function submitSingleOrder() {
 function checkoutCart() {
   if (!cart.length) return;
 
-  const defaultContact = orderContacts[0];
+  if (!selectedCartBranch) {
+    alert("Please select a branch before checkout.");
+    return;
+  }
+
+  const branchContact = orderContacts.find(contact => contact.name === selectedCartBranch);
+  if (!branchContact) {
+    alert("Selected branch is invalid.");
+    return;
+  }
 
   const messageLines = [
-    `Hello ${defaultContact.name}, I would like to order:`,
+    `Hello ${branchContact.name}, I would like to order:`,
     ""
   ];
 
@@ -633,7 +665,7 @@ function checkoutCart() {
       `Category: ${item.category}`,
       `Price: ${formatPrice(item.price)}`,
       `Quantity: ${item.quantity}`,
-      `Branch: ${item.branch || "Not specified"}`,
+      `Branch: ${selectedCartBranch}`,
       `Accompaniment: ${item.accompaniment || "None"}`,
       `Special instructions: ${item.note || "None"}`,
       ""
@@ -646,7 +678,7 @@ function checkoutCart() {
   );
 
   const message = encodeURIComponent(messageLines.join("\n"));
-  window.open(`https://wa.me/${defaultContact.number}?text=${message}`, "_blank");
+  window.open(`https://wa.me/${branchContact.number}?text=${message}`, "_blank");
 }
 
 function initReveal() {
@@ -705,6 +737,10 @@ cartItems?.addEventListener("input", event => {
 qtyMinus?.addEventListener("click", () => {
   const current = parseInt(orderQuantity.value || "1", 10);
   orderQuantity.value = Math.max(1, current - 1);
+});
+
+cartBranchSelect?.addEventListener("change", event => {
+  saveCartBranch(event.target.value);
 });
 
 qtyPlus?.addEventListener("click", () => {
