@@ -624,5 +624,431 @@ const menuItems = [
   price: 8000,
   description: "",
   image: "images/Fresh Juice.jpg"
+},
+                    // Coffee//
+  {
+  category: "Coffee",
+  name: "Espresso (Single)",
+  price: 7000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Espresso (Double)",
+  price: 9000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Macchiato (Single)",
+  price: 8000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Macchiato (Double)",
+  price: 10000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Cappuccino (Single)",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Cappuccino (Double)",
+  price: 15000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Flat White (Single)",
+  price: 8000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Flat White (Double)",
+  price: 9000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Latte (Single)",
+  price: 12000,
+  description: "",
+  image: "images/Latte.jpg"
+},
+{
+  category: "Coffee",
+  name: "Latte (Double)",
+  price: 13000,
+  description: "",
+  image: "images/Latte.jpg"
+},
+{
+  category: "Coffee",
+  name: "Affogato",
+  price: 14000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Americano",
+  price: 10000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Frappuccino",
+  price: 19000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Baileys Cappuccino",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Caramel Latte",
+  price: 17000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Hazelnut Latte",
+  price: 17000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Vanilla Latte",
+  price: 17000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Cinnamon Latte",
+  price: 17000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Iced Latte",
+  price: 13000,
+  description: "",
+  image: "images/Iced Latte.jpg"
+},
+{
+  category: "Coffee",
+  name: "Cafe Mocha",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "White Mocha",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Iced Mocha",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "Hot Chocolate",
+  price: 13000,
+  description: "",
+  image: "images/Hot Chocolate.jpg"
+},
+{
+  category: "Coffee",
+  name: "House Coffee",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "White Hot Chocolate",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Coffee",
+  name: "A Glass Of Milk",
+  price: 9000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+             //Tea//
+  {
+  category: "Tea",
+  name: "Black Tea",
+  price: 10000,
+  description: "",
+  image: "images/Black Tea.jpg"
+},
+{
+  category: "Tea",
+  name: "English Tea",
+  price: 11000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Dawa Tea",
+  price: 11000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Turmeric Tea",
+  price: 11000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Lemon Tea",
+  price: 11000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Black Tea Spiced",
+  price: 11000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Iced Tea",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "African or Milk Tea",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Herbal Camomile Tea",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Herbal Earl Grey Tea",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Herbal Green Tea",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Herbal Lemon Tea",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Herbal Peppermint Tea",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Tea",
+  name: "Herbal Freshmint Tea",
+  price: 12000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+  
+              //Smoothie//
+  {
+  category: "Smoothies",
+  name: "Booster",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Pinacolada",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Mango Madness",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Tropical",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Super Veggie",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Creamy Butter",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Glowing Skin",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Super Healthy 1",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Smoothies",
+  name: "Super Healthy 2",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+                   //Fresh Juice//
+
+  {
+  category: "Fresh Juices",
+  name: "Orange Juice",
+  price: 18000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Pineapple Juice",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Watermelon Juice",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Passion Juice",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Mango Juice",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Carrot Juice",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Lemonade",
+  price: 13000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Apple Juice",
+  price: 18000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Lemon Mint",
+  price: 14000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Pineapple Mint",
+  price: 14000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Fresh Juices",
+  name: "Mixed Juice",
+  price: 14000,
+  description: "",
+  image: "images/NO DRINKS.webp"
 }
 ];
