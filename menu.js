@@ -2,7 +2,7 @@ const menuItems = [
   {
     category: "Breakfast Menu",
     name: "CARAMEL BREAKY",
-    price: "UGX 36,000",
+    price: 36000,
     description: "Our signature breakfast burritos with curried chicken strips, peppers, onions, omelette, pair of sausage, sweet and spicy potatoes with garden salad",
     image: "images/Caramel Breaky.webp"
   },
