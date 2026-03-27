@@ -157,14 +157,29 @@ function handleThemeToggle(container) {
 function openSidebar() {
   sidebar.classList.add("open");
   sidebarOverlay.classList.add("show");
+  openSidebarBtn?.classList.add("active");
   setBodyLock(true);
 }
 
 function closeSidebar() {
   sidebar.classList.remove("open");
   sidebarOverlay.classList.remove("show");
+  openSidebarBtn?.classList.remove("active");
+
   if (orderFormModal.classList.contains("hidden") && cartDrawer.classList.contains("hidden")) {
     setBodyLock(false);
+  }
+}
+
+function toggleSidebar() {
+  if (sidebar.classList.contains("open")) {
+    closeSidebar();
+  } else {
+    closeSidebar();
+    closeCart();
+    closeOrderForm();
+    closeMobileCategoryDropdown();
+    openSidebar();
   }
 }
 
@@ -717,7 +732,7 @@ searchInput?.addEventListener("input", e => {
   renderMenu();
 });
 
-openSidebarBtn?.addEventListener("click", openSidebar);
+openSidebarBtn?.addEventListener("click", toggleSidebar);
 closeSidebarBtn?.addEventListener("click", closeSidebar);
 sidebarOverlay?.addEventListener("click", closeSidebar);
 
