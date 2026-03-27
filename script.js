@@ -55,9 +55,9 @@ const menuGroups = {
   "Main Menu": [
     "Starters",
     "Fresh Salads",
-    "Main Course (chicken)",
-    "Main Course (beef)",
-    "Main Course (fish)",
+    "Main Course (Chicken)",
+    "Main Course (Beef)",
+    "Main Course (Fish)",
     "Habesha",
     "Pasta",
     "Burgers",
@@ -541,8 +541,7 @@ function openOrderForm(item) {
   orderFormSummary.innerHTML = `
     <strong>Item:</strong> ${item.name}<br>
     <strong>Category:</strong> ${item.category}<br>
-    <strong>Price:</strong> ${formatPrice(item.price)}<br>
-    <strong>Description:</strong> ${item.description}
+    <strong>Price:</strong> ${formatPrice(item.price)}
   `;
 
   orderQuantity.value = 1;
@@ -582,8 +581,7 @@ function submitSingleOrder() {
     `Price: ${formatPrice(selectedOrderItem.price)}\n` +
     `Quantity: ${quantity}\n` +
     `Accompaniment: ${accompaniment}\n` +
-    `Special instructions: ${note || "None"}\n` +
-    `Description: ${selectedOrderItem.description}`
+    `Special instructions: ${note || "None"}\n`
   );
 
   window.open(`https://wa.me/${contact.number}?text=${message}`, "_blank");
