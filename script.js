@@ -553,9 +553,12 @@ function closeCart() {
 }
 
 function populateBranches() {
-  orderBranch.innerHTML = orderContacts
-    .map(contact => `<option value="${contact.name}">${contact.name}</option>`)
-    .join("");
+  orderBranch.innerHTML = `
+    <option value="" selected disabled>Select branch</option>
+    ${orderContacts
+      .map(contact => `<option value="${contact.name}">${contact.name}</option>`)
+      .join("")}
+  `;
 }
 
 function renderAccompanimentOptions(category) {
@@ -623,8 +626,17 @@ function submitSingleOrder() {
   const accompaniment = orderAccompaniment.value || "None";
   const note = orderNote.value.trim();
 
+  if (!branchName) {
+    alert("Please select a branch before ordering.");
+    orderBranch.focus();
+    return;
+  }
+
   const contact = orderContacts.find(item => item.name === branchName);
-  if (!contact) return;
+  if (!contact) {
+    alert("Selected branch is invalid.");
+    return;
+  }
 
   const message = encodeURIComponent(
     `Hello ${contact.name}, I would like to order:\n\n` +
