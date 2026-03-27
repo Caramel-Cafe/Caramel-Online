@@ -1050,5 +1050,614 @@ const menuItems = [
   price: 14000,
   description: "",
   image: "images/NO DRINKS.webp"
+},
+  
+                  //Mojitos//
+
+  {
+  category: "Mojitos",
+  name: "Mint Mojito",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mojitos",
+  name: "Strawberry Mojito",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mojitos",
+  name: "Kiwi Mojito",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+                 //Milkshake//
+  {
+  category: "Milkshake",
+  name: "Oreo Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Vanilla Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Chocolate Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Cookies Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Unicorn Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Strawberry Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Brownie Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Stracciatella Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Milkshake",
+  name: "Coconut Milkshake",
+  price: 22000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+             //Soft drinks//
+
+  {
+  category: "Soft Drinks",
+  name: "Coca Cola",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Coke Zero",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Fanta",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Soda Water",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Sprite",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Stony",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Tonic Water",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Red Bull",
+  price: 11000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Soft Drinks",
+  name: "Krest",
+  price: 5000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+                //Mocktails//
+
+  {
+  category: "Mocktails",
+  name: "Material Girl",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Cranberry Pucker",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Passionate Girl",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Cool Down",
+  price: 17000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Virgin Strawberry Daiquiri",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Virgin Captain Colada",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Material Boy",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+{
+  category: "Mocktails",
+  name: "Mango Pucker",
+  price: 21000,
+  description: "",
+  image: "images/NO DRINKS.webp"
+},
+              //Cocktails//
+
+  {
+  category: "Cocktails",
+  name: "Aperol Martini",
+  price: 32000,
+  description: "Ice cubes, slice of orange, Martini Bianco, 3 parts prosecco (or dry sparkling wine), 2 parts Aperol, 1 splash of soda.",
+  image: "images/The Aperols.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Aperol Spritz",
+  price: 31000,
+  description: "Ice cubes, slice of orange, 3 parts prosecco (or dry sparkling wine), 2 parts Aperol, 1 splash of soda.",
+  image: "images/The Aperols.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Bourbon Aperol",
+  price: 34000,
+  description: "Ice cubes, slice of orange, bourbon, prosecco, Aperol and soda.",
+  image: "images/The Aperols.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Slap & Tickle",
+  price: 31000,
+  description: "Monin berry purée, triple sec, Absolut vodka topped with Red Bull.",
+  image: "images/SLAP & TICKLE.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Faithful Bitch",
+  price: 32000,
+  description: "Absolut vodka, tang, sour apple, lemonade and grenadine.",
+  image: "images/FAITHFULL BITCH.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Desperate House Wife",
+  price: 31000,
+  description: "Absolut vodka, peach schnapps, lemon juice, passion purée, orange juice and lemonade.",
+  image: "images/DESPERATE HOUSE WIFE.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Kiwi Mojito",
+  price: 31000,
+  description: "Fresh kiwi, mint, Havana Club rum, crushed ice and soda.",
+  image: "images/MOJITOS.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Classic Mojito",
+  price: 31000,
+  description: "Fresh lime, mint, Havana Club rum, crushed ice and soda.",
+  image: "images/MOJITOS.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Strawberry Mojito",
+  price: 31000,
+  description: "Strawberries, mint, Havana Club rum, strawberry liqueur and soda.",
+  image: "images/MOJITOS.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Pan Galactic",
+  price: 35000,
+  description: "Vodka, orange juice, cherry liqueur, grenadine, peach schnapps, blue curaçao and citrus mix.",
+  image: "images/PAN GALACTIC.jpg"
+},
+{
+  category: "Cocktails",
+  name: "7 Devils",
+  price: 36000,
+  description: "Mix of seven spirits with orange and cranberry juice.",
+  image: "images/7 DEVILS.jpg"
+},
+{
+  category: "Cocktails",
+  name: "After Sex",
+  price: 35000,
+  description: "Vodka, banana liqueur, orange juice and grenadine.",
+  image: "images/AFTER SEX AND IRON MAN.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Iron Man",
+  price: 35000,
+  description: "Rum, gin, vodka, melon liqueur, sour mix and orange juice.",
+  image: "images/AFTER SEX AND IRON MAN.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Long Island Iced Tea",
+  price: 36000,
+  description: "Five white spirits with lemon, lime and a splash of coke.",
+  image: "images/LONG ISLAND.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Mango Frozen Margarita",
+  price: 33000,
+  description: "Tequila blended with mango, sugar and triple sec.",
+  image: "images/FROZEN MARGARITA.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Classic Frozen Margarita",
+  price: 32000,
+  description: "Tequila blended with lemon, lime, sugar and triple sec.",
+  image: "images/FROZEN MARGARITA.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Strawberry Daiquiri",
+  price: 32000,
+  description: "Rum, strawberry liqueur, lime and strawberry juice.",
+  image: "images/STRAWBERRY DAIQUIRI.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Moscow Mule",
+  price: 31000,
+  description: "Vodka, ginger beer, lime juice and lime wedges.",
+  image: "images/MOSCOW MULE.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Old Fashioned",
+  price: 24000,
+  description: "Whiskey, sugar syrup, bitters and orange zest.",
+  image: "images/OLD FASHIONED.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Dirty Martini",
+  price: 28000,
+  description: "Vodka, olive water and dry martini.",
+  image: "images/DIRTY MARTINI.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Whiskey Sour",
+  price: 31000,
+  description: "Whiskey, bitters, lime and egg wash.",
+  image: "images/WHISKEY SMASH.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Mixed Berry Sangria",
+  price: 26000,
+  description: "Red wine with berry purée, citrus fruits and lemonade (glass price).",
+  image: "images/MIXED BERRY SANGRIA.jpg"
+},
+{
+  category: "Cocktails",
+  name: "The Big Bang",
+  price: 26000,
+  description: "White wine, vodka, gin, kiwi purée, cucumber, lemon and apple juice (glass price).",
+  image: "images/THE BIG BANG.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Jäger Bomb",
+  price: 21000,
+  description: "Jägermeister with Red Bull.",
+  image: "images/JÄGER BOMB.jpg"
+},
+{
+  category: "Cocktails",
+  name: "Irish Coffee",
+  price: 25000,
+  description: "Jameson whiskey, hot coffee, cream and sugar syrup.",
+  image: "images/IRISH COFFEE.jpg"
+},
+           //Bakery//
+
+{
+  category: "Bakery",
+  name: "Sweet Bread",
+  price: 9000,
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Cramique Bread",
+  price: 13000,
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Brown Bread",
+  price: 8000,
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "White Bread",
+  price: 8000,
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Baguette Bread",
+  price: 7000,
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Sunflower Bread",
+  price: 10000,
+  description: "",
+  image: "images/No Bread.webp"
+},
+{
+  category: "Bakery",
+  name: "Gluten Free Bread",
+  price: 17000,
+  description: "",
+  image: "images/No Bread.webp"
+},
+                //Pastries//
+
+  {
+  category: "Pastries",
+  name: "Black Forest Cake (Slice)",
+  price: 17000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Black Forest Cake (Full)",
+  price: 125000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Blueberry Cheese Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Blueberry Cheese Cake (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Caramel Cheese Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Caramel Cheese Cake (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Chocoberry Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Chocoberry Cake (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Chocolate Cheese Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Chocolate Lovers Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Chocolate Lovers Cake (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Chocolate Nutella Cheese Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Chocolate Strawberry Cheese Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Lotus Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Nutella Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Nutella Cake (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Red Velvet Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Red Velvet Cake (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Toffe Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Toffe Cake (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Purple Velvet (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "Purple Velvet (Full)",
+  price: 135000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "White Forest Cake (Slice)",
+  price: 18000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
+},
+{
+  category: "Pastries",
+  name: "White Forest Cake (Full)",
+  price: 125000,
+  description: "",
+  image: "images/NO FOOD PIC.webp"
 }
 ];
