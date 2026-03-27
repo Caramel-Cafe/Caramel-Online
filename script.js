@@ -2,19 +2,46 @@ const menuGrid = document.getElementById("menu-grid");
 const chipsWrap = document.getElementById("categoryChips");
 const searchInput = document.getElementById("searchInput");
 const emptyState = document.getElementById("emptyState");
-const mobileCategoryChips = document.getElementById("mobileCategoryChips");
-const mobileCategoryDropdown = document.getElementById("mobileCategoryDropdown");
-let activeBottomButton = null;
+const heroItemCount = document.getElementById("heroItemCount");
+
 const mobileBottomNav = document.getElementById("mobileBottomNav");
+const mobileCategoryDropdown = document.getElementById("mobileCategoryDropdown");
+const mobileCategoryChips = document.getElementById("mobileCategoryChips");
+
+const desktopMenuGroups = document.getElementById("desktopMenuGroups");
+
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const openSidebarBtn = document.getElementById("openSidebar");
+const closeSidebarBtn = document.getElementById("closeSidebar");
+
+const themeToggle = document.getElementById("themeToggle");
+const themeToggleSidebar = document.getElementById("themeToggleSidebar");
+
+const cartFab = document.getElementById("cartFab");
+const cartCount = document.getElementById("cartCount");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartItems = document.getElementById("cartItems");
+const cartTotalItems = document.getElementById("cartTotalItems");
+const cartTotalPrice = document.getElementById("cartTotalPrice");
+const closeCartBtn = document.getElementById("closeCartBtn");
+const checkoutCartBtn = document.getElementById("checkoutCartBtn");
+const clearCartBtn = document.getElementById("clearCartBtn");
+const cartDrawerBackdrop = document.querySelector(".cart-drawer-backdrop");
+
 const orderFormModal = document.getElementById("orderFormModal");
 const orderFormBackdrop = document.getElementById("orderFormBackdrop");
 const orderFormSummary = document.getElementById("orderFormSummary");
+const orderBranch = document.getElementById("orderBranch");
 const orderQuantity = document.getElementById("orderQuantity");
 const orderAccompaniment = document.getElementById("orderAccompaniment");
 const orderAccompanimentOptions = document.getElementById("orderAccompanimentOptions");
 const orderNote = document.getElementById("orderNote");
 const continueOrderBtn = document.getElementById("continueOrderBtn");
 const closeOrderFormBtn = document.getElementById("closeOrderForm");
+const qtyMinus = document.getElementById("qtyMinus");
+const qtyPlus = document.getElementById("qtyPlus");
+
 const orderContacts = [
   { name: "Acacia", number: "256794417777" },
   { name: "Munyonyo", number: "256759859795" },
@@ -23,48 +50,8 @@ const orderContacts = [
   { name: "Naalya", number: "256781800800" },
   { name: "Kansanga", number: "256709410410" }
 ];
-const accompanimentOptions = {
-  Coffee: ["None", "No sugar", "Extra hot", "Oat milk", "Takeaway"],
-  Burger: ["None", "Fries", "Salad", "Extra sauce", "Takeaway"],
-  Pizza: ["None", "Extra cheese", "Chili flakes", "Ketchup", "Takeaway"],
-  Juice: ["None", "No ice", "Less sugar", "Takeaway"],
-  Default: ["None", "Takeaway"]
-};
-const desktopMenuGroups = document.getElementById("desktopMenuGroups");
-const qtyMinus = document.getElementById("qtyMinus");
-const qtyPlus = document.getElementById("qtyPlus");
-const body = document.body;
-const themeToggle = document.getElementById("themeToggle");
-const themeToggleSidebar = document.getElementById("themeToggleSidebar");
-
-const sidebar = document.getElementById("sidebar");
-const sidebarOverlay = document.getElementById("sidebarOverlay");
-const openSidebarBtn = document.getElementById("openSidebar");
-const closeSidebarBtn = document.getElementById("closeSidebar");
-const itemPopup = document.getElementById("itemPopup");
-const popupImage = document.getElementById("popupImage");
-const popupName = document.getElementById("popupName");
-const popupPrice = document.getElementById("popupPrice");
-const popupDesc = document.getElementById("popupDesc");
-const popupOrderBtn = document.getElementById("popupOrderBtn");
-const popupClose = document.querySelector(".popup-close");
-const popupBackdrop = document.querySelector(".item-popup-backdrop");
-const cartFab = document.getElementById("cartFab");
-const cartCount = document.getElementById("cartCount");
-const cartDrawer = document.getElementById("cartDrawer");
-const cartItems = document.getElementById("cartItems");
-const cartTotalItems = document.getElementById("cartTotalItems");
-const closeCartBtn = document.getElementById("closeCartBtn");
-const checkoutCartBtn = document.getElementById("checkoutCartBtn");
-const cartDrawerBackdrop = document.querySelector(".cart-drawer-backdrop");
-let activeMenuGroup = "Main Menu";
-let activeCategory = "All";
-let searchTerm = "";
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const menuGroups = {
-  "Breakfast Menu": ["Breakfast Menu"],
-
   "Main Menu": [
     "Starters",
     "Fresh Salads",
@@ -80,9 +67,8 @@ const menuGroups = {
     "Cookies",
     "Pastries"
   ],
-
+  "Breakfast Menu": ["Breakfast Menu"],
   "Kids Menu": ["Kids Menu"],
-
   "Drinks Menu": [
     "Coffee",
     "Tea",
@@ -96,113 +82,578 @@ const menuGroups = {
   ]
 };
 
+const mobileNavConfig = [
+  { label: "Main", group: "Main Menu" },
+  { label: "Drinks", group: "Drinks Menu" },
+  { label: "Breakfast", group: "Breakfast Menu" },
+  { label: "Kids", group: "Kids Menu" }
+];
 
-function getCategories(items) {
-  const allowedCategories = menuGroups[activeMenuGroup] || [];
-  return ["All", ...allowedCategories];
+const accompanimentOptions = {
+  Coffee: ["None", "No sugar", "Extra hot", "Oat milk", "Takeaway"],
+  Tea: ["None", "No sugar", "Extra hot", "Takeaway"],
+  Burgers: ["None", "Fries", "Salad", "Extra sauce", "Takeaway"],
+  Pizzeria: ["None", "Extra cheese", "Chili flakes", "Ketchup", "Takeaway"],
+  "Fresh Juice": ["None", "No ice", "Less sugar", "Takeaway"],
+  Smoothies: ["None", "No ice", "Less sugar", "Takeaway"],
+  Milkshake: ["None", "No ice", "Takeaway"],
+  Default: ["None", "Takeaway"]
+};
+
+const menuItems = [
+  {
+    name: "Espresso",
+    category: "Coffee",
+    price: 5000,
+    description: "Rich, bold, and smooth with a concentrated coffee finish.",
+    tag: "Hot favorite",
+    image: "images/espresso.jpg"
+  },
+  {
+    name: "Cappuccino",
+    category: "Coffee",
+    price: 7500,
+    description: "Creamy foam and balanced espresso for a soft café classic.",
+    tag: "Popular",
+    image: "images/cappuccino.jpg"
+  },
+  {
+    name: "Iced Latte",
+    category: "Coffee",
+    price: 9000,
+    description: "Cold, smooth espresso with milk over ice.",
+    tag: "Refreshing",
+    image: "images/iced-latte.jpg"
+  },
+  {
+    name: "African Tea",
+    category: "Tea",
+    price: 6000,
+    description: "Comforting spiced tea prepared fresh and served hot.",
+    tag: "Classic",
+    image: "images/african-tea.jpg"
+  },
+  {
+    name: "Mango Juice",
+    category: "Fresh Juice",
+    price: 9000,
+    description: "Fresh tropical mango juice with a naturally sweet finish.",
+    tag: "Fresh",
+    image: "images/mango-juice.jpg"
+  },
+  {
+    name: "Strawberry Smoothie",
+    category: "Smoothies",
+    price: 11000,
+    description: "Creamy blended strawberry smoothie, cool and sweet.",
+    tag: "Best seller",
+    image: "images/strawberry-smoothie.jpg"
+  },
+  {
+    name: "Chicken Burger",
+    category: "Burgers",
+    price: 18000,
+    description: "Juicy chicken burger with crispy lettuce and house sauce.",
+    tag: "Best seller",
+    image: "images/chicken-burger.jpg"
+  },
+  {
+    name: "Beef Burger",
+    category: "Burgers",
+    price: 19000,
+    description: "Tender beef burger layered with sauce and fresh salad.",
+    tag: "Hearty",
+    image: "images/beef-burger.jpg"
+  },
+  {
+    name: "Margherita Pizza",
+    category: "Pizzeria",
+    price: 28000,
+    description: "Classic pizza with cheese, tomato base, and soft crust.",
+    tag: "Cheesy",
+    image: "images/margherita-pizza.jpg"
+  },
+  {
+    name: "Chicken Alfredo Pasta",
+    category: "Pasta",
+    price: 24000,
+    description: "Creamy pasta tossed with tender chicken and rich sauce.",
+    tag: "Creamy",
+    image: "images/chicken-alfredo.jpg"
+  },
+  {
+    name: "Greek Salad",
+    category: "Fresh Salads",
+    price: 16000,
+    description: "Fresh salad with crunchy vegetables and light dressing.",
+    tag: "Healthy",
+    image: "images/greek-salad.jpg"
+  },
+  {
+    name: "Fish Fillet",
+    category: "Main Course (fish)",
+    price: 26000,
+    description: "Golden fish fillet served with a delicious savory finish.",
+    tag: "Chef pick",
+    image: "images/fish-fillet.jpg"
+  },
+  {
+    name: "Chicken Wings",
+    category: "Starters",
+    price: 17000,
+    description: "Tender wings glazed with bold flavor and a juicy bite.",
+    tag: "Starter",
+    image: "images/chicken-wings.jpg"
+  },
+  {
+    name: "Pancake Breakfast",
+    category: "Breakfast Menu",
+    price: 15000,
+    description: "Soft pancakes served warm for a sweet breakfast treat.",
+    tag: "Morning",
+    image: "images/pancakes.jpg"
+  },
+  {
+    name: "Kids Burger",
+    category: "Kids Menu",
+    price: 12000,
+    description: "Small, tasty burger perfect for little appetites.",
+    tag: "Kids",
+    image: "images/kids-burger.jpg"
+  },
+  {
+    name: "Chocolate Cookie",
+    category: "Cookies",
+    price: 4000,
+    description: "Soft baked cookie with rich chocolate flavor.",
+    tag: "Sweet",
+    image: "images/chocolate-cookie.jpg"
+  },
+  {
+    name: "Croissant",
+    category: "Pastries",
+    price: 5500,
+    description: "Buttery and flaky pastry, warm and light.",
+    tag: "Freshly baked",
+    image: "images/croissant.jpg"
+  },
+  {
+    name: "Chocolate Cake Slice",
+    category: "Bakery",
+    price: 8000,
+    description: "Soft chocolate cake slice with a rich dessert finish.",
+    tag: "Dessert",
+    image: "images/chocolate-cake.jpg"
+  }
+];
+
+let activeMenuGroup = "Main Menu";
+let activeCategory = "All";
+let activeMobileButton = null;
+let searchTerm = "";
+let cart = JSON.parse(localStorage.getItem("caramel-cart")) || [];
+let selectedOrderItem = null;
+
+function formatPrice(value) {
+  return `${Number(value).toLocaleString()} UGX`;
 }
 
-qtyMinus?.addEventListener("click", () => {
-  const current = parseInt(orderQuantity.value || "1", 10);
-  orderQuantity.value = Math.max(1, current - 1);
-});
-
-qtyPlus?.addEventListener("click", () => {
-  const current = parseInt(orderQuantity.value || "1", 10);
-  orderQuantity.value = current + 1;
-});
-
-function openItemPopup(item) {
-  popupImage.src = item.image;
-  popupName.textContent = item.name;
-  popupPrice.textContent = item.price;
-  popupDesc.textContent = item.description;
-
-  itemPopup.classList.remove("hidden");
-
-  popupOrderBtn.onclick = () => {
-    openOrderForm(item); // your existing function
-    closeItemPopup();
-  };
-}
-function closeItemPopup() {
-  itemPopup.classList.add("hidden");
-}
-popupClose?.addEventListener("click", closeItemPopup);
-popupBackdrop?.addEventListener("click", closeItemPopup);
-
-function createChips() {
-  const categories = getCategories(menuItems);
-
-  chipsWrap.innerHTML = categories
-    .map(
-      category => `
-        <button
-          class="${category === activeCategory ? "chip active" : "chip"}"
-          data-category="${category}"
-        >
-          ${category}
-        </button>
-      `
-    )
-    .join("");
-
-  chipsWrap.querySelectorAll(".chip").forEach(chip => {
-    chip.addEventListener("click", () => {
-      activeCategory = chip.dataset.category;
-      createChips();
-      renderMenu();
-      syncMobileCategoryChips();
-    });
-  });
-}
-
-function initDesktopMenuGroups() {
-  if (!desktopMenuGroups) return;
-
-  const buttons = desktopMenuGroups.querySelectorAll(".desktop-menu-group-btn");
-
-  buttons.forEach(button => {
-    button.addEventListener("click", () => {
-      buttons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-
-      activeMenuGroup = button.dataset.menuGroup;
-      activeCategory = "All";
-
-      createChips();
-      renderMenu();
-      syncMobileCategoryChips();
-    });
-  });
+function getCategoriesForGroup(groupName) {
+  return ["All", ...(menuGroups[groupName] || [])];
 }
 
 function getAccompaniments(category) {
   return accompanimentOptions[category] || accompanimentOptions.Default;
 }
-function syncMobileCategoryChips() {
-  if (!mobileCategoryChips || !chipsWrap) return;
 
-  mobileCategoryChips.innerHTML = "";
+function saveCart() {
+  localStorage.setItem("caramel-cart", JSON.stringify(cart));
+}
 
-  chipsWrap.querySelectorAll(".chip").forEach(chip => {
-    const clone = chip.cloneNode(true);
+function setBodyLock(locked) {
+  document.body.classList.toggle("modal-open", locked);
+}
 
-    clone.addEventListener("click", () => {
-      activeCategory = clone.dataset.category;
-      createChips();
-      renderMenu();
-      syncMobileCategoryChips();
-      mobileCategoryDropdown?.classList.add("hidden");
-    });
+function applyTheme(theme) {
+  const isLight = theme === "light";
+  document.body.classList.toggle("light-mode", isLight);
+  localStorage.setItem("caramel-theme", theme);
 
-    mobileCategoryChips.appendChild(clone);
+  document.querySelectorAll("[data-theme-btn]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.themeBtn === theme);
   });
 }
+
+function initTheme() {
+  const savedTheme = localStorage.getItem("caramel-theme") || "dark";
+  applyTheme(savedTheme);
+}
+
+function handleThemeToggle(container) {
+  if (!container) return;
+
+  container.addEventListener("click", event => {
+    const button = event.target.closest("[data-theme-btn]");
+    if (!button) return;
+    applyTheme(button.dataset.themeBtn);
+  });
+}
+
+function openSidebar() {
+  sidebar.classList.add("open");
+  sidebarOverlay.classList.add("show");
+  setBodyLock(true);
+}
+
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("show");
+  if (orderFormModal.classList.contains("hidden") && cartDrawer.classList.contains("hidden")) {
+    setBodyLock(false);
+  }
+}
+
+function initDesktopMenuGroups() {
+  desktopMenuGroups.innerHTML = Object.keys(menuGroups)
+    .map(group => `
+      <button
+        type="button"
+        class="desktop-menu-group-btn ${group === activeMenuGroup ? "active" : ""}"
+        data-menu-group="${group}"
+      >
+        ${group.replace(" Menu", "")}
+      </button>
+    `)
+    .join("");
+
+  desktopMenuGroups.querySelectorAll(".desktop-menu-group-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      activeMenuGroup = button.dataset.menuGroup;
+      activeCategory = "All";
+      syncDesktopGroups();
+      renderChips();
+      renderMenu();
+      syncMobileCategoryChips();
+    });
+  });
+}
+
+function syncDesktopGroups() {
+  desktopMenuGroups.querySelectorAll(".desktop-menu-group-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.menuGroup === activeMenuGroup);
+  });
+}
+
+function initMobileBottomNav() {
+  mobileBottomNav.innerHTML = mobileNavConfig
+    .map(item => `
+      <button
+        class="mobile-bottom-link ${item.group === activeMenuGroup ? "active" : ""}"
+        type="button"
+        data-menu-group="${item.group}"
+      >
+        ${item.label}
+      </button>
+    `)
+    .join("");
+
+  const links = mobileBottomNav.querySelectorAll(".mobile-bottom-link");
+
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      const sameButton = activeMobileButton === link;
+      const wasOpen = mobileCategoryDropdown.classList.contains("show");
+
+      links.forEach(item => item.classList.remove("active"));
+      link.classList.add("active");
+
+      activeMobileButton = link;
+      activeMenuGroup = link.dataset.menuGroup;
+      activeCategory = "All";
+
+      syncDesktopGroups();
+      renderChips();
+      renderMenu();
+      syncMobileCategoryChips();
+
+      if (sameButton && wasOpen) {
+        closeMobileCategoryDropdown();
+      } else {
+        openMobileCategoryDropdown();
+      }
+    });
+  });
+
+  document.addEventListener("click", event => {
+    const clickedNav = event.target.closest("#mobileBottomNav");
+    const clickedDropdown = event.target.closest("#mobileCategoryDropdown");
+
+    if (!clickedNav && !clickedDropdown) {
+      closeMobileCategoryDropdown();
+    }
+  });
+}
+
+function openMobileCategoryDropdown() {
+  mobileCategoryDropdown.classList.add("show");
+}
+
+function closeMobileCategoryDropdown() {
+  mobileCategoryDropdown.classList.remove("show");
+}
+
+function renderChips() {
+  const categories = getCategoriesForGroup(activeMenuGroup);
+
+  chipsWrap.innerHTML = categories
+    .map(category => `
+      <button
+        type="button"
+        class="chip ${category === activeCategory ? "active" : ""}"
+        data-category="${category}"
+      >
+        ${category}
+      </button>
+    `)
+    .join("");
+
+  chipsWrap.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      activeCategory = chip.dataset.category;
+      renderChips();
+      renderMenu();
+      syncMobileCategoryChips();
+    });
+  });
+}
+
+function syncMobileCategoryChips() {
+  const categories = getCategoriesForGroup(activeMenuGroup);
+
+  mobileCategoryChips.innerHTML = categories
+    .map(category => `
+      <button
+        type="button"
+        class="mobile-category-chip ${category === activeCategory ? "active" : ""}"
+        data-category="${category}"
+      >
+        ${category}
+      </button>
+    `)
+    .join("");
+
+  mobileCategoryChips.querySelectorAll(".mobile-category-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      activeCategory = chip.dataset.category;
+      renderChips();
+      renderMenu();
+      syncMobileCategoryChips();
+      closeMobileCategoryDropdown();
+    });
+  });
+}
+
+function filterMenu() {
+  const allowedCategories = menuGroups[activeMenuGroup] || [];
+  const term = searchTerm.trim().toLowerCase();
+
+  return menuItems.filter(item => {
+    const menuMatch = allowedCategories.includes(item.category);
+    const categoryMatch = activeCategory === "All" || item.category === activeCategory;
+    const text = `${item.name} ${item.category} ${item.description} ${item.tag || ""}`.toLowerCase();
+    const searchMatch = !term || text.includes(term);
+
+    return menuMatch && categoryMatch && searchMatch;
+  });
+}
+
+function createCard(item) {
+  return `
+    <article class="menu-card reveal-card">
+      <div class="menu-thumb">
+        ${
+          item.image
+            ? `<img src="${item.image}" alt="${item.name}" class="menu-image" loading="lazy">`
+            : ""
+        }
+        ${item.tag ? `<span class="menu-badge">${item.tag}</span>` : ""}
+        <span class="thumb-badge">${item.category}</span>
+      </div>
+
+      <div class="menu-body">
+        <div class="menu-meta">
+          <span class="menu-category">${item.category}</span>
+          <span class="menu-price">${formatPrice(item.price)}</span>
+        </div>
+
+        <h4 class="menu-name">${item.name}</h4>
+        <p class="menu-desc">${item.description}</p>
+
+        <div class="menu-footer">
+          <span class="menu-tag">${item.tag || "Fresh pick"}</span>
+
+          <div class="menu-actions">
+            <button
+              class="menu-order-btn add-cart-trigger"
+              type="button"
+              data-name="${item.name}"
+            >
+              Add to Cart
+            </button>
+
+            <button
+              class="menu-order-btn order-trigger"
+              type="button"
+              data-name="${item.name}"
+            >
+              Order Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderMenu() {
+  const filtered = filterMenu();
+
+  if (!filtered.length) {
+    menuGrid.innerHTML = "";
+    emptyState.classList.remove("hidden");
+    return;
+  }
+
+  emptyState.classList.add("hidden");
+  menuGrid.innerHTML = filtered.map(createCard).join("");
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".menu-card").forEach((card, index) => {
+      setTimeout(() => card.classList.add("is-visible"), index * 35);
+    });
+  });
+}
+
+function getItemByName(name) {
+  return menuItems.find(item => item.name === name);
+}
+
+function addToCart(item) {
+  const existingIndex = cart.findIndex(
+    cartItem =>
+      cartItem.name === item.name &&
+      cartItem.branch === item.branch &&
+      cartItem.accompaniment === item.accompaniment &&
+      cartItem.note === item.note
+  );
+
+  if (existingIndex >= 0) {
+    cart[existingIndex].quantity += item.quantity || 1;
+  } else {
+    cart.push({
+      ...item,
+      quantity: item.quantity || 1,
+      accompaniment: item.accompaniment || "None",
+      note: item.note || "",
+      branch: item.branch || ""
+    });
+  }
+
+  saveCart();
+  updateCartUI();
+}
+
+function removeCartItem(index) {
+  cart.splice(index, 1);
+  saveCart();
+  updateCartUI();
+}
+
+function changeCartQty(index, delta) {
+  if (!cart[index]) return;
+  cart[index].quantity += delta;
+
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1);
+  }
+
+  saveCart();
+  updateCartUI();
+}
+
+function clearCart() {
+  cart = [];
+  saveCart();
+  updateCartUI();
+  closeCart();
+}
+
+function updateCartUI() {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPriceValue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  cartCount.textContent = totalItems;
+  cartTotalItems.textContent = totalItems;
+  cartTotalPrice.textContent = formatPrice(totalPriceValue);
+
+  if (!cart.length) {
+    cartFab.classList.add("hidden");
+    cartItems.innerHTML = `
+      <div class="empty-state glass-soft">
+        <h4>Your cart is empty</h4>
+        <p>Add items to start your order.</p>
+      </div>
+    `;
+    return;
+  }
+
+  cartFab.classList.remove("hidden");
+
+  cartItems.innerHTML = cart
+    .map((item, index) => `
+      <div class="cart-item">
+        <img src="${item.image || "https://via.placeholder.com/200x200?text=Menu"}" alt="${item.name}">
+        <div>
+          <p class="cart-item-name">${item.name}</p>
+          <div class="cart-item-meta">
+            ${formatPrice(item.price)} • Qty ${item.quantity}<br>
+            ${item.branch ? `Branch: ${item.branch}<br>` : ""}
+            ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
+            ${item.note ? `Note: ${item.note}` : ""}
+          </div>
+
+          <div class="cart-item-actions">
+            <button class="cart-qty-btn" data-action="decrease" data-index="${index}">−</button>
+            <button class="cart-qty-btn" data-action="increase" data-index="${index}">+</button>
+            <button class="cart-remove-btn" data-action="remove" data-index="${index}">Remove</button>
+          </div>
+        </div>
+      </div>
+    `)
+    .join("");
+}
+
+function openCart() {
+  cartDrawer.classList.remove("hidden");
+  setBodyLock(true);
+}
+
+function closeCart() {
+  cartDrawer.classList.add("hidden");
+
+  if (orderFormModal.classList.contains("hidden") && !sidebar.classList.contains("open")) {
+    setBodyLock(false);
+  }
+}
+
+function populateBranches() {
+  orderBranch.innerHTML = orderContacts
+    .map(contact => `<option value="${contact.name}">${contact.name}</option>`)
+    .join("");
+}
+
 function renderAccompanimentOptions(category) {
   const options = getAccompaniments(category);
-
-  if (!orderAccompanimentOptions || !orderAccompaniment) return;
 
   orderAccompanimentOptions.innerHTML = options
     .map(option => `
@@ -230,309 +681,91 @@ function renderAccompanimentOptions(category) {
   });
 }
 
-function filterMenu() {
-  const allowedCategories = menuGroups[activeMenuGroup] || [];
-
-  return menuItems.filter(item => {
-    const menuMatch = allowedCategories.includes(item.category);
-    const categoryMatch = activeCategory === "All" || item.category === activeCategory;
-    const term = searchTerm.trim().toLowerCase();
-    const text = `${item.name} ${item.category} ${item.description} ${item.tag || ""}`.toLowerCase();
-    const searchMatch = !term || text.includes(term);
-
-    return menuMatch && categoryMatch && searchMatch;
-  });
-}
-
-const orderPicker = document.getElementById("orderPicker");
-const orderPickerBackdrop = document.getElementById("orderPickerBackdrop");
-const orderPickerList = document.getElementById("orderPickerList");
-const orderPickerText = document.getElementById("orderPickerText");
-const closeOrderPickerBtn = document.getElementById("closeOrderPicker");
-
-let selectedOrderItem = null;
-let preparedOrderDetails = null;
-
-
-function openOrderPicker(item) {
-  selectedOrderItem = item;
-
-  orderPickerText.innerHTML = `
-    <strong>Item:</strong> ${item.name}<br>
-    <strong>Category:</strong> ${item.category}<br>
-    <strong>Price:</strong> ${item.price}<br>
-    <strong>Quantity:</strong> ${item.quantity}<br>
-    <strong>Accompaniment:</strong> ${item.accompaniment}<br>
-    <strong>Description:</strong> ${item.description}<br>
-    <strong>Special instructions:</strong> ${item.note || "None"}<br><br>
-    Choose who should handle this order.
-  `;
-
-  orderPickerList.innerHTML = orderContacts
-    .map(
-      contact => `
-        <button
-          type="button"
-          class="order-contact-btn"
-          data-number="${contact.number}"
-          data-name="${contact.name}"
-        >
-          ${contact.name}
-        </button>
-      `
-    )
-    .join("");
-
-orderPicker.classList.remove("hidden");
-orderPickerBackdrop.classList.remove("hidden");
-lockBodyScroll();
-
-  orderPickerList.querySelectorAll(".order-contact-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const number = btn.dataset.number;
-      const name = btn.dataset.name;
-
-      const message = encodeURIComponent(
-        `Hello ${name}, I would like to order:\n\n` +
-        `Item: ${selectedOrderItem.name}\n` +
-        `Category: ${selectedOrderItem.category}\n` +
-        `Price: ${selectedOrderItem.price}\n` +
-        `Quantity: ${selectedOrderItem.quantity}\n` +
-        `Accompaniment: ${selectedOrderItem.accompaniment}\n` +
-        `Description: ${selectedOrderItem.description}\n` +
-        `Special instructions: ${selectedOrderItem.note || "None"}`
-      );
-
-      window.open(`https://wa.me/${number}?text=${message}`, "_blank");
-      closeOrderPicker();
-    });
-  });
-}
-
-
-function closeOrderPicker() {
-  orderPicker?.classList.add("hidden");
-  orderPickerBackdrop?.classList.add("hidden");
-  unlockBodyScroll();
-}
-
 function openOrderForm(item) {
   selectedOrderItem = item;
-  preparedOrderDetails = null;
 
   orderFormSummary.innerHTML = `
     <strong>Item:</strong> ${item.name}<br>
     <strong>Category:</strong> ${item.category}<br>
-    <strong>Price:</strong> ${item.price}<br>
+    <strong>Price:</strong> ${formatPrice(item.price)}<br>
     <strong>Description:</strong> ${item.description}
   `;
 
   orderQuantity.value = 1;
-  renderAccompanimentOptions(item.category);
   orderNote.value = "";
+  populateBranches();
+  renderAccompanimentOptions(item.category);
 
   orderFormModal.classList.remove("hidden");
   orderFormBackdrop.classList.remove("hidden");
-  lockBodyScroll();
+  setBodyLock(true);
 }
 
 function closeOrderForm() {
-  orderFormModal?.classList.add("hidden");
-  orderFormBackdrop?.classList.add("hidden");
-  unlockBodyScroll();
+  orderFormModal.classList.add("hidden");
+  orderFormBackdrop.classList.add("hidden");
+
+  if (cartDrawer.classList.contains("hidden") && !sidebar.classList.contains("open")) {
+    setBodyLock(false);
+  }
 }
 
-function continueOrderFlow() {
-  const quantity = orderQuantity.value || "1";
+function submitSingleOrder() {
+  if (!selectedOrderItem) return;
+
+  const branchName = orderBranch.value;
+  const quantity = Math.max(1, Number(orderQuantity.value) || 1);
   const accompaniment = orderAccompaniment.value || "None";
   const note = orderNote.value.trim();
 
-preparedOrderDetails = {
-  ...selectedOrderItem,
-  quantity,
-  accompaniment,
-  note
-};
+  const contact = orderContacts.find(item => item.name === branchName);
+  if (!contact) return;
 
+  const message = encodeURIComponent(
+    `Hello ${contact.name}, I would like to order:\n\n` +
+    `Item: ${selectedOrderItem.name}\n` +
+    `Category: ${selectedOrderItem.category}\n` +
+    `Price: ${formatPrice(selectedOrderItem.price)}\n` +
+    `Quantity: ${quantity}\n` +
+    `Accompaniment: ${accompaniment}\n` +
+    `Special instructions: ${note || "None"}\n` +
+    `Description: ${selectedOrderItem.description}`
+  );
+
+  window.open(`https://wa.me/${contact.number}?text=${message}`, "_blank");
   closeOrderForm();
-
-  setTimeout(() => {
-    openOrderPicker(preparedOrderDetails);
-  }, 50);
 }
 
-function createCard(item) {
-  return `
-    <article class="menu-card reveal-card">
-      <div class="menu-thumb">
-        ${item.image ? `<img src="${item.image}" alt="${item.name}" class="menu-image">` : ""}
-        ${item.tag ? `<span class="menu-badge">${item.tag}</span>` : ""}
-        <span class="thumb-badge">${item.category}</span>
-      </div>
+function checkoutCart() {
+  if (!cart.length) return;
 
-      <div class="menu-body">
-        <div class="menu-meta">
-          <span class="menu-category">${item.category}</span>
-          <span class="menu-price">${item.price}</span>
-        </div>
+  const defaultContact = orderContacts[0];
 
-        <h4 class="menu-name">${item.name}</h4>
-        <p class="menu-desc">${item.description}</p>
+  const messageLines = [
+    `Hello ${defaultContact.name}, I would like to order:`,
+    ""
+  ];
 
-        <div class="menu-footer">
-          <span class="menu-tag">${item.tag || ""}</span>
-          <div style="display:grid; gap:8px; width:100%;">
-            <button
-              class="menu-order-btn add-cart-trigger"
-              type="button"
-              data-item="${item.name}"
-              data-category="${item.category}"
-              data-price="${item.price}"
-              data-description="${item.description}"
-              data-image="${item.image || ""}"
-            >
-              Add to Cart
-            </button>
-
-            <button
-              class="menu-order-btn order-trigger"
-              type="button"
-              data-item="${item.name}"
-              data-category="${item.category}"
-              data-price="${item.price}"
-              data-description="${item.description}"
-            >
-              Order
-            </button>
-          </div>
-        </div>
-      </div>
-    </article>
-  `;
-}
-
-orderPickerBackdrop?.addEventListener("click", closeOrderPicker);
-closeOrderPickerBtn?.addEventListener("click", closeOrderPicker);
-
-continueOrderBtn?.addEventListener("click", continueOrderFlow);
-orderFormBackdrop?.addEventListener("click", closeOrderForm);
-closeOrderFormBtn?.addEventListener("click", closeOrderForm);
-
-function renderMenu() {
-  const filtered = filterMenu();
-
-  if (!filtered.length) {
-    menuGrid.innerHTML = "";
-    emptyState.classList.remove("hidden");
-    return;
-  }
-
-  emptyState.classList.add("hidden");
-  menuGrid.innerHTML = filtered.map(item => createCard(item)).join("");
-
-  requestAnimationFrame(() => {
-    document.querySelectorAll(".menu-card").forEach((card, index) => {
-      setTimeout(() => card.classList.add("is-visible"), index * 35);
-    });
-
-    initTiltCards();
-  });
-}
-  
-
-function applyTheme(theme) {
-  const isLight = theme === "light";
-  body.classList.toggle("light-mode", isLight);
-  localStorage.setItem("caramel-theme", theme);
-  syncThemeButtons(theme);
-}
-
-function syncThemeButtons(theme) {
-  document.querySelectorAll("[data-theme-btn]").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.themeBtn === theme);
-  });
-}
-
-function initTheme() {
-  const savedTheme = localStorage.getItem("caramel-theme") || "dark";
-  applyTheme(savedTheme);
-}
-
-function handleThemeToggle(container) {
-  if (!container) return;
-
-  container.addEventListener("click", event => {
-    const button = event.target.closest("[data-theme-btn]");
-    if (!button) return;
-    applyTheme(button.dataset.themeBtn);
-  });
-}
-
-function lockBodyScroll() {
-  document.body.style.overflow = "hidden";
-}
-
-function unlockBodyScroll() {
-  document.body.style.overflow = "";
-}
-
-function openSidebar() {
-  sidebar.classList.add("open");
-  sidebarOverlay.classList.add("show");
-  lockBodyScroll();
-}
-
-function closeSidebar() {
-  sidebar.classList.remove("open");
-  sidebarOverlay.classList.remove("show");
-  unlockBodyScroll();
-}
-
-function initMobileBottomNav() {
-  if (!mobileBottomNav) return;
-
-  const links = mobileBottomNav.querySelectorAll(".mobile-bottom-link");
-
-  links.forEach(link => {
-    link.addEventListener("click", () => {
-      const sameButton = activeBottomButton === link;
-      const dropdownWasOpen = mobileCategoryDropdown && !mobileCategoryDropdown.classList.contains("hidden");
-
-      links.forEach(item => item.classList.remove("active"));
-      link.classList.add("active");
-
-      activeBottomButton = link;
-      activeMenuGroup = link.dataset.menuGroup;
-      activeCategory = "All";
-
-      createChips();
-      renderMenu();
-      syncMobileCategoryChips();
-
-      if (!mobileCategoryDropdown) return;
-
-      const rect = link.getBoundingClientRect();
-      const navRect = mobileBottomNav.getBoundingClientRect();
-
-      mobileCategoryDropdown.style.left = `${rect.left - navRect.left}px`;
-      mobileCategoryDropdown.style.width = `${rect.width}px`;
-
-      if (sameButton && dropdownWasOpen) {
-        mobileCategoryDropdown.classList.add("hidden");
-      } else {
-        mobileCategoryDropdown.classList.remove("hidden");
-      }
-    });
+  cart.forEach((item, index) => {
+    messageLines.push(
+      `${index + 1}. ${item.name}`,
+      `Category: ${item.category}`,
+      `Price: ${formatPrice(item.price)}`,
+      `Quantity: ${item.quantity}`,
+      `Branch: ${item.branch || "Not specified"}`,
+      `Accompaniment: ${item.accompaniment || "None"}`,
+      `Special instructions: ${item.note || "None"}`,
+      ""
+    );
   });
 
-  document.addEventListener("click", e => {
-    const clickedBottomNav = e.target.closest("#mobileBottomNav");
-    const clickedDropdown = e.target.closest("#mobileCategoryDropdown");
+  messageLines.push(
+    `Total Items: ${cart.reduce((sum, item) => sum + item.quantity, 0)}`,
+    `Total Price: ${formatPrice(cart.reduce((sum, item) => sum + item.price * item.quantity, 0))}`
+  );
 
-    if (!clickedBottomNav && !clickedDropdown) {
-      mobileCategoryDropdown?.classList.add("hidden");
-    }
-  });
+  const message = encodeURIComponent(messageLines.join("\n"));
+  window.open(`https://wa.me/${defaultContact.number}?text=${message}`, "_blank");
 }
 
 function initReveal() {
@@ -561,145 +794,6 @@ function initReveal() {
   revealEls.forEach(el => observer.observe(el));
 }
 
-function initTiltCards() {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReducedMotion) return;
-
-  const tiltCards = document.querySelectorAll(".tilt-card");
-
-  tiltCards.forEach(card => {
-    card.addEventListener("mousemove", e => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const rotateX = ((y / rect.height) - 0.5) * -8;
-      const rotateY = ((x / rect.width) - 0.5) * 10;
-
-      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "";
-    });
-  });
-}
-
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-function updateCartUI() {
-  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  cartCount.textContent = totalCount;
-  cartTotalItems.textContent = totalCount;
-
-  if (totalCount > 0) {
-    cartFab.classList.remove("hidden");
-  } else {
-    cartFab.classList.add("hidden");
-  }
-
-  if (!cart.length) {
-    cartItems.innerHTML = `<p>Your cart is empty.</p>`;
-    return;
-  }
-
-  cartItems.innerHTML = cart.map((item, index) => `
-    <div class="cart-item">
-      <img src="${item.image || ""}" alt="${item.name}">
-      <div>
-        <div class="cart-item-name">${item.name}</div>
-<div class="cart-item-meta">
-  ${item.category ? `${item.category}<br>` : ""}
-  ${item.price}<br>
-  ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
-  ${item.note ? `Note: ${item.note}` : ""}
-</div>
-        <div class="cart-item-actions">
-          <button class="cart-qty-btn" type="button" data-action="decrease" data-index="${index}">-</button>
-          <span>${item.quantity}</span>
-          <button class="cart-qty-btn" type="button" data-action="increase" data-index="${index}">+</button>
-          <button class="cart-remove-btn" type="button" data-action="remove" data-index="${index}">Remove</button>
-        </div>
-      </div>
-    </div>
-  `).join("");
-}
-
-function addToCart(item) {
-  const existingIndex = cart.findIndex(cartItem =>
-    cartItem.name === item.name &&
-    cartItem.accompaniment === item.accompaniment &&
-    cartItem.note === item.note
-  );
-
-  if (existingIndex > -1) {
-    cart[existingIndex].quantity += item.quantity;
-  } else {
-    cart.push({ ...item });
-  }
-
-  saveCart();
-  updateCartUI();
-}
-
-function openCart() {
-  cartDrawer.classList.remove("hidden");
-  lockBodyScroll();
-}
-
-function closeCart() {
-  cartDrawer.classList.add("hidden");
-  unlockBodyScroll();
-}
-
-function handleCartAction(action, index) {
-  const item = cart[index];
-  if (!item) return;
-
-  if (action === "increase") {
-    item.quantity += 1;
-  }
-
-  if (action === "decrease") {
-    item.quantity -= 1;
-    if (item.quantity <= 0) {
-      cart.splice(index, 1);
-    }
-  }
-
-  if (action === "remove") {
-    cart.splice(index, 1);
-  }
-
-  saveCart();
-  updateCartUI();
-}
-
-function checkoutCart() {
-  if (!cart.length) return;
-
-  closeCart();
-
-  const combinedOrder = {
-    name: "Cart Order",
-    category: "Multiple Items",
-    price: "",
-    description: cart.map(item =>
-      `Item: ${item.name}
-Category: ${item.category}
-Price: ${item.price}
-Quantity: ${item.quantity}
-${item.accompaniment ? `Accompaniment: ${item.accompaniment}` : ""}
-${item.note ? `Special instructions: ${item.note}` : ""}`
-    ).join("\n\n")
-  };
-
-  openOrderPicker(combinedOrder);
-}
-
 function initMagneticButtons() {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReducedMotion) return;
@@ -719,41 +813,39 @@ function initMagneticButtons() {
   });
 }
 
-menuGrid?.addEventListener("click", (event) => {
-  // ADD TO CART
+qtyMinus?.addEventListener("click", () => {
+  const current = parseInt(orderQuantity.value || "1", 10);
+  orderQuantity.value = Math.max(1, current - 1);
+});
+
+qtyPlus?.addEventListener("click", () => {
+  const current = parseInt(orderQuantity.value || "1", 10);
+  orderQuantity.value = current + 1;
+});
+
+menuGrid?.addEventListener("click", event => {
   const addBtn = event.target.closest(".add-cart-trigger");
   if (addBtn) {
-    const item = {
-      name: addBtn.dataset.item,
-      category: addBtn.dataset.category,
-      price: addBtn.dataset.price,
-      description: addBtn.dataset.description,
-      image: addBtn.dataset.image,
-      quantity: 1,
-      accompaniment: "",
-      note: ""
-    };
+    const item = getItemByName(addBtn.dataset.name);
+    if (!item) return;
 
-    addToCart(item);
+    addToCart({
+      ...item,
+      quantity: 1,
+      accompaniment: "None",
+      note: "",
+      branch: ""
+    });
     return;
   }
 
-  // ORDER BUTTON
   const orderBtn = event.target.closest(".order-trigger");
   if (orderBtn) {
-    openOrderForm({
-      name: orderBtn.dataset.item,
-      category: orderBtn.dataset.category,
-      price: orderBtn.dataset.price,
-      description: orderBtn.dataset.description
-    });
+    const item = getItemByName(orderBtn.dataset.name);
+    if (!item) return;
+    openOrderForm(item);
   }
 });
-
-cartFab?.addEventListener("click", openCart);
-closeCartBtn?.addEventListener("click", closeCart);
-cartDrawerBackdrop?.addEventListener("click", closeCart);
-checkoutCartBtn?.addEventListener("click", checkoutCart);
 
 cartItems?.addEventListener("click", event => {
   const button = event.target.closest("[data-action]");
@@ -761,7 +853,10 @@ cartItems?.addEventListener("click", event => {
 
   const action = button.dataset.action;
   const index = Number(button.dataset.index);
-  handleCartAction(action, index);
+
+  if (action === "increase") changeCartQty(index, 1);
+  if (action === "decrease") changeCartQty(index, -1);
+  if (action === "remove") removeCartItem(index);
 });
 
 searchInput?.addEventListener("input", e => {
@@ -777,20 +872,35 @@ document.querySelectorAll(".sidebar-nav a").forEach(link => {
   link.addEventListener("click", closeSidebar);
 });
 
+cartFab?.addEventListener("click", openCart);
+closeCartBtn?.addEventListener("click", closeCart);
+cartDrawerBackdrop?.addEventListener("click", closeCart);
+checkoutCartBtn?.addEventListener("click", checkoutCart);
+clearCartBtn?.addEventListener("click", clearCart);
+
+continueOrderBtn?.addEventListener("click", submitSingleOrder);
+orderFormBackdrop?.addEventListener("click", closeOrderForm);
+closeOrderFormBtn?.addEventListener("click", closeOrderForm);
+
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeSidebar();
+  if (e.key === "Escape") {
+    closeSidebar();
+    closeCart();
+    closeOrderForm();
+    closeMobileCategoryDropdown();
+  }
 });
 
 handleThemeToggle(themeToggle);
 handleThemeToggle(themeToggleSidebar);
 
-createChips();
+heroItemCount.textContent = `${menuItems.length}+`;
+renderChips();
 renderMenu();
 syncMobileCategoryChips();
+initDesktopMenuGroups();
+initMobileBottomNav();
 initTheme();
 initReveal();
 initMagneticButtons();
-initDesktopMenuGroups();
-initMobileBottomNav();
-
 updateCartUI();
