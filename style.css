@@ -434,6 +434,7 @@ body.light-mode .glass-soft {
 }
 
 .sidebar-nav {
+  margin-top: 12px; /* 👈 adjust 12–20px */
   display: flex;
   flex-direction: column;
   gap: 10px;
