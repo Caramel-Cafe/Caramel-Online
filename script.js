@@ -479,28 +479,41 @@ function updateCartUI() {
 
   cartFab.classList.remove("hidden");
 
-  cartItems.innerHTML = cart
-    .map((item, index) => `
-      <div class="cart-item">
-        <img src="${item.image || "https://via.placeholder.com/200x200?text=Menu"}" alt="${item.name}">
-        <div>
-          <p class="cart-item-name">${item.name}</p>
-          <div class="cart-item-meta">
-            ${formatPrice(item.price)} • Qty ${item.quantity}<br>
-            ${item.branch ? `Branch: ${item.branch}<br>` : ""}
-            ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
-            ${item.note ? `Note: ${item.note}` : ""}
-          </div>
+cartItems.innerHTML = cart
+  .map((item, index) => `
+    <div class="cart-item">
+      <img src="${item.image || "https://via.placeholder.com/200x200?text=Menu"}" alt="${item.name}">
+      <div>
+        <p class="cart-item-name">${item.name}</p>
+        <div class="cart-item-meta">
+          ${formatPrice(item.price)} • Qty ${item.quantity}<br>
+          ${item.branch ? `Branch: ${item.branch}<br>` : ""}
+          ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
+        </div>
 
-          <div class="cart-item-actions">
-            <button class="cart-qty-btn" data-action="decrease" data-index="${index}">−</button>
-            <button class="cart-qty-btn" data-action="increase" data-index="${index}">+</button>
-            <button class="cart-remove-btn" data-action="remove" data-index="${index}">Remove</button>
-          </div>
+        <div class="cart-item-note">
+          <textarea
+            class="cart-note-input"
+            data-index="${index}"
+            placeholder="Add note (e.g. no onions, extra spicy)"
+          >${item.note || ""}</textarea>
+        </div>
+
+        <div class="cart-item-actions">
+          <button class="cart-qty-btn" data-action="decrease" data-index="${index}">−</button>
+          <button class="cart-qty-btn" data-action="increase" data-index="${index}">+</button>
+          <button class="cart-remove-btn" data-action="remove" data-index="${index}">Remove</button>
         </div>
       </div>
-    `)
-    .join("");
+    </div>
+  `)
+  .join("");
+}
+
+function updateCartNote(index, value) {
+  if (!cart[index]) return;
+  cart[index].note = value;
+  saveCart();
 }
 
 function openCart() {
@@ -680,6 +693,14 @@ function initMagneticButtons() {
     });
   });
 }
+
+cartItems?.addEventListener("input", event => {
+  const noteInput = event.target.closest(".cart-note-input");
+  if (!noteInput) return;
+
+  const index = Number(noteInput.dataset.index);
+  updateCartNote(index, noteInput.value);
+});
 
 qtyMinus?.addEventListener("click", () => {
   const current = parseInt(orderQuantity.value || "1", 10);
