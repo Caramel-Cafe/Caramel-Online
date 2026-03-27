@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Caramel Café — Menu</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>Caramel Café — Digital Menu</title>
   <meta
     name="description"
-    content="Caramel Café digital menu. Browse coffee, food, juices, desserts, and more."
+    content="Caramel Café digital menu. Browse coffee, food, juices, desserts, and order easily on WhatsApp."
   />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,18 +24,11 @@
   <div class="bg-orb bg-orb-2"></div>
   <div class="bg-grid"></div>
 
-              <button class="icon-btn hamburger-btn" id="openSidebar" aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-  
-<div class="desktop-menu-groups" id="desktopMenuGroups">
-  <button type="button" class="desktop-menu-group-btn active" data-menu-group="Main Menu">Main Menu</button>
-  <button type="button" class="desktop-menu-group-btn" data-menu-group="Breakfast Menu">Breakfast</button>
-  <button type="button" class="desktop-menu-group-btn" data-menu-group="Kids Menu">Kids Menu</button>
-  <button type="button" class="desktop-menu-group-btn" data-menu-group="Drinks Menu">Drinks</button>
-</div>
+  <button class="icon-btn hamburger-btn" id="openSidebar" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
   <aside class="sidebar-overlay" id="sidebarOverlay"></aside>
 
@@ -55,8 +51,7 @@
       <a href="#contact">Contact</a>
       <a href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer">WhatsApp Order</a>
     </nav>
-  
-    
+
     <div class="sidebar-section">
       <p class="sidebar-label">Appearance</p>
       <button class="theme-toggle sidebar-theme-toggle" id="themeToggleSidebar" type="button">
@@ -65,12 +60,11 @@
       </button>
     </div>
   </aside>
-  
+
   <div class="page-shell" id="top">
     <header class="hero glass reveal reveal-up">
       <nav class="topbar">
         <div class="topbar-left">
-
           <div class="brand">
             <div class="brand-badge">C</div>
             <div>
@@ -93,11 +87,11 @@
       <div class="hero-grid">
         <div class="hero-copy">
           <div class="pill reveal reveal-up delay-1">Freshly brewed • Daily prepared</div>
+
           <h2 class="reveal reveal-up delay-2">
-            Tastes good,
-            <span>Sets the mood</span>
-            cheers
+            Tastes good, <span>sets the mood</span>
           </h2>
+
           <p class="reveal reveal-up delay-3">
             Discover drinks, food, sweets, and quick bites in a clean,
             premium layout designed to feel fast, soft, and easy to browse.
@@ -110,7 +104,7 @@
 
           <div class="hero-stats reveal reveal-up delay-5">
             <div class="stat-card glass-soft">
-              <strong>40+</strong>
+              <strong id="heroItemCount">0+</strong>
               <span>Menu items</span>
             </div>
             <div class="stat-card glass-soft">
@@ -144,11 +138,11 @@
                 </div>
                 <div class="mini-card tilt-card">
                   <p>Chicken Burger</p>
-                  <span>12,000 UGX</span>
+                  <span>18,000 UGX</span>
                 </div>
                 <div class="mini-card tilt-card">
                   <p>Mango Juice</p>
-                  <span>6,000 UGX</span>
+                  <span>9,000 UGX</span>
                 </div>
               </div>
             </div>
@@ -165,6 +159,8 @@
           <p class="eyebrow">Explore</p>
           <h3>Browse the menu</h3>
         </div>
+
+        <div class="desktop-menu-groups" id="desktopMenuGroups"></div>
 
         <div class="toolbar">
           <div class="search-wrap glass-soft">
@@ -184,18 +180,13 @@
             />
           </div>
 
-<div class="mobile-category-wrap" id="categoryBar">
-  <div class="mobile-category-dropdown hidden" id="mobileCategoryDropdown">
-    <div class="mobile-category-list" id="mobileCategoryChips"></div>
-  </div>
-</div>
-          
           <div class="category-chips" id="categoryChips"></div>
         </div>
       </section>
 
       <section class="menu-section">
         <div class="menu-grid" id="menu-grid"></div>
+
         <div class="empty-state hidden glass-soft" id="emptyState">
           <h4>No items found</h4>
           <p>Try another search or choose a different category.</p>
@@ -209,111 +200,101 @@
         <p>Fresh drinks, comfort food, and sweet moments.</p>
       </div>
 
-      <a class="whatsapp-btn magnetic" href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer">
+      <a
+        class="whatsapp-btn magnetic"
+        href="https://wa.me/256700000000"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Order on WhatsApp
       </a>
     </footer>
   </div>
 
+  <!-- Mobile Bottom Nav -->
+  <div class="mobile-bottom-nav" id="mobileBottomNav"></div>
+
+  <!-- Mobile Category Popup -->
+  <div class="mobile-category-dropdown" id="mobileCategoryDropdown">
+    <div class="mobile-category-list" id="mobileCategoryChips"></div>
+  </div>
+
+  <!-- Cart FAB -->
   <button id="cartFab" class="cart-fab hidden" type="button">
-  🛒 Cart (<span id="cartCount">0</span>)
-</button>
-
-<div id="cartDrawer" class="cart-drawer hidden">
-  <div class="cart-drawer-backdrop"></div>
-
-  <div class="cart-drawer-panel">
-    <div class="cart-header">
-      <h3>Your Cart</h3>
-      <button id="closeCartBtn" class="cart-close" type="button">&times;</button>
-    </div>
-
-    <div id="cartItems" class="cart-items"></div>
-
-    <div class="cart-footer">
-      <div class="cart-summary">
-        <strong>Total Items:</strong>
-        <span id="cartTotalItems">0</span>
-      </div>
-      <button id="checkoutCartBtn" class="primary-btn" type="button">
-        Checkout on WhatsApp
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="order-form-backdrop hidden" id="orderFormBackdrop"></div>
-
-<div class="order-form-modal hidden" id="orderFormModal">
-  <div class="order-picker-head">
-    <h3>Customize your order</h3>
-    <button type="button" class="icon-btn" id="closeOrderForm" aria-label="Close order form">✕</button>
-  </div>
-
-  <div class="order-form-summary" id="orderFormSummary"></div>
-
-  <div class="order-form-fields">
-<label class="order-field">
-  <span>Quantity</span>
-  <div class="quantity-stepper">
-    <button type="button" class="qty-btn" id="qtyMinus">−</button>
-    <input type="number" id="orderQuantity" min="1" value="1">
-    <button type="button" class="qty-btn" id="qtyPlus">+</button>
-  </div>
-</label>
-
-<label class="order-field">
-  <span>Accompaniment</span>
-  <div class="accompaniment-options" id="orderAccompanimentOptions"></div>
-  <input type="hidden" id="orderAccompaniment" value="None">
-</label>
-
-    <label class="order-field">
-      <span>Special instructions</span>
-      <textarea id="orderNote" rows="4" placeholder="Optional note..."></textarea>
-    </label>
-  </div>
-
-  <button type="button" class="menu-order-btn order-continue-btn" id="continueOrderBtn">
-    Continue
+    🛒 Cart (<span id="cartCount">0</span>)
   </button>
-</div>
-  <div class="order-picker-backdrop hidden" id="orderPickerBackdrop"></div>
 
-<div class="order-picker hidden" id="orderPicker">
-  <div class="order-picker-head">
-    <h3>Choose who should take this order</h3>
-    <button type="button" class="icon-btn" id="closeOrderPicker" aria-label="Close order picker">✕</button>
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="cart-drawer hidden">
+    <div class="cart-drawer-backdrop"></div>
+
+    <div class="cart-drawer-panel">
+      <div class="cart-header">
+        <h3>Your Cart</h3>
+        <button id="closeCartBtn" class="cart-close" type="button">&times;</button>
+      </div>
+
+      <div id="cartItems" class="cart-items"></div>
+
+      <div class="cart-footer">
+        <div class="cart-summary">
+          <div><strong>Total Items:</strong> <span id="cartTotalItems">0</span></div>
+          <div><strong>Total:</strong> <span id="cartTotalPrice">0 UGX</span></div>
+        </div>
+
+        <div class="cart-footer-actions">
+          <button id="clearCartBtn" class="secondary-btn" type="button">Clear Cart</button>
+          <button id="checkoutCartBtn" class="primary-btn" type="button">
+            Checkout on WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <p class="order-picker-text" id="orderPickerText">
-    Select who should continue with this order.
-  </p>
+  <!-- Order Modal -->
+  <div class="order-form-backdrop hidden" id="orderFormBackdrop"></div>
 
-  <div class="order-picker-list" id="orderPickerList"></div>
-</div>
-<!-- Mobile floating bottom bar -->
-<div class="mobile-bottom-nav" id="mobileBottomNav">
-  <button class="mobile-bottom-link active" data-menu-group="all">All</button>
-  <button class="mobile-bottom-link" data-menu-group="coffee">Coffee</button>
-  <button class="mobile-bottom-link" data-menu-group="food">Food</button>
-  <button class="mobile-bottom-link" data-menu-group="dessert">Dessert</button>
-</div>
+  <div class="order-form-modal hidden" id="orderFormModal">
+    <div class="order-picker-head">
+      <h3>Customize your order</h3>
+      <button type="button" class="icon-btn" id="closeOrderForm" aria-label="Close order form">✕</button>
+    </div>
 
-<!-- Mobile popup categories -->
-<div class="mobile-category-dropdown" id="mobileCategoryDropdown">
-  <div class="mobile-category-list" id="mobileCategoryList"></div>
-</div>
+    <div class="order-form-summary" id="orderFormSummary"></div>
 
-<!-- Desktop side menu -->
-<div class="desktop-side-menu" id="desktopSideMenu">
-  <button class="active" data-menu-group="all">All</button>
-  <button data-menu-group="coffee">Coffee</button>
-  <button data-menu-group="food">Food</button>
-  <button data-menu-group="dessert">Dessert</button>
-</div>
-  
-<script src="menu.js" defer></script>
-<script src="script.js" defer></script>
+    <div class="order-form-fields">
+      <label class="order-field">
+        <span>Branch</span>
+        <select id="orderBranch"></select>
+      </label>
+
+      <label class="order-field">
+        <span>Quantity</span>
+        <div class="quantity-stepper">
+          <button type="button" class="qty-btn" id="qtyMinus">−</button>
+          <input type="number" id="orderQuantity" min="1" value="1" />
+          <button type="button" class="qty-btn" id="qtyPlus">+</button>
+        </div>
+      </label>
+
+      <label class="order-field">
+        <span>Accompaniment</span>
+        <div class="accompaniment-options" id="orderAccompanimentOptions"></div>
+        <input type="hidden" id="orderAccompaniment" value="None" />
+      </label>
+
+      <label class="order-field">
+        <span>Special instructions</span>
+        <textarea id="orderNote" rows="4" placeholder="Optional note..."></textarea>
+      </label>
+    </div>
+
+    <button type="button" class="menu-order-btn order-continue-btn" id="continueOrderBtn">
+      Order on WhatsApp
+    </button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
