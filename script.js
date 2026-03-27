@@ -60,8 +60,6 @@ let activeCategory = "All";
 let searchTerm = "";
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let activeMenuGroup = "Breakfast Menu";
-
 const menuGroups = {
   "Breakfast Menu": ["Breakfast Menu"],
 
