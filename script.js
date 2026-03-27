@@ -96,6 +96,7 @@ const menuGroups = {
   ]
 };
 
+
 function getCategories(items) {
   const allowedCategories = menuGroups[activeMenuGroup] || [];
   return ["All", ...allowedCategories];
