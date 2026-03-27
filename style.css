@@ -2697,3 +2697,134 @@ body.light-mode .cart-footer {
     display: none !important;
   }
 }
+/* MOBILE FLOATING BOTTOM BAR */
+.mobile-bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 520px;
+  background: rgba(20, 20, 20, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 9999;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.mobile-bottom-link {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #fff;
+  padding: 12px 10px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.mobile-bottom-link.active,
+.mobile-bottom-link:hover {
+  background: #c49b63;
+  color: #111;
+}
+
+/* CATEGORY POPUP */
+.mobile-category-dropdown {
+  position: fixed;
+  left: 50%;
+  bottom: 88px;
+  transform: translateX(-50%) translateY(10px);
+  width: calc(100% - 24px);
+  max-width: 520px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s ease;
+}
+
+.mobile-category-dropdown.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.mobile-category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mobile-category-chip {
+  border: none;
+  background: #f3f3f3;
+  padding: 10px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mobile-category-chip.active {
+  background: #c49b63;
+  color: #111;
+}
+
+/* DESKTOP SIDEBAR */
+.desktop-side-menu {
+  position: fixed;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.desktop-side-menu button {
+  border: none;
+  background: rgba(20,20,20,0.92);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  transition: 0.25s ease;
+}
+
+.desktop-side-menu button.active,
+.desktop-side-menu button:hover {
+  background: #c49b63;
+  color: #111;
+}
+
+/* RESPONSIVE */
+@media (min-width: 992px) {
+  .mobile-bottom-nav,
+  .mobile-category-dropdown {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .desktop-side-menu {
+    display: none;
+  }
+
+  body {
+    padding-bottom: 110px; /* prevents content from hiding behind floating bar */
+  }
+}
