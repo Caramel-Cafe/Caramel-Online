@@ -264,32 +264,49 @@
 
     <div class="order-form-summary" id="orderFormSummary"></div>
 
-    <div class="order-form-fields">
-      <label class="order-field">
-        <span>Branch</span>
-        <select id="orderBranch"></select>
-      </label>
+<div class="order-form-fields">
+  <label class="order-field">
+    <span>Branch</span>
+    <select id="orderBranch"></select>
+  </label>
 
-      <label class="order-field">
-        <span>Quantity</span>
-        <div class="quantity-stepper">
-          <button type="button" class="qty-btn" id="qtyMinus">−</button>
-          <input type="number" id="orderQuantity" min="1" value="1" />
-          <button type="button" class="qty-btn" id="qtyPlus">+</button>
-        </div>
-      </label>
-
-      <label class="order-field">
-        <span>Accompaniment</span>
-        <div class="accompaniment-options" id="orderAccompanimentOptions"></div>
-        <input type="hidden" id="orderAccompaniment" value="None" />
-      </label>
-
-      <label class="order-field">
-        <span>Special instructions</span>
-        <textarea id="orderNote" rows="4" placeholder="Optional note..."></textarea>
-      </label>
+  <label class="order-field">
+    <span>Quantity</span>
+    <div class="quantity-stepper">
+      <button type="button" class="qty-btn" id="qtyMinus">−</button>
+      <input type="number" id="orderQuantity" min="1" value="1" />
+      <button type="button" class="qty-btn" id="qtyPlus">+</button>
     </div>
+  </label>
+
+  <label class="order-field">
+    <span>Order Type</span>
+    <select id="orderType">
+      <option value="Pickup">Pickup</option>
+      <option value="Delivery">Delivery</option>
+    </select>
+  </label>
+
+  <label class="order-field hidden" id="deliveryAddressWrap">
+    <span>Delivery Address</span>
+    <textarea
+      id="deliveryAddress"
+      rows="3"
+      placeholder="Enter delivery location..."
+    ></textarea>
+  </label>
+
+  <label class="order-field">
+    <span>Accompaniment</span>
+    <div class="accompaniment-options" id="orderAccompanimentOptions"></div>
+    <input type="hidden" id="orderAccompaniment" value="None" />
+  </label>
+
+  <label class="order-field">
+    <span>Special instructions</span>
+    <textarea id="orderNote" rows="4" placeholder="Optional note..."></textarea>
+  </label>
+</div>
 
     <button type="button" class="menu-order-btn order-continue-btn" id="continueOrderBtn">
       Order on WhatsApp
