@@ -91,9 +91,25 @@
             premium layout designed to feel fast, soft, and easy to browse.
           </p>
 
+<div class="hero-location">
+  <label>📍 Deliver to:</label>
+  <input 
+    type="text" 
+    id="heroLocationInput" 
+    placeholder="Enter your location..." 
+    autocomplete="off"
+  />
+  <div id="heroLocationSuggestions" class="location-suggestions hidden"></div>
+
+  <label class="current-location-check">
+    <input type="checkbox" id="heroUseCurrentLocation">
+    <span>Use my current location</span>
+  </label>
+</div>
+          
           <div class="hero-actions reveal reveal-up delay-4">
-            <a class="primary-btn magnetic" href="#menu-grid">View Menu</a>
-            <a class="secondary-btn magnetic" href="#contact">Contact</a>
+<a class="primary-btn magnetic" id="startOrderBtn">Order Now</a>
+<a class="secondary-btn magnetic" href="#menu-grid">Browse Menu</a>
           </div>
 
           <div class="hero-stats reveal reveal-up delay-5">
@@ -125,19 +141,7 @@
               <div class="preview-line shimmer"></div>
               <div class="preview-line shimmer"></div>
 
-              <div class="preview-cards">
-                <div class="mini-card tilt-card">
-                  <p>Signature Latte</p>
-                  <span>7,500 UGX</span>
-                </div>
-                <div class="mini-card tilt-card">
-                  <p>Chicken Burger</p>
-                  <span>18,000 UGX</span>
-                </div>
-                <div class="mini-card tilt-card">
-                  <p>Mango Juice</p>
-                  <span>9,000 UGX</span>
-                </div>
+              <div class="preview-cards" id="heroBestSellers"></div>
               </div>
             </div>
           </div>
