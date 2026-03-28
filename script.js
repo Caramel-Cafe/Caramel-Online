@@ -43,14 +43,17 @@ const continueOrderBtn = document.getElementById("continueOrderBtn");
 const closeOrderFormBtn = document.getElementById("closeOrderForm");
 const qtyMinus = document.getElementById("qtyMinus");
 const qtyPlus = document.getElementById("qtyPlus");
+const orderType = document.getElementById("orderType");
+const deliveryAddressWrap = document.getElementById("deliveryAddressWrap");
+const deliveryAddress = document.getElementById("deliveryAddress");
 
 const orderContacts = [
-  { name: "Acacia", number: "256794417777" },
-  { name: "Munyonyo", number: "256759859795" },
-  { name: "Lubowa", number: "256709769548" },
-  { name: "Ntinda", number: "256766550001" },
-  { name: "Naalya", number: "256781800800" },
-  { name: "Kansanga", number: "256709410410" }
+  { name: "Acacia", number: "256794417777", lat: 0.3380, lng: 32.6090 },
+  { name: "Munyonyo", number: "256759859795", lat: 0.2400, lng: 32.6250 },
+  { name: "Lubowa", number: "256709769548", lat: 0.2750, lng: 32.5580 },
+  { name: "Ntinda", number: "256766550001", lat: 0.3540, lng: 32.6220 },
+  { name: "Naalya", number: "256781800800", lat: 0.3900, lng: 32.6480 },
+  { name: "Kansanga", number: "256709410410", lat: 0.3000, lng: 32.6100 }
 ];
 
 const menuGroups = {
@@ -176,6 +179,27 @@ function saveCartBranch(value) {
   localStorage.setItem("caramel-cart-branch", value);
 }
 
+function isMorningBreakfastAllowed() {
+  const now = new Date();
+  const hour = now.getHours();
+  return hour >= 6 && hour < 12; // 6am to 11:59am
+}
+
+function canOrderItem(item) {
+  if (item.category === "Breakfast Menu" && item.breakfastWithDrink) {
+    return isMorningBreakfastAllowed();
+  }
+  return true;
+}
+
+function toggleDeliveryAddress() {
+  if (!orderType || !deliveryAddressWrap) return;
+  const isDelivery = orderType.value === "Delivery";
+  deliveryAddressWrap.classList.toggle("hidden", !isDelivery);
+}
+
+orderType?.addEventListener("change", toggleDeliveryAddress);
+
 function openSidebar() {
   sidebar.classList.add("open");
   sidebarOverlay.classList.add("show");
@@ -234,6 +258,74 @@ function syncDesktopGroups() {
   desktopMenuGroups.querySelectorAll(".desktop-menu-group-btn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.menuGroup === activeMenuGroup);
   });
+}
+function toRad(value) {
+  return (value * Math.PI) / 180;
+}
+
+function getDistanceKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function findNearestBranch(userLat, userLng) {
+  let nearest = null;
+  let smallestDistance = Infinity;
+
+  orderContacts.forEach(branch => {
+    if (typeof branch.lat !== "number" || typeof branch.lng !== "number") return;
+
+    const distance = getDistanceKm(userLat, userLng, branch.lat, branch.lng);
+
+    if (distance < smallestDistance) {
+      smallestDistance = distance;
+      nearest = branch;
+    }
+  });
+
+  return nearest;
+}
+function suggestNearestBranch() {
+  if (!navigator.geolocation) return;
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const { latitude, longitude } = position.coords;
+      const nearest = findNearestBranch(latitude, longitude);
+
+      if (!nearest) return;
+
+      selectedCartBranch = nearest.name;
+      localStorage.setItem("caramel-cart-branch", nearest.name);
+
+      if (cartBranchSelect) {
+        cartBranchSelect.value = nearest.name;
+      }
+
+      if (orderBranch && !orderBranch.value) {
+        orderBranch.value = nearest.name;
+      }
+    },
+    error => {
+      console.log("Location not available:", error.message);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 300000
+    }
+  );
 }
 
 function initMobileBottomNav() {
@@ -360,6 +452,12 @@ function filterMenu() {
 }
 
 function createCard(item) {
+  const allowed = canOrderItem(item);
+  const blockedText =
+    item.category === "Breakfast Menu" && item.breakfastWithDrink && !allowed
+      ? "Available with drink in morning only"
+      : "";
+
   return `
     <article class="menu-card reveal-card">
       <div class="menu-thumb">
@@ -369,7 +467,6 @@ function createCard(item) {
             : ""
         }
         ${item.tag ? `<span class="menu-badge">${item.tag}</span>` : ""}
-        
       </div>
 
       <div class="menu-body">
@@ -381,6 +478,8 @@ function createCard(item) {
         <h4 class="menu-name">${item.name}</h4>
         <p class="menu-desc">${item.description}</p>
 
+        ${blockedText ? `<p class="menu-desc" style="margin-top:8px;color:#ff9b9b;">${blockedText}</p>` : ""}
+
         <div class="menu-footer">
           <span class="menu-tag">${item.tag || "Fresh pick"}</span>
 
@@ -389,6 +488,7 @@ function createCard(item) {
               class="menu-order-btn add-cart-trigger"
               type="button"
               data-name="${item.name}"
+              ${!allowed ? "disabled" : ""}
             >
               Add to Cart
             </button>
@@ -397,6 +497,7 @@ function createCard(item) {
               class="menu-order-btn order-trigger"
               type="button"
               data-name="${item.name}"
+              ${!allowed ? "disabled" : ""}
             >
               Order Now
             </button>
@@ -406,6 +507,37 @@ function createCard(item) {
     </article>
   `;
 }
+
+menuGrid?.addEventListener("click", event => {
+  const addBtn = event.target.closest(".add-cart-trigger");
+  if (addBtn) {
+    const item = getItemByName(addBtn.dataset.name);
+    if (!item || !canOrderItem(item)) {
+      alert("This breakfast item with a drink is available in the morning only.");
+      return;
+    }
+
+    addToCart({
+      ...item,
+      quantity: 1,
+      accompaniment: "None",
+      note: "",
+      branch: ""
+    });
+    return;
+  }
+
+  const orderBtn = event.target.closest(".order-trigger");
+  if (orderBtn) {
+    const item = getItemByName(orderBtn.dataset.name);
+    if (!item || !canOrderItem(item)) {
+      alert("This breakfast item with a drink is available in the morning only.");
+      return;
+    }
+    openOrderForm(item);
+  }
+});
+
 
 function renderMenu() {
   const filtered = filterMenu();
@@ -607,6 +739,11 @@ function openOrderForm(item) {
   orderFormModal.classList.remove("hidden");
   orderFormBackdrop.classList.remove("hidden");
   setBodyLock(true);
+
+if (orderType) orderType.value = "Pickup";
+if (deliveryAddress) deliveryAddress.value = "";
+toggleDeliveryAddress();
+  
 }
 
 function closeOrderForm() {
@@ -625,10 +762,18 @@ function submitSingleOrder() {
   const quantity = Math.max(1, Number(orderQuantity.value) || 1);
   const accompaniment = orderAccompaniment.value || "None";
   const note = orderNote.value.trim();
+  const type = orderType.value;
+  const address = deliveryAddress.value.trim();
 
   if (!branchName) {
     alert("Please select a branch before ordering.");
     orderBranch.focus();
+    return;
+  }
+
+  if (type === "Delivery" && !address) {
+    alert("Please enter a delivery address.");
+    deliveryAddress.focus();
     return;
   }
 
@@ -644,6 +789,8 @@ function submitSingleOrder() {
     `Category: ${selectedOrderItem.category}\n` +
     `Price: ${formatPrice(selectedOrderItem.price)}\n` +
     `Quantity: ${quantity}\n` +
+    `Order Type: ${type}\n` +
+    `Delivery Address: ${type === "Delivery" ? address : "N/A"}\n` +
     `Accompaniment: ${accompaniment}\n` +
     `Special instructions: ${note || "None"}\n`
   );
@@ -760,30 +907,6 @@ qtyPlus?.addEventListener("click", () => {
   orderQuantity.value = current + 1;
 });
 
-menuGrid?.addEventListener("click", event => {
-  const addBtn = event.target.closest(".add-cart-trigger");
-  if (addBtn) {
-    const item = getItemByName(addBtn.dataset.name);
-    if (!item) return;
-
-    addToCart({
-      ...item,
-      quantity: 1,
-      accompaniment: "None",
-      note: "",
-      branch: ""
-    });
-    return;
-  }
-
-  const orderBtn = event.target.closest(".order-trigger");
-  if (orderBtn) {
-    const item = getItemByName(orderBtn.dataset.name);
-    if (!item) return;
-    openOrderForm(item);
-  }
-});
-
 cartItems?.addEventListener("click", event => {
   const button = event.target.closest("[data-action]");
   if (!button) return;
@@ -841,3 +964,4 @@ initTheme();
 initReveal();
 initMagneticButtons();
 updateCartUI();
+suggestNearestBranch();
