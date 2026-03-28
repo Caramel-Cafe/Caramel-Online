@@ -4,7 +4,8 @@ const menuItems = [
     name: "CARAMEL BREAKY",
     price: 36000,
     description: "Our signature breakfast burritos with curried chicken strips, peppers, onions, omelette, pair of sausage, sweet and spicy potatoes with garden salad",
-    image: "images/Caramel Breaky.webp"
+    image: "images/Caramel Breaky.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
@@ -12,14 +13,16 @@ const menuItems = [
     price: 32000,
     description: "Spanish omelette is served with our curried creamy spinach, avocado slice, house gourmet bread, bread, and fresh homemade jam.",
     tag: "Best Seller",
-    image: "images/Farmers Breakfast.webp"
+    image: "images/Farmers Breakfast.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "CARAMEL CHICKEN NUGGETS WRAP",
     price: 32000,
     description: "Homemade tortilla, lettuce, tomatoes, red onion, and chicken nuggets are served with chopped salad, egg of your choice, and baked beans.",
-    image: "images/CARAMEL CHICKEN NUGGETS WRAP.png"
+    image: "images/CARAMEL CHICKEN NUGGETS WRAP.png",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
