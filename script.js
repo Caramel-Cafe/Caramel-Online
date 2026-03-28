@@ -927,13 +927,13 @@ function addToCart(item) {
   if (existingIndex >= 0) {
     cart[existingIndex].quantity += item.quantity || 1;
   } else {
-    cart.push({
-      ...item,
-      quantity: item.quantity || 1,
-      accompaniment: item.accompaniment || "None",
-      note: item.note || "",
-      branch: item.branch || ""
-    });
+cart.push({
+  ...item,
+  quantity: item.quantity || 1,
+  accompaniment: item.accompaniment || "None",
+  note: item.note || "",
+  branch: item.branch || ""
+});
   }
 
   saveCart();
