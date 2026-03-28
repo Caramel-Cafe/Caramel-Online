@@ -66,6 +66,24 @@ const orderContacts = [
   { name: "Kansanga", number: "256709410410", lat: 0.3000, lng: 32.6100 }
 ];
 
+const customDeliveryPlaces = [
+  { name: "Ntinda", address: "Ntinda, Kampala", lat: 0.3572, lng: 32.6246 },
+  { name: "Bukoto", address: "Bukoto, Kampala", lat: 0.3476, lng: 32.5940 },
+  { name: "Kololo", address: "Kololo, Kampala", lat: 0.3317, lng: 32.5920 },
+  { name: "Bugolobi", address: "Bugolobi, Kampala", lat: 0.3206, lng: 32.6249 },
+  { name: "Kisugu", address: "Kisugu, Kampala", lat: 0.3025, lng: 32.6104 },
+  { name: "Muyenga", address: "Muyenga, Kampala", lat: 0.2897, lng: 32.6147 },
+  { name: "Kabalagala", address: "Kabalagala, Kampala", lat: 0.2982, lng: 32.6045 },
+  { name: "Kansanga", address: "Kansanga, Kampala", lat: 0.3000, lng: 32.6100 },
+  { name: "Munyonyo", address: "Munyonyo, Kampala", lat: 0.2400, lng: 32.6250 },
+  { name: "Lubowa", address: "Lubowa, Kampala", lat: 0.2750, lng: 32.5580 },
+  { name: "Naalya", address: "Naalya, Kampala", lat: 0.3900, lng: 32.6480 },
+  { name: "Najjera", address: "Najjera, Wakiso", lat: 0.4014, lng: 32.6053 },
+  { name: "Buziga", address: "Buziga, Kampala", lat: 0.2790, lng: 32.6130 },
+  { name: "Makindye", address: "Makindye, Kampala", lat: 0.2890, lng: 32.5830 },
+  { name: "Wandegeya", address: "Wandegeya, Kampala", lat: 0.3368, lng: 32.5702 }
+];
+
 const menuGroups = {
   "Main Menu": [
     "Starters",
@@ -253,39 +271,94 @@ function toggleDeliveryAddress() {
 orderType?.addEventListener("change", toggleDeliveryAddress);
 
 let selectedCartPlaceData = null;
+const cartLocationSuggestions = document.getElementById("cartLocationSuggestions");
 
-function initAutocomplete() {
-  const input = document.getElementById("cartDeliveryAddress");
-  if (!input || !window.google || !google.maps || !google.maps.places) return;
+function renderCartLocationSuggestions(matches) {
+  if (!cartLocationSuggestions) return;
 
-  const autocomplete = new google.maps.places.Autocomplete(input, {
-    fields: ["formatted_address", "geometry", "name"],
-    componentRestrictions: { country: "ug" }
-  });
+  if (!matches.length) {
+    cartLocationSuggestions.classList.add("hidden");
+    cartLocationSuggestions.innerHTML = "";
+    return;
+  }
 
-  autocomplete.addListener("place_changed", () => {
-    const place = autocomplete.getPlace();
-    if (!place.geometry) return;
+  cartLocationSuggestions.innerHTML = matches
+    .map((place, index) => `
+      <button
+        type="button"
+        class="cart-location-suggestion"
+        data-place-index="${index}"
+      >
+        <span class="cart-location-name">${place.name}</span>
+        <span class="cart-location-meta">${place.address}</span>
+      </button>
+    `)
+    .join("");
 
-    const lat = place.geometry.location.lat();
-    const lng = place.geometry.location.lng();
-    const readableAddress = place.formatted_address || place.name || "";
+  cartLocationSuggestions.classList.remove("hidden");
 
-    input.value = readableAddress;
+  cartLocationSuggestions
+    .querySelectorAll(".cart-location-suggestion")
+    .forEach((button, index) => {
+      button.addEventListener("click", () => {
+        const place = matches[index];
 
-    selectedCartPlaceData = {
-      address: readableAddress,
-      lat,
-      lng,
-      mapLink: `https://maps.google.com/?q=${lat},${lng}`
-    };
+        cartDeliveryAddress.value = place.address;
+        selectedCartPlaceData = {
+          address: place.address,
+          lat: place.lat,
+          lng: place.lng,
+          mapLink: `https://maps.google.com/?q=${place.lat},${place.lng}`
+        };
 
-    saveCartDeliveryAddress(selectedCartPlaceData.mapLink);
-    updateCartDeliveryPricing();
-  });
+        saveCartDeliveryAddress(selectedCartPlaceData.mapLink);
+        updateCartDeliveryPricing();
+
+        cartLocationSuggestions.classList.add("hidden");
+      });
+    });
 }
 
-window.addEventListener("load", initAutocomplete);
+function handleCartLocationSearch() {
+  if (!cartDeliveryAddress) return;
+
+  const term = cartDeliveryAddress.value.trim().toLowerCase();
+
+  if (!term) {
+    selectedCartPlaceData = null;
+    saveCartDeliveryAddress("");
+    updateCartDeliveryPricing();
+    renderCartLocationSuggestions([]);
+    return;
+  }
+
+  const matches = customDeliveryPlaces.filter(place => {
+    const text = `${place.name} ${place.address}`.toLowerCase();
+    return text.includes(term);
+  }).slice(0, 6);
+
+  renderCartLocationSuggestions(matches);
+}
+
+cartDeliveryAddress?.addEventListener("input", () => {
+  if (cartUseCurrentLocation?.checked) return;
+  handleCartLocationSearch();
+});
+
+cartDeliveryAddress?.addEventListener("focus", () => {
+  if (cartUseCurrentLocation?.checked) return;
+  handleCartLocationSearch();
+});
+
+document.addEventListener("click", event => {
+  const clickedInside =
+    event.target.closest(".cart-location-picker") ||
+    event.target.closest("#cartLocationSuggestions");
+
+  if (!clickedInside && cartLocationSuggestions) {
+    cartLocationSuggestions.classList.add("hidden");
+  }
+});
 
 function openSidebar() {
   sidebar.classList.add("open");
@@ -420,8 +493,10 @@ function updateCartDeliveryPricing() {
     return;
   }
 
-  const branch = orderContacts.find(item => item.name === selectedCartBranch);
-  const location = extractLatLngFromGoogleMapsLink(selectedCartDeliveryAddress);
+const branch = orderContacts.find(item => item.name === selectedCartBranch);
+const location = selectedCartPlaceData
+  ? { lat: selectedCartPlaceData.lat, lng: selectedCartPlaceData.lng }
+  : extractLatLngFromGoogleMapsLink(selectedCartDeliveryAddress);
 
   if (!branch || !location) {
     cartDeliverySummary.classList.remove("hidden");
