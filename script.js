@@ -772,10 +772,14 @@ useCurrentLocation?.addEventListener("change", handleCurrentLocationToggle);
 
 function openMobileCategoryDropdown() {
   mobileCategoryDropdown.classList.add("show");
+  cartFab?.classList.add("hidden");
 }
 
 function closeMobileCategoryDropdown() {
   mobileCategoryDropdown.classList.remove("show");
+    if (cart.length > 0) {
+    cartFab?.classList.remove("hidden");
+  }
 }
 
 function renderChips() {
