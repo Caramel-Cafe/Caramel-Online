@@ -519,13 +519,13 @@ function updateOrderDeliveryPricing() {
   selectedOrderDeliveryDistanceKm = null;
   selectedOrderDeliveryFee = 0;
 
-  if (orderType.value !== "Delivery") {
-    orderDeliverySummary.classList.add("hidden");
-    orderDeliveryDistance.textContent = "—";
-    orderDeliveryFee.textContent = "—";
-    orderGrandTotal.textContent = formatPrice(subtotal);
-    return;
-  }
+if (orderType.value !== "Delivery") {
+  orderDeliverySummary.classList.remove("hidden");
+  orderDeliveryDistance.textContent = "Pickup";
+  orderDeliveryFee.textContent = formatPrice(0);
+  orderGrandTotal.textContent = formatPrice(subtotal);
+  return;
+}
 
 const branch = orderContacts.find(item => item.name === orderBranch.value);
 const location = selectedOrderPlaceData
@@ -1417,22 +1417,30 @@ function submitSingleOrder() {
           : `${formatPrice(subtotal)} + delivery fee confirm`)
       : formatPrice(subtotal);
 
-  const message = encodeURIComponent(
-    `Hello ${contact.name}, I would like to order:\n\n` +
-    `Item: ${selectedOrderItem.name}\n` +
-    `Category: ${selectedOrderItem.category}\n` +
-    `Unit Price: ${formatPrice(selectedOrderItem.price)}\n` +
-    `Quantity: ${quantity}\n` +
-    `Subtotal: ${formatPrice(subtotal)}\n` +
-    `Order Type: ${type}\n` +
-    `Delivery Address: ${type === "Delivery" ? address : "N/A"}\n` +
-    `Distance: ${type === "Delivery" && selectedOrderDeliveryDistanceKm !== null ? `${selectedOrderDeliveryDistanceKm.toFixed(1)} km` : "N/A"}\n` +
-    `Delivery Fee: ${deliveryFeeText}\n` +
-    `Grand Total: ${grandTotalText}\n` +
-    `Branch: ${branchName}\n` +
-    `Accompaniment: ${accompaniment}\n` +
-    `Special instructions: ${note || "None"}\n`
+const messageLines = [
+  `Hello ${contact.name}, I would like to order:`,
+  "",
+  `Item: ${selectedOrderItem.name}`,
+  `Category: ${selectedOrderItem.category}`,
+  `Unit Price: ${formatPrice(selectedOrderItem.price)}`,
+  `Quantity: ${quantity}`,
+  `Subtotal: ${formatPrice(subtotal)}`,
+  `Order Type: ${type}`,
+  `Grand Total: ${grandTotalText}`,
+  `Branch: ${branchName}`,
+  `Accompaniment: ${accompaniment}`,
+  `Special instructions: ${note || "None"}`
+];
+
+if (type === "Delivery") {
+  messageLines.splice(8, 0,
+    `Delivery Address: ${address}`,
+    `Distance: ${selectedOrderDeliveryDistanceKm !== null ? `${selectedOrderDeliveryDistanceKm.toFixed(1)} km` : "To be confirmed"}`,
+    `Delivery Fee: ${deliveryFeeText}`
   );
+}
+
+const message = encodeURIComponent(messageLines.join("\n"));
 
   window.open(`https://wa.me/${contact.number}?text=${message}`, "_blank");
   closeOrderForm();
@@ -1483,15 +1491,21 @@ function checkoutCart() {
           : `${formatPrice(subtotal)} + delivery fee confirm`)
       : formatPrice(subtotal);
 
-  const messageLines = [
-    `Hello ${branchContact.name}, I would like to order:`,
-    "",
-    `Order Type: ${selectedCartOrderType}`,
-    `Delivery Address: ${selectedCartOrderType === "Delivery" ? selectedCartDeliveryAddress : "N/A"}`,
-    `Distance: ${selectedCartOrderType === "Delivery" && selectedCartDeliveryDistanceKm !== null ? `${selectedCartDeliveryDistanceKm.toFixed(1)} km` : "N/A"}`,
-    `Delivery Fee: ${deliveryFeeText}`,
-    ""
-  ];
+const messageLines = [
+  `Hello ${branchContact.name}, I would like to order:`,
+  "",
+  `Order Type: ${selectedCartOrderType}`
+];
+
+if (selectedCartOrderType === "Delivery") {
+  messageLines.push(
+    `Delivery Address: ${selectedCartDeliveryAddress}`,
+    `Distance: ${selectedCartDeliveryDistanceKm !== null ? `${selectedCartDeliveryDistanceKm.toFixed(1)} km` : "To be confirmed"}`,
+    `Delivery Fee: ${deliveryFeeText}`
+  );
+}
+
+messageLines.push("");
 
   cart.forEach((item, index) => {
     messageLines.push(
@@ -1653,10 +1667,6 @@ cartOrderType.addEventListener("change", () => {
   } else {
     cartDeliveryWrap.classList.add("hidden");
   }
-});
-
-orderType.addEventListener("change", () => {
-  cartOrderType.value = orderType.value;
 });
 
 orderBranch?.addEventListener("change", updateOrderDeliveryPricing);
