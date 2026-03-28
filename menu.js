@@ -4,6 +4,7 @@ const menuItems = [
     name: "CARAMEL BREAKY",
     price: 36000,
     description: "Our signature breakfast burritos with curried chicken strips, peppers, onions, omelette, pair of sausage, sweet and spicy potatoes with garden salad",
+    tag: "Best Seller",
     image: "images/Caramel Breaky.webp",
     breakfastWithDrink: true
   },
@@ -29,6 +30,7 @@ const menuItems = [
     name: "MUESLI",
     price: 29000,
     description: "Plain Yoghurt, Banana & Pineapple, Granola, Honey & Cashew Nuts/Gnuts",
+    tag: "Best Seller",
     image: "images/Muesli.webp"
   },
   {
@@ -36,6 +38,7 @@ const menuItems = [
     name: "BELGIAN WAFFLE",
     price: 31000,
     description: "freshly made waffles served with seasonal fruits and maple syrup, garnished with icing sugar.",
+    tag: "Best Seller",
     image: "images/Belgian Waffle.webp"
   },
   {
@@ -43,6 +46,7 @@ const menuItems = [
     name: "AMERICAN PANCAKES",
     price: 31000,
     description: "freshly made Pancakes served with seasonal fruits and maple syrup, garnished with icing sugar.",
+    tag: "Best Seller",
     image: "images/American Pancake.webp"
   },
   {
