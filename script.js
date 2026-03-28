@@ -1536,9 +1536,6 @@ function submitSingleOrder() {
     return;
   }
 
-  // keep the rest of your WhatsApp message code below this point unchanged
-}
-
   const subtotal = selectedOrderItem.price * quantity;
 
   const deliveryFeeText =
@@ -1557,33 +1554,38 @@ function submitSingleOrder() {
           : `${formatPrice(subtotal)} + delivery fee confirm`)
       : formatPrice(subtotal);
 
-const messageLines = [
-  `Hello ${contact.name}, I would like to order:`,
-  "",
-  `Item: ${selectedOrderItem.name}`,
-  `Category: ${selectedOrderItem.category}`,
-  `Unit Price: ${formatPrice(selectedOrderItem.price)}`,
-  `Quantity: ${quantity}`,
-  `Subtotal: ${formatPrice(subtotal)}`,
-  `Order Type: ${type}`,
-  `Grand Total: ${grandTotalText}`,
-  `Branch: ${branchName}`,
-  `Accompaniment: ${accompaniment}`,
-  `Special instructions: ${note || "None"}`
-];
+  const messageLines = [
+    `Hello ${contact.name}, I would like to order:`,
+    "",
+    `Item: ${selectedOrderItem.name}`,
+    `Category: ${selectedOrderItem.category}`,
+    `Unit Price: ${formatPrice(selectedOrderItem.price)}`,
+    `Quantity: ${quantity}`,
+    `Subtotal: ${formatPrice(subtotal)}`,
+    `Order Type: ${type}`,
+    `Grand Total: ${grandTotalText}`,
+    `Branch: ${branchName}`,
+    `Accompaniment: ${accompaniment}`,
+    `Special instructions: ${note || "None"}`
+  ];
 
-if (type === "Delivery") {
-  messageLines.splice(8, 0,
-    `Delivery Address: ${address}`,
-    `Distance: ${selectedOrderDeliveryDistanceKm !== null ? `${selectedOrderDeliveryDistanceKm.toFixed(1)} km` : "To be confirmed"}`,
-    `Delivery Fee: ${deliveryFeeText}`
-  );
-}
+  if (type === "Delivery") {
+    messageLines.splice(8, 0,
+      `Delivery Address: ${address}`,
+      `Distance: ${selectedOrderDeliveryDistanceKm !== null ? `${selectedOrderDeliveryDistanceKm.toFixed(1)} km` : "To be confirmed"}`,
+      `Delivery Fee: ${deliveryFeeText}`
+    );
+  }
 
-const message = encodeURIComponent(messageLines.join("\n"));
-
+  const message = encodeURIComponent(messageLines.join("\n"));
   window.open(`https://wa.me/${contact.number}?text=${message}`, "_blank");
   closeOrderForm();
+}
+
+if (!isBranchOpen(selectedCartBranch)) {
+  alert(`${selectedCartBranch} is currently closed. Please choose another open branch.`);
+  cartBranchSelect.focus();
+  return;
 }
 
 function checkoutCart() {
