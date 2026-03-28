@@ -2274,3 +2274,21 @@ textarea:focus {
   border-color: #c08457;
   box-shadow: 0 0 0 3px rgba(192,132,87,0.15);
 }
+body.light-mode .order-form-modal,
+body.light-mode .cart-drawer-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,239,231,0.96));
+  border: 1px solid rgba(97, 67, 45, 0.08);
+  box-shadow: 0 20px 40px rgba(72, 44, 25, 0.12);
+}
+body.light-mode select {
+  background: #fff;
+  color: #21150d;
+  border: 1px solid rgba(97, 67, 45, 0.12);
+}
+body.light-mode textarea {
+  background: #fff;
+  color: #21150d;
+  border: 1px solid rgba(97, 67, 45, 0.12);
+}
+
