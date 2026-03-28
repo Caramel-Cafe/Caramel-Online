@@ -55,6 +55,16 @@ const orderDeliverySummary = document.getElementById("orderDeliverySummary");
 const orderDeliveryDistance = document.getElementById("orderDeliveryDistance");
 const orderDeliveryFee = document.getElementById("orderDeliveryFee");
 const orderGrandTotal = document.getElementById("orderGrandTotal");
+const cartQuickModal = document.getElementById("cartQuickModal");
+const cartQuickBackdrop = document.getElementById("cartQuickBackdrop");
+const closeCartQuickModalBtn = document.getElementById("closeCartQuickModal");
+const cartQuickSummary = document.getElementById("cartQuickSummary");
+const cartQuickAccompaniment = document.getElementById("cartQuickAccompaniment");
+const cartQuickAccompanimentOptions = document.getElementById("cartQuickAccompanimentOptions");
+const cartQuickNote = document.getElementById("cartQuickNote");
+const confirmAddToCartBtn = document.getElementById("confirmAddToCartBtn");
+
+let selectedCartQuickItem = null;
 
 const orderContacts = [
   { name: "Acacia", number: "256794417777", lat: 0.3380, lng: 32.6090 },
@@ -291,6 +301,84 @@ function toggleCartDeliveryFields() {
 function saveCartBranch(value) {
   selectedCartBranch = value;
   localStorage.setItem("caramel-cart-branch", value);
+}
+
+function renderCartQuickAccompanimentOptions(category) {
+  const options = getAccompaniments(category);
+
+  cartQuickAccompanimentOptions.innerHTML = options
+    .map(option => `
+      <button
+        type="button"
+        class="accompaniment-chip ${option === "None" ? "active" : ""}"
+        data-value="${option}"
+      >
+        ${option}
+      </button>
+    `)
+    .join("");
+
+  cartQuickAccompaniment.value = "None";
+
+  cartQuickAccompanimentOptions
+    .querySelectorAll(".accompaniment-chip")
+    .forEach(chip => {
+      chip.addEventListener("click", () => {
+        cartQuickAccompanimentOptions
+          .querySelectorAll(".accompaniment-chip")
+          .forEach(btn => btn.classList.remove("active"));
+
+        chip.classList.add("active");
+        cartQuickAccompaniment.value = chip.dataset.value;
+      });
+    });
+}
+
+function openCartQuickModal(item) {
+  selectedCartQuickItem = item;
+
+  closeCart();
+  closeSidebar();
+  closeMobileCategoryDropdown();
+
+  cartQuickSummary.innerHTML = `
+    <strong>Item:</strong> ${item.name}<br>
+    <strong>Category:</strong> ${item.category}<br>
+    <strong>Price:</strong> ${formatPrice(item.price)}
+  `;
+
+  cartQuickNote.value = "";
+  renderCartQuickAccompanimentOptions(item.category);
+
+  cartQuickModal.classList.remove("hidden");
+  setBodyLock(true);
+}
+
+function closeCartQuickModal() {
+  cartQuickModal.classList.add("hidden");
+  selectedCartQuickItem = null;
+
+  if (
+    orderFormModal.classList.contains("hidden") &&
+    cartDrawer.classList.contains("hidden") &&
+    !sidebar.classList.contains("open")
+  ) {
+    setBodyLock(false);
+  }
+}
+
+function submitQuickAddToCart() {
+  if (!selectedCartQuickItem) return;
+
+  addToCart({
+    ...selectedCartQuickItem,
+    quantity: 1,
+    accompaniment: cartQuickAccompaniment.value || "None",
+    note: cartQuickNote.value.trim(),
+    branch: ""
+  });
+
+  closeCartQuickModal();
 }
 
 function isMorningBreakfastAllowed() {
@@ -990,7 +1078,7 @@ menuGrid?.addEventListener("click", event => {
       return;
     }
 
-openOrderForm(item, "cart");
+openCartQuickModal(item);
 return;
   }
 
@@ -1870,6 +1958,9 @@ clearCartBtn?.addEventListener("click", clearCart);
 continueOrderBtn?.addEventListener("click", submitSingleOrder);
 orderFormBackdrop?.addEventListener("click", closeOrderForm);
 closeOrderFormBtn?.addEventListener("click", closeOrderForm);
+confirmAddToCartBtn?.addEventListener("click", submitQuickAddToCart);
+cartQuickBackdrop?.addEventListener("click", closeCartQuickModal);
+closeCartQuickModalBtn?.addEventListener("click", closeCartQuickModal);
 
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") {
@@ -1894,5 +1985,5 @@ initReveal();
 initMagneticButtons();
 updateCartUI();
 suggestNearestBranch();
-
+closeCartQuickModal();
 
