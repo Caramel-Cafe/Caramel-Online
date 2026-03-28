@@ -7,7 +7,7 @@ const heroItemCount = document.getElementById("heroItemCount");
 const mobileBottomNav = document.getElementById("mobileBottomNav");
 const mobileCategoryDropdown = document.getElementById("mobileCategoryDropdown");
 const mobileCategoryChips = document.getElementById("mobileCategoryChips");
-
+const slice = shuffled.slice(currentIndex, currentIndex + 3);
 const desktopMenuGroups = document.getElementById("desktopMenuGroups");
 
 const sidebar = document.getElementById("sidebar");
@@ -654,6 +654,62 @@ function fillDeliveryAddressFromCurrentLocation() {
     }
   );
 }
+
+console.log("hero container:", document.getElementById("heroBestSellers"));
+console.log("menuItems:", menuItems);
+console.log("best sellers:", menuItems.filter(item => item.tag === "Best Seller"));
+
+document.addEventListener("DOMContentLoaded", () => {
+  const heroContainer = document.getElementById("heroBestSellers");
+
+  if (!heroContainer) {
+    console.log("heroBestSellers container not found");
+    return;
+  }
+
+  if (typeof menuItems === "undefined") {
+    console.log("menuItems is not defined");
+    return;
+  }
+
+  const bestSellers = menuItems.filter(item => item.tag === "Best Seller");
+
+  console.log("Best sellers found:", bestSellers);
+
+  if (!bestSellers.length) {
+    heroContainer.innerHTML = `<div class="mini-card"><p>No best sellers found</p></div>`;
+    return;
+  }
+
+  let currentIndex = 0;
+
+  function renderHeroItems() {
+    heroContainer.innerHTML = "";
+
+    const itemsToShow = [];
+    for (let i = 0; i < 3; i++) {
+      const item = bestSellers[(currentIndex + i) % bestSellers.length];
+      if (item) itemsToShow.push(item);
+    }
+
+    itemsToShow.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "mini-card tilt-card";
+      div.innerHTML = `
+        <p>${item.name}</p>
+        <span>${Number(item.price).toLocaleString()} UGX</span>
+      `;
+      heroContainer.appendChild(div);
+    });
+  }
+
+  renderHeroItems();
+
+  setInterval(() => {
+    currentIndex = (currentIndex + 3) % bestSellers.length;
+    renderHeroItems();
+  }, 3000);
+});
 
 function handleCurrentLocationToggle() {
   if (!useCurrentLocation || !deliveryAddress) return;
