@@ -1381,17 +1381,17 @@ function submitSingleOrder() {
     return;
   }
 
+  if (!type) {
+    alert("Please choose Pickup or Delivery.");
+    orderType.focus();
+    return;
+  }
+
   if (type === "Delivery" && !address) {
     alert("Please enter a delivery address.");
     deliveryAddress.focus();
     return;
   }
-
-  if (!type) {
-  alert("Please choose Pickup or Delivery.");
-  orderType.focus();
-  return;
-}
 
   const contact = orderContacts.find(item => item.name === branchName);
   if (!contact) {
@@ -1399,14 +1399,37 @@ function submitSingleOrder() {
     return;
   }
 
+  const subtotal = selectedOrderItem.price * quantity;
+
+  const deliveryFeeText =
+    type === "Delivery"
+      ? (selectedOrderDeliveryDistanceKm !== null
+          ? (selectedOrderDeliveryFee
+              ? formatPrice(selectedOrderDeliveryFee)
+              : "To be confirmed")
+          : "To be confirmed")
+      : "N/A";
+
+  const grandTotalText =
+    type === "Delivery"
+      ? (selectedOrderDeliveryDistanceKm !== null && selectedOrderDeliveryFee
+          ? formatPrice(subtotal + selectedOrderDeliveryFee)
+          : `${formatPrice(subtotal)} + delivery fee confirm`)
+      : formatPrice(subtotal);
+
   const message = encodeURIComponent(
     `Hello ${contact.name}, I would like to order:\n\n` +
     `Item: ${selectedOrderItem.name}\n` +
     `Category: ${selectedOrderItem.category}\n` +
-    `Price: ${formatPrice(selectedOrderItem.price)}\n` +
+    `Unit Price: ${formatPrice(selectedOrderItem.price)}\n` +
     `Quantity: ${quantity}\n` +
+    `Subtotal: ${formatPrice(subtotal)}\n` +
     `Order Type: ${type}\n` +
-    `Delivery Address: ${address}\n` +
+    `Delivery Address: ${type === "Delivery" ? address : "N/A"}\n` +
+    `Distance: ${type === "Delivery" && selectedOrderDeliveryDistanceKm !== null ? `${selectedOrderDeliveryDistanceKm.toFixed(1)} km` : "N/A"}\n` +
+    `Delivery Fee: ${deliveryFeeText}\n` +
+    `Grand Total: ${grandTotalText}\n` +
+    `Branch: ${branchName}\n` +
     `Accompaniment: ${accompaniment}\n` +
     `Special instructions: ${note || "None"}\n`
   );
