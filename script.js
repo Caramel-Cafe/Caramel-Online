@@ -1462,6 +1462,17 @@ function initReveal() {
   revealEls.forEach(el => observer.observe(el));
 }
 
+function closeOrderForm() {
+  orderFormModal.classList.add("hidden");
+  orderFormBackdrop.classList.add("hidden");
+
+  if (!sidebar.classList.contains("open") && cartDrawer.classList.contains("hidden")) {
+    setBodyLock(false);
+  }
+}
+
+orderFormBackdrop?.addEventListener("click", closeOrderForm);
+
 function initMagneticButtons() {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReducedMotion) return;
@@ -1623,7 +1634,7 @@ document.addEventListener("keydown", e => {
 
 handleThemeToggle(themeToggle);
 handleThemeToggle(themeToggleSidebar);
-
+closeOrderFormBtn?.addEventListener("click", closeOrderForm);
 heroItemCount.textContent = `${menuItems.length}+`;
 renderChips();
 renderMenu();
@@ -1635,3 +1646,5 @@ initReveal();
 initMagneticButtons();
 updateCartUI();
 suggestNearestBranch();
+
+
