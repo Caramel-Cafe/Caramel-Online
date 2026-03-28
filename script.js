@@ -67,12 +67,12 @@ const confirmAddToCartBtn = document.getElementById("confirmAddToCartBtn");
 let selectedCartQuickItem = null;
 
 const orderContacts = [
-  { name: "Acacia", number: "256794417777", lat: 0.3380, lng: 32.6090 },
-  { name: "Munyonyo", number: "256759859795", lat: 0.2400, lng: 32.6250 },
-  { name: "Lubowa", number: "256709769548", lat: 0.2750, lng: 32.5580 },
-  { name: "Ntinda", number: "256766550001", lat: 0.3540, lng: 32.6220 },
-  { name: "Naalya", number: "256781800800", lat: 0.3900, lng: 32.6480 },
-  { name: "Kansanga", number: "256709410410", lat: 0.3000, lng: 32.6100 }
+  { name: "Acacia", number: "256794417777", lat: 0.31367, lng: 32.58111 },
+  { name: "Munyonyo", number: "256759859795", lat: 0.29034, lng: 32.62073 },
+  { name: "Lubowa", number: "256709769548", lat: 0.31784, lng: 32.58264 },
+  { name: "Ntinda", number: "256766550001", lat: 0.31254, lng: 32.58587 },
+  { name: "Naalya", number: "256781800800", lat: 0.30718, lng: 32.61492 },
+  { name: "Kansanga", number: "256709410410", lat: 0.28561, lng: 32.62348 }
 ];
 
 const branchHours = {
