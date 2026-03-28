@@ -335,6 +335,17 @@ function renderCartQuickAccompanimentOptions(category) {
 }
 
 function openCartQuickModal(item) {
+  if (
+    !cartQuickModal ||
+    !cartQuickSummary ||
+    !cartQuickNote ||
+    !cartQuickAccompaniment ||
+    !cartQuickAccompanimentOptions
+  ) {
+    alert("Quick cart modal HTML is missing.");
+    return;
+  }
+
   selectedCartQuickItem = item;
 
   closeCart();
@@ -352,19 +363,6 @@ function openCartQuickModal(item) {
 
   cartQuickModal.classList.remove("hidden");
   setBodyLock(true);
-}
-
-function closeCartQuickModal() {
-  cartQuickModal.classList.add("hidden");
-  selectedCartQuickItem = null;
-
-  if (
-    orderFormModal.classList.contains("hidden") &&
-    cartDrawer.classList.contains("hidden") &&
-    !sidebar.classList.contains("open")
-  ) {
-    setBodyLock(false);
-  }
 }
 
 function submitQuickAddToCart() {
@@ -1078,7 +1076,13 @@ menuGrid?.addEventListener("click", event => {
       return;
     }
 
-openCartQuickModal(item);
+addToCart({
+  ...item,
+  quantity: 1,
+  accompaniment: "None",
+  note: "",
+  branch: ""
+});
 return;
   }
 
