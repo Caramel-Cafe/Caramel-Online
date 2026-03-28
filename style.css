@@ -1160,8 +1160,8 @@ body.light-mode .glass-soft {
 }
 
 .accompaniment-chip.active {
-  background: linear-gradient(135deg, #d8b4fe, #a78bfa);
-  color: #1f1207;
+  background: linear-gradient(135deg, #f3c49b, #e6a779);
+  color: #3a1f0f;
   border-color: transparent;
 }
 
