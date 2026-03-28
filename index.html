@@ -266,6 +266,12 @@
     ></textarea>
   </div>
 
+  <div class="cart-delivery-summary hidden" id="cartDeliverySummary">
+  <div><strong>Distance:</strong> <span id="cartDeliveryDistance">—</span></div>
+  <div><strong>Delivery Fee:</strong> <span id="cartDeliveryFee">—</span></div>
+  <div><strong>Total + Delivery:</strong> <span id="cartGrandTotal">—</span></div>
+</div>
+
   <div class="cart-footer-actions">
     <button id="clearCartBtn" class="secondary-btn" type="button">Clear Cart</button>
     <button id="checkoutCartBtn" class="primary-btn" type="button">
@@ -324,6 +330,12 @@
     rows="3"
     placeholder="Enter delivery location..."
   ></textarea>
+</div>
+
+  <div class="order-delivery-summary hidden" id="orderDeliverySummary">
+  <div><strong>Distance:</strong> <span id="orderDeliveryDistance">—</span></div>
+  <div><strong>Delivery Fee:</strong> <span id="orderDeliveryFee">—</span></div>
+  <div><strong>Total + Delivery:</strong> <span id="orderGrandTotal">—</span></div>
 </div>
 
   <label class="order-field">
