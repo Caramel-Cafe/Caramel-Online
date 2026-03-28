@@ -258,12 +258,12 @@
       <span>Use my current location</span>
     </label>
 
-    <textarea
-      id="cartDeliveryAddress"
-      class="cart-note-input"
-      rows="3"
-      placeholder="Paste Google Maps link..."
-    ></textarea>
+<input
+  id="cartDeliveryAddress"
+  class="cart-note-input"
+  type="text"
+  placeholder="Search location..."
+/>
   </div>
 
   <div class="cart-delivery-summary hidden" id="cartDeliverySummary">
@@ -354,7 +354,9 @@
       Order on WhatsApp
     </button>
   </div>
-  
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
   <script src="menu.js"></script>
 <script src="script.js"></script>
 </body>
