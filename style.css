@@ -2160,3 +2160,8 @@ body.light-mode .mini-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(72, 44, 25, 0.08);
 }
+.menu-order-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
