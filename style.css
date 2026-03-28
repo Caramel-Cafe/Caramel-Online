@@ -1538,6 +1538,50 @@ body.light-mode .cart-branch select option {
   height: 18px;
   accent-color: var(--accent);
 }
+.cart-location-input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border-radius: 16px;
+  padding: 0 14px;
+  outline: none;
+}
+
+.cart-location-input::placeholder {
+  color: var(--muted);
+}
+
+.cart-location-input:focus {
+  border-color: rgba(255, 203, 146, 0.35);
+  box-shadow: 0 0 0 3px rgba(212, 154, 97, 0.12);
+}
+
+body.light-mode .cart-location-input {
+  border-color: rgba(97, 67, 45, 0.08);
+  background: rgba(255,255,255,0.88);
+  color: #21150d;
+}
+
+.pac-container {
+  z-index: 100200 !important;
+  border-radius: 14px;
+  border: 1px solid rgba(97, 67, 45, 0.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+}
+
+.pac-item {
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.pac-item:hover {
+  background: rgba(212, 154, 97, 0.08);
+}
+
 
 /* mobile bottom nav */
 .mobile-bottom-nav {
