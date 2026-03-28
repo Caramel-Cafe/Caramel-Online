@@ -107,7 +107,13 @@ const accompanimentOptions = {
   Milkshake: ["None", "No ice", "Takeaway"],
   Default: ["None", "Takeaway"]
 };
+const cartOrderType = document.getElementById("cartOrderType");
+const cartDeliveryWrap = document.getElementById("cartDeliveryWrap");
+const cartUseCurrentLocation = document.getElementById("cartUseCurrentLocation");
+const cartDeliveryAddress = document.getElementById("cartDeliveryAddress");
 
+let selectedCartOrderType = localStorage.getItem("caramel-cart-order-type") || "";
+let selectedCartDeliveryAddress = localStorage.getItem("caramel-cart-delivery-address") || "";
 let activeMenuGroup = "Main Menu";
 let activeCategory = "All";
 let activeMobileButton = null;
@@ -158,6 +164,29 @@ function handleThemeToggle(container) {
     if (!button) return;
     applyTheme(button.dataset.themeBtn);
   });
+}
+
+function saveCartOrderType(value) {
+  selectedCartOrderType = value;
+  localStorage.setItem("caramel-cart-order-type", value);
+}
+
+function saveCartDeliveryAddress(value) {
+  selectedCartDeliveryAddress = value;
+  localStorage.setItem("caramel-cart-delivery-address", value);
+}
+function toggleCartDeliveryFields() {
+  if (!cartOrderType || !cartDeliveryWrap || !cartDeliveryAddress || !cartUseCurrentLocation) return;
+
+  const isDelivery = cartOrderType.value === "Delivery";
+  cartDeliveryWrap.classList.toggle("hidden", !isDelivery);
+
+  if (!isDelivery) {
+    cartUseCurrentLocation.checked = false;
+    cartDeliveryAddress.value = "";
+    cartDeliveryAddress.disabled = false;
+    saveCartDeliveryAddress("");
+  }
 }
 
 function populateCartBranches() {
@@ -664,6 +693,10 @@ function changeCartQty(index, delta) {
 
 function clearCart() {
   cart = [];
+  selectedCartOrderType = "";
+  selectedCartDeliveryAddress = "";
+  localStorage.removeItem("caramel-cart-order-type");
+  localStorage.removeItem("caramel-cart-delivery-address");
   saveCart();
   updateCartUI();
   closeCart();
@@ -720,6 +753,62 @@ cartItems.innerHTML = cart
   `)
   .join("");
   populateCartBranches();
+
+  if (cartOrderType) {
+  cartOrderType.value = selectedCartOrderType;
+}
+
+if (cartDeliveryAddress) {
+  cartDeliveryAddress.value = selectedCartDeliveryAddress;
+}
+
+toggleCartDeliveryFields();
+  
+}
+
+function fillCartDeliveryAddressFromCurrentLocation() {
+  if (!navigator.geolocation || !cartDeliveryAddress) {
+    alert("Location is not supported on this device.");
+    return;
+  }
+
+  cartDeliveryAddress.value = "Getting your location...";
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const { latitude, longitude } = position.coords;
+      const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
+
+      cartDeliveryAddress.value = `📍${mapLink}`;
+      cartDeliveryAddress.disabled = true;
+      saveCartDeliveryAddress(cartDeliveryAddress.value);
+    },
+    error => {
+      cartDeliveryAddress.value = "";
+      cartDeliveryAddress.disabled = false;
+      if (cartUseCurrentLocation) cartUseCurrentLocation.checked = false;
+      alert("Please allow location access or enter manually.");
+      console.log("Cart location error:", error.message);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    }
+  );
+}
+function handleCartCurrentLocationToggle() {
+  if (!cartUseCurrentLocation || !cartDeliveryAddress) return;
+
+  if (cartUseCurrentLocation.checked) {
+    setTimeout(() => {
+      fillCartDeliveryAddressFromCurrentLocation();
+    }, 300);
+  } else {
+    cartDeliveryAddress.disabled = false;
+    cartDeliveryAddress.value = "";
+    saveCartDeliveryAddress("");
+  }
 }
 
 function updateCartNote(index, value) {
@@ -874,6 +963,18 @@ function checkoutCart() {
     return;
   }
 
+  if (!selectedCartOrderType) {
+    alert("Please choose Pickup or Delivery.");
+    cartOrderType?.focus();
+    return;
+  }
+
+  if (selectedCartOrderType === "Delivery" && !selectedCartDeliveryAddress.trim()) {
+    alert("Please enter a delivery address.");
+    cartDeliveryAddress?.focus();
+    return;
+  }
+
   const branchContact = orderContacts.find(contact => contact.name === selectedCartBranch);
   if (!branchContact) {
     alert("Selected branch is invalid.");
@@ -882,6 +983,9 @@ function checkoutCart() {
 
   const messageLines = [
     `Hello ${branchContact.name}, I would like to order:`,
+    "",
+    `Order Type: ${selectedCartOrderType}`,
+    `Delivery Address: ${selectedCartOrderType === "Delivery" ? selectedCartDeliveryAddress : "N/A"}`,
     ""
   ];
 
@@ -985,6 +1089,20 @@ cartItems?.addEventListener("click", event => {
   if (action === "decrease") changeCartQty(index, -1);
   if (action === "remove") removeCartItem(index);
 });
+
+function handleCartCurrentLocationToggle() {
+  if (!cartUseCurrentLocation || !cartDeliveryAddress) return;
+
+  if (cartUseCurrentLocation.checked) {
+    setTimeout(() => {
+      fillCartDeliveryAddressFromCurrentLocation();
+    }, 300);
+  } else {
+    cartDeliveryAddress.disabled = false;
+    cartDeliveryAddress.value = "";
+    saveCartDeliveryAddress("");
+  }
+}
 
 searchInput?.addEventListener("input", e => {
   searchTerm = e.target.value;
