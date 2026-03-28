@@ -2165,3 +2165,17 @@ body.light-mode .mini-card:hover {
   cursor: not-allowed;
   pointer-events: none;
 }
+
+.current-location-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.current-location-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
