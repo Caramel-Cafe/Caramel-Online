@@ -265,6 +265,40 @@ const customDeliveryPlaces = [
   { name: "Kampala Boulevard Shops", address: "Kampala Road", lat: 0.3130, lng: 32.5810 },
   { name: "Oasis Mall Supermarket", address: "Nakasero, Kampala", lat: 0.3200, lng: 32.5800 },
   { name: "Arena Mall Supermarket", address: "Nsambya, Kampala", lat: 0.3000, lng: 32.5900 },
-  { name: "Freedom City Supermarket", address: "Namasuba, Kampala", lat: 0.2800, lng: 32.5700 }
+  { name: "Freedom City Supermarket", address: "Namasuba, Kampala", lat: 0.2800, lng: 32.5700 },
+
+  { name: "Gangu", address: "Gangu, Kampala", lat: 0.2476, lng: 32.5638 },
+{ name: "Kibiri", address: "Kibiri, Kampala", lat: 0.2563, lng: 32.5659 },
+{ name: "Masajja", address: "Masajja, Kampala", lat: 0.2471, lng: 32.5467 },
+{ name: "Kigo", address: "Kigo, Wakiso", lat: 0.2205, lng: 32.5632 },
+{ name: "Kaz Beach", address: "KK Beach (Kaz Beach), Bunga", lat: 0.2608, lng: 32.6362 },
+
+{ name: "Mirembe Villas", address: "Mirembe Villas, Buziga", lat: 0.2743, lng: 32.6271 },
+{ name: "Serena Heights", address: "Serena Heights, Kigo", lat: 0.2217, lng: 32.5608 },
+{ name: "Baki Close", address: "Baki Close, Buziga", lat: 0.2725, lng: 32.6248 },
+
+{ name: "Bunga Market", address: "Bunga Market, Kampala", lat: 0.2644, lng: 32.6370 },
+{ name: "Bunga Zebra", address: "Bunga Zebra, Ggaba Road", lat: 0.2636, lng: 32.6355 },
+
+{ name: "Executive Apartment", address: "Executive Apartments, Buziga", lat: 0.2730, lng: 32.6259 },
+{ name: "Kalungu", address: "Kalungu, Kampala (Makindye)", lat: 0.2811, lng: 32.5972 },
+
+{ name: "Soya", address: "Soya, Kampala", lat: 0.2784, lng: 32.6035 },
+{ name: "Water Pump", address: "Water Pump, Buziga", lat: 0.2702, lng: 32.6265 },
+
+{ name: "Upper Buziga", address: "Upper Buziga, Kampala", lat: 0.2768, lng: 32.6283 },
+{ name: "Upper Konge", address: "Upper Konge, Buziga", lat: 0.2739, lng: 32.6217 },
+{ name: "Lower Konge", address: "Lower Konge, Buziga", lat: 0.2710, lng: 32.6198 },
+
+{ name: "Mugendage", address: "Mugendage, Kampala", lat: 0.2694, lng: 32.6173 },
+{ name: "Old Kaboja", address: "Old Kaboja, Buziga", lat: 0.2665, lng: 32.6185 },
+{ name: "New Kaboja", address: "New Kaboja, Buziga", lat: 0.2681, lng: 32.6202 },
+
+{ name: "Lukuli", address: "Lukuli, Kampala", lat: 0.2926, lng: 32.5993 },
+{ name: "Kirudu Hospital", address: "Kirudu Hospital, Kampala", lat: 0.3040, lng: 32.5895 },
+
+{ name: "Kabuma", address: "Kabuma, Kampala", lat: 0.2887, lng: 32.6030 },
+{ name: "Lwasa", address: "Lwasa, Wakiso", lat: 0.2142, lng: 32.5136 },
+{ name: "Boston", address: "Boston, Buziga/Konge area", lat: 0.2752, lng: 32.6234 }
 ];
 
