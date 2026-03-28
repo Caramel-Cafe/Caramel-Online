@@ -46,6 +46,7 @@ const qtyPlus = document.getElementById("qtyPlus");
 const orderType = document.getElementById("orderType");
 const deliveryAddressWrap = document.getElementById("deliveryAddressWrap");
 const deliveryAddress = document.getElementById("deliveryAddress");
+const useCurrentLocation = document.getElementById("useCurrentLocation");
 
 const orderContacts = [
   { name: "Acacia", number: "256794417777", lat: 0.3380, lng: 32.6090 },
@@ -193,9 +194,16 @@ function canOrderItem(item) {
 }
 
 function toggleDeliveryAddress() {
-  if (!orderType || !deliveryAddressWrap) return;
+  if (!orderType || !deliveryAddressWrap || !deliveryAddress || !useCurrentLocation) return;
+
   const isDelivery = orderType.value === "Delivery";
   deliveryAddressWrap.classList.toggle("hidden", !isDelivery);
+
+  if (!isDelivery) {
+    useCurrentLocation.checked = false;
+    deliveryAddress.value = "";
+    deliveryAddress.disabled = false;
+  }
 }
 
 orderType?.addEventListener("change", toggleDeliveryAddress);
@@ -277,6 +285,46 @@ function getDistanceKm(lat1, lng1, lat2, lng2) {
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
+}
+
+function fillDeliveryAddressFromCurrentLocation() {
+  if (!navigator.geolocation || !deliveryAddress) {
+    alert("Location is not supported on this device.");
+    return;
+  }
+
+  deliveryAddress.value = "Getting your current location...";
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const { latitude, longitude } = position.coords;
+      deliveryAddress.value = `Current location: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+      deliveryAddress.disabled = true;
+    },
+    error => {
+      deliveryAddress.value = "";
+      deliveryAddress.disabled = false;
+      useCurrentLocation.checked = false;
+      alert("Could not get your current location. Please type your address manually.");
+      console.log("Current location error:", error.message);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 300000
+    }
+  );
+}
+
+function handleCurrentLocationToggle() {
+  if (!useCurrentLocation || !deliveryAddress) return;
+
+  if (useCurrentLocation.checked) {
+    fillDeliveryAddressFromCurrentLocation();
+  } else {
+    deliveryAddress.disabled = false;
+    deliveryAddress.value = "";
+  }
 }
 
 function findNearestBranch(userLat, userLng) {
@@ -377,6 +425,8 @@ function initMobileBottomNav() {
     }
   });
 }
+
+useCurrentLocation?.addEventListener("change", handleCurrentLocationToggle);
 
 function openMobileCategoryDropdown() {
   mobileCategoryDropdown.classList.add("show");
@@ -740,8 +790,12 @@ function openOrderForm(item) {
   orderFormBackdrop.classList.remove("hidden");
   setBodyLock(true);
 
-if (orderType) orderType.value = "Pickup";
-if (deliveryAddress) deliveryAddress.value = "";
+if (orderType) orderType.value = "";
+if (deliveryAddress) {
+  deliveryAddress.value = "";
+  deliveryAddress.disabled = false;
+}
+if (useCurrentLocation) useCurrentLocation.checked = false;
 toggleDeliveryAddress();
   
 }
@@ -776,6 +830,12 @@ function submitSingleOrder() {
     deliveryAddress.focus();
     return;
   }
+
+  if (!type) {
+  alert("Please choose Pickup or Delivery.");
+  orderType.focus();
+  return;
+}
 
   const contact = orderContacts.find(item => item.name === branchName);
   if (!contact) {
