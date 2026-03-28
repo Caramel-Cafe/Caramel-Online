@@ -1617,6 +1617,11 @@ body.light-mode .cart-location-input {
   pointer-events: auto;
 }
 
+.mobile-category-dropdown {
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
 .mobile-category-list {
   display: flex;
   flex-wrap: wrap;
