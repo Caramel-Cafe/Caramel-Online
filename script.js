@@ -322,28 +322,32 @@ function fillDeliveryAddressFromCurrentLocation() {
     return;
   }
 
+  if (!window.isSecureContext) {
+    alert("Location needs HTTPS. Open the secure https version of the site.");
+    return;
+  }
+
   deliveryAddress.value = "Getting your location...";
 
   navigator.geolocation.getCurrentPosition(
     position => {
       const { latitude, longitude } = position.coords;
-
       const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
 
-      deliveryAddress.value = `📍${mapLink}`;
+      deliveryAddress.value = mapLink;
       deliveryAddress.disabled = true;
     },
     error => {
       deliveryAddress.value = "";
       deliveryAddress.disabled = false;
-      useCurrentLocation.checked = false;
+      if (useCurrentLocation) useCurrentLocation.checked = false;
 
-      alert("Please allow location access or enter manually.");
-      console.log("Location error:", error.message);
+      alert(getLocationErrorMessage(error));
+      console.log("Location error:", error.code, error.message);
     },
     {
       enableHighAccuracy: true,
-      timeout: 15000, // ⬅️ important for iPhone
+      timeout: 20000,
       maximumAge: 0
     }
   );
@@ -677,6 +681,23 @@ function removeCartItem(index) {
   cart.splice(index, 1);
   saveCart();
   updateCartUI();
+}
+
+function getLocationErrorMessage(error) {
+  if (!window.isSecureContext) {
+    return "Location needs HTTPS. Open the secure https version of the site.";
+  }
+
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      return "Location permission was denied. On iPhone go to Settings > Safari > Location and set it to Ask or Allow, then try again.";
+    case error.POSITION_UNAVAILABLE:
+      return "Your location is unavailable right now. Please try again or type the address manually.";
+    case error.TIMEOUT:
+      return "Location took too long. Please try again in a place with better signal.";
+    default:
+      return "Could not get your location. Please enter the address manually.";
+  }
 }
 
 function changeCartQty(index, delta) {
