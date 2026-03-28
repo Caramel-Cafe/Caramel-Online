@@ -252,25 +252,35 @@ function toggleDeliveryAddress() {
 
 orderType?.addEventListener("change", toggleDeliveryAddress);
 
+let selectedCartPlaceData = null;
+
 function initAutocomplete() {
   const input = document.getElementById("cartDeliveryAddress");
-
   if (!input || !window.google || !google.maps || !google.maps.places) return;
 
   const autocomplete = new google.maps.places.Autocomplete(input, {
-    fields: ["formatted_address", "geometry", "name"]
+    fields: ["formatted_address", "geometry", "name"],
+    componentRestrictions: { country: "ug" }
   });
 
   autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
-
     if (!place.geometry) return;
 
     const lat = place.geometry.location.lat();
     const lng = place.geometry.location.lng();
+    const readableAddress = place.formatted_address || place.name || "";
 
-    input.value = place.formatted_address || place.name || "";
-    saveCartDeliveryAddress(`https://maps.google.com/?q=${lat},${lng}`);
+    input.value = readableAddress;
+
+    selectedCartPlaceData = {
+      address: readableAddress,
+      lat,
+      lng,
+      mapLink: `https://maps.google.com/?q=${lat},${lng}`
+    };
+
+    saveCartDeliveryAddress(selectedCartPlaceData.mapLink);
     updateCartDeliveryPricing();
   });
 }
@@ -961,12 +971,20 @@ function fillCartDeliveryAddressFromCurrentLocation() {
   navigator.geolocation.getCurrentPosition(
     position => {
       const { latitude, longitude } = position.coords;
-      const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
+const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
 
-      cartDeliveryAddress.value = mapLink;
-      cartDeliveryAddress.disabled = true;
-      saveCartDeliveryAddress(mapLink);
-      updateCartDeliveryPricing();
+cartDeliveryAddress.value = "Current location selected";
+cartDeliveryAddress.disabled = true;
+
+selectedCartPlaceData = {
+  address: "Current location selected",
+  lat: latitude,
+  lng: longitude,
+  mapLink
+};
+
+saveCartDeliveryAddress(mapLink);
+updateCartDeliveryPricing();
     },
     error => {
       cartDeliveryAddress.value = "";
@@ -993,7 +1011,9 @@ function handleCartCurrentLocationToggle() {
   } else {
     cartDeliveryAddress.disabled = false;
     cartDeliveryAddress.value = "";
+    selectedCartPlaceData = null;
     saveCartDeliveryAddress("");
+    updateCartDeliveryPricing();
   }
 }
 
@@ -1370,7 +1390,9 @@ function handleCartCurrentLocationToggle() {
   } else {
     cartDeliveryAddress.disabled = false;
     cartDeliveryAddress.value = "";
+    selectedCartPlaceData = null;
     saveCartDeliveryAddress("");
+    updateCartDeliveryPricing();
   }
 }
 
