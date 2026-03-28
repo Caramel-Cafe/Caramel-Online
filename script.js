@@ -255,9 +255,11 @@ orderType?.addEventListener("change", toggleDeliveryAddress);
 function initAutocomplete() {
   const input = document.getElementById("cartDeliveryAddress");
 
-  if (!input) return;
+  if (!input || !window.google || !google.maps || !google.maps.places) return;
 
-  const autocomplete = new google.maps.places.Autocomplete(input);
+  const autocomplete = new google.maps.places.Autocomplete(input, {
+    fields: ["formatted_address", "geometry", "name"]
+  });
 
   autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
@@ -267,9 +269,8 @@ function initAutocomplete() {
     const lat = place.geometry.location.lat();
     const lng = place.geometry.location.lng();
 
-    const mapLink = `https://maps.google.com/?q=${lat},${lng}`;
-
-    saveCartDeliveryAddress(mapLink);
+    input.value = place.formatted_address || place.name || "";
+    saveCartDeliveryAddress(`https://maps.google.com/?q=${lat},${lng}`);
     updateCartDeliveryPricing();
   });
 }
