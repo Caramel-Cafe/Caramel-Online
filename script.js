@@ -7,7 +7,6 @@ const heroItemCount = document.getElementById("heroItemCount");
 const mobileBottomNav = document.getElementById("mobileBottomNav");
 const mobileCategoryDropdown = document.getElementById("mobileCategoryDropdown");
 const mobileCategoryChips = document.getElementById("mobileCategoryChips");
-const slice = shuffled.slice(currentIndex, currentIndex + 3);
 const desktopMenuGroups = document.getElementById("desktopMenuGroups");
 
 const sidebar = document.getElementById("sidebar");
@@ -179,62 +178,6 @@ function handleThemeToggle(container) {
     if (!button) return;
     applyTheme(button.dataset.themeBtn);
   });
-}
-
-// HERO BEST SELLER ROTATION
-
-const heroContainer = document.getElementById("heroBestSellers");
-
-// 1. Filter best sellers
-const bestSellers = menuItems.filter(item => item.tag === "Best Seller");
-
-// 2. Shuffle (optional but nice)
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-let shuffled = shuffle([...bestSellers]);
-
-let currentIndex = 0;
-
-// 3. Render function
-function renderHeroItems() {
-  heroContainer.innerHTML = "";
-
-  const slice = shuffled.slice(currentIndex, currentIndex + 3);
-
-  slice.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "mini-card tilt-card";
-
-    div.innerHTML = `
-      <p>${item.name}</p>
-      <span>${item.price.toLocaleString()} UGX</span>
-    `;
-
-    // OPTIONAL: click to order
-    div.onclick = () => openOrderForm(item);
-
-    heroContainer.appendChild(div);
-  });
-}
-
-// 4. Auto rotate
-function rotateHeroItems() {
-  heroContainer.classList.add("fade-out");
-
-  setTimeout(() => {
-    currentIndex += 3;
-
-    if (currentIndex >= shuffled.length) {
-      shuffled = shuffle([...bestSellers]);
-      currentIndex = 0;
-    }
-
-    renderHeroItems();
-
-    heroContainer.classList.remove("fade-out");
-  }, 300);
 }
 
 function saveCartOrderType(value) {
