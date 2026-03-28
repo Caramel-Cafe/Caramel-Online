@@ -258,14 +258,17 @@
       <span>Use my current location</span>
     </label>
 
-<input
-  id="cartDeliveryAddress"
-  class="cart-location-input"
-  type="text"
-  placeholder="Search delivery location..."
-  autocomplete="off"
-/>
-  </div>
+<div class="cart-location-picker">
+  <input
+    id="cartDeliveryAddress"
+    class="cart-location-input"
+    type="text"
+    placeholder="Search delivery location..."
+    autocomplete="off"
+  />
+
+  <div id="cartLocationSuggestions" class="cart-location-suggestions hidden"></div>
+</div>
 
   <div class="cart-delivery-summary hidden" id="cartDeliverySummary">
   <div><strong>Distance:</strong> <span id="cartDeliveryDistance">—</span></div>
@@ -355,8 +358,6 @@
       Order on WhatsApp
     </button>
   </div>
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 
   <script src="menu.js"></script>
 <script src="script.js"></script>
