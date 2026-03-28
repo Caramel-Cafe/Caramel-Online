@@ -138,7 +138,8 @@ const cartOrderType = document.getElementById("cartOrderType");
 const cartDeliveryWrap = document.getElementById("cartDeliveryWrap");
 const cartUseCurrentLocation = document.getElementById("cartUseCurrentLocation");
 const cartDeliveryAddress = document.getElementById("cartDeliveryAddress");
-
+const orderLocationSuggestions = document.getElementById("orderLocationSuggestions");
+let selectedOrderPlaceData = null;
 let selectedCartOrderType = localStorage.getItem("caramel-cart-order-type") || "";
 let selectedCartDeliveryAddress = localStorage.getItem("caramel-cart-delivery-address") || "";
 let activeMenuGroup = "Main Menu";
@@ -351,12 +352,20 @@ cartDeliveryAddress?.addEventListener("focus", () => {
 });
 
 document.addEventListener("click", event => {
-  const clickedInside =
+  const insideCart =
     event.target.closest(".cart-location-picker") ||
     event.target.closest("#cartLocationSuggestions");
 
-  if (!clickedInside && cartLocationSuggestions) {
+  const insideOrder =
+    event.target.closest(".order-location-picker") ||
+    event.target.closest("#orderLocationSuggestions");
+
+  if (!insideCart && cartLocationSuggestions) {
     cartLocationSuggestions.classList.add("hidden");
+  }
+
+  if (!insideOrder && orderLocationSuggestions) {
+    orderLocationSuggestions.classList.add("hidden");
   }
 });
 
@@ -535,8 +544,10 @@ function updateOrderDeliveryPricing() {
     return;
   }
 
-  const branch = orderContacts.find(item => item.name === orderBranch.value);
-  const location = extractLatLngFromGoogleMapsLink(deliveryAddress.value);
+const branch = orderContacts.find(item => item.name === orderBranch.value);
+const location = selectedOrderPlaceData
+  ? { lat: selectedOrderPlaceData.lat, lng: selectedOrderPlaceData.lng }
+  : extractLatLngFromGoogleMapsLink(deliveryAddress.value);
 
   if (!branch || !location) {
     orderDeliverySummary.classList.remove("hidden");
@@ -576,8 +587,16 @@ function fillDeliveryAddressFromCurrentLocation() {
       const { latitude, longitude } = position.coords;
       const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
 
-      deliveryAddress.value = mapLink;
+      deliveryAddress.value = "Current location selected";
       deliveryAddress.disabled = true;
+
+      selectedOrderPlaceData = {
+        address: "Current location selected",
+        lat: latitude,
+        lng: longitude,
+        mapLink
+      };
+
       updateOrderDeliveryPricing();
     },
     error => {
@@ -600,13 +619,14 @@ function handleCurrentLocationToggle() {
   if (!useCurrentLocation || !deliveryAddress) return;
 
   if (useCurrentLocation.checked) {
-    // slight delay improves Safari reliability
     setTimeout(() => {
       fillDeliveryAddressFromCurrentLocation();
     }, 300);
   } else {
     deliveryAddress.disabled = false;
     deliveryAddress.value = "";
+    selectedOrderPlaceData = null;
+    updateOrderDeliveryPricing();
   }
 }
 
@@ -1045,32 +1065,47 @@ function fillCartDeliveryAddressFromCurrentLocation() {
 
   navigator.geolocation.getCurrentPosition(
     position => {
-      const { latitude, longitude } = position.coords;
-const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
+      const { latitude, longitude, accuracy } = position.coords;
+      const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
 
-cartDeliveryAddress.value = "Current location selected";
-cartDeliveryAddress.disabled = true;
+      cartDeliveryAddress.value = "Current location selected";
+      cartDeliveryAddress.disabled = true;
 
-selectedCartPlaceData = {
-  address: "Current location selected",
-  lat: latitude,
-  lng: longitude,
-  mapLink
-};
+      selectedCartPlaceData = {
+        address: "Current location selected",
+        lat: latitude,
+        lng: longitude,
+        mapLink
+      };
 
-saveCartDeliveryAddress(mapLink);
-updateCartDeliveryPricing();
+      saveCartDeliveryAddress(mapLink);
+      updateCartDeliveryPricing();
     },
     error => {
       cartDeliveryAddress.value = "";
       cartDeliveryAddress.disabled = false;
       if (cartUseCurrentLocation) cartUseCurrentLocation.checked = false;
-      alert(getLocationErrorMessage(error));
+
+      let msg = "Could not get your location.";
+
+      switch (error.code) {
+        case 1:
+          msg = "Location permission was denied on iPhone. Please allow location for Safari and reload the page.";
+          break;
+        case 2:
+          msg = "Your iPhone could not determine the location. Try going outside or checking signal.";
+          break;
+        case 3:
+          msg = "Location request timed out. Try again.";
+          break;
+      }
+
+      alert(msg);
       console.log("Cart location error:", error.code, error.message);
     },
     {
       enableHighAccuracy: true,
-      timeout: 20000,
+      timeout: 30000,
       maximumAge: 0
     }
   );
@@ -1149,13 +1184,91 @@ function renderAccompanimentOptions(category) {
   });
 }
 
+function renderOrderLocationSuggestions(matches) {
+  if (!orderLocationSuggestions) return;
+
+  if (!matches.length) {
+    orderLocationSuggestions.classList.add("hidden");
+    orderLocationSuggestions.innerHTML = "";
+    return;
+  }
+
+  orderLocationSuggestions.innerHTML = matches
+    .map((place, index) => `
+      <button
+        type="button"
+        class="order-location-suggestion"
+        data-place-index="${index}"
+      >
+        <span class="order-location-name">${place.name}</span>
+        <span class="order-location-meta">${place.address}</span>
+      </button>
+    `)
+    .join("");
+
+  orderLocationSuggestions.classList.remove("hidden");
+
+  orderLocationSuggestions
+    .querySelectorAll(".order-location-suggestion")
+    .forEach((button, index) => {
+      button.addEventListener("click", () => {
+        const place = matches[index];
+
+        deliveryAddress.value = place.address;
+        selectedOrderPlaceData = {
+          address: place.address,
+          lat: place.lat,
+          lng: place.lng,
+          mapLink: `https://maps.google.com/?q=${place.lat},${place.lng}`
+        };
+
+        updateOrderDeliveryPricing();
+        orderLocationSuggestions.classList.add("hidden");
+      });
+    });
+}
+
+function handleOrderLocationSearch() {
+  if (!deliveryAddress) return;
+
+  const term = deliveryAddress.value.trim().toLowerCase();
+
+  if (!term) {
+    selectedOrderPlaceData = null;
+    updateOrderDeliveryPricing();
+    renderOrderLocationSuggestions([]);
+    return;
+  }
+
+  const matches = customDeliveryPlaces.filter(place => {
+    const text = `${place.name} ${place.address}`.toLowerCase();
+    return text.includes(term);
+  }).slice(0, 6);
+
+  renderOrderLocationSuggestions(matches);
+}
+
+deliveryAddress?.addEventListener("input", () => {
+  if (useCurrentLocation?.checked) return;
+  handleOrderLocationSearch();
+});
+
+deliveryAddress?.addEventListener("focus", () => {
+  if (useCurrentLocation?.checked) return;
+  handleOrderLocationSearch();
+});
+
 function openOrderForm(item) {
   selectedOrderItem = item;
 
-selectedOrderDeliveryDistanceKm = null;
-selectedOrderDeliveryFee = 0;
-updateOrderDeliveryPricing();
-  
+  // always close cart first so layers do not clash
+  closeCart();
+  closeSidebar();
+  closeMobileCategoryDropdown();
+
+  selectedOrderDeliveryDistanceKm = null;
+  selectedOrderDeliveryFee = 0;
+
   orderFormSummary.innerHTML = `
     <strong>Item:</strong> ${item.name}<br>
     <strong>Category:</strong> ${item.category}<br>
@@ -1167,27 +1280,22 @@ updateOrderDeliveryPricing();
   populateBranches();
   renderAccompanimentOptions(item.category);
 
+  if (orderType) orderType.value = "";
+  if (deliveryAddress) {
+    deliveryAddress.value = "";
+    deliveryAddress.disabled = false;
+  }
+  if (useCurrentLocation) useCurrentLocation.checked = false;
+
+  selectedOrderPlaceData = null;
+
+  toggleDeliveryAddress();
+  updateOrderDeliveryPricing();
+
   orderFormModal.classList.remove("hidden");
   orderFormBackdrop.classList.remove("hidden");
   setBodyLock(true);
-
-if (orderType) orderType.value = "";
-if (deliveryAddress) {
-  deliveryAddress.value = "";
-  deliveryAddress.disabled = false;
 }
-if (useCurrentLocation) useCurrentLocation.checked = false;
-toggleDeliveryAddress();
-  
-}
-
-function closeOrderForm() {
-  orderFormModal.classList.add("hidden");
-  orderFormBackdrop.classList.add("hidden");
-
-  if (cartDrawer.classList.contains("hidden") && !sidebar.classList.contains("open")) {
-    setBodyLock(false);
-  }
 }
 
 function submitSingleOrder() {
