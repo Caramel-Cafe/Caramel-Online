@@ -793,6 +793,11 @@ function fillCartDeliveryAddressFromCurrentLocation() {
     return;
   }
 
+  if (!window.isSecureContext) {
+    alert("Location needs HTTPS. Open the secure https version of the site.");
+    return;
+  }
+
   cartDeliveryAddress.value = "Getting your location...";
 
   navigator.geolocation.getCurrentPosition(
@@ -800,24 +805,25 @@ function fillCartDeliveryAddressFromCurrentLocation() {
       const { latitude, longitude } = position.coords;
       const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
 
-      cartDeliveryAddress.value = `📍${mapLink}`;
+      cartDeliveryAddress.value = mapLink;
       cartDeliveryAddress.disabled = true;
-      saveCartDeliveryAddress(cartDeliveryAddress.value);
+      saveCartDeliveryAddress(mapLink);
     },
     error => {
       cartDeliveryAddress.value = "";
       cartDeliveryAddress.disabled = false;
       if (cartUseCurrentLocation) cartUseCurrentLocation.checked = false;
-      alert("Please allow location access or enter manually.");
-      console.log("Cart location error:", error.message);
+      alert(getLocationErrorMessage(error));
+      console.log("Cart location error:", error.code, error.message);
     },
     {
       enableHighAccuracy: true,
-      timeout: 15000,
+      timeout: 20000,
       maximumAge: 0
     }
   );
 }
+
 function handleCartCurrentLocationToggle() {
   if (!cartUseCurrentLocation || !cartDeliveryAddress) return;
 
@@ -1094,6 +1100,17 @@ cartBranchSelect?.addEventListener("change", event => {
   saveCartBranch(event.target.value);
 });
 
+cartOrderType?.addEventListener("change", event => {
+  saveCartOrderType(event.target.value);
+  toggleCartDeliveryFields();
+});
+
+cartUseCurrentLocation?.addEventListener("change", handleCartCurrentLocationToggle);
+
+cartDeliveryAddress?.addEventListener("input", event => {
+  saveCartDeliveryAddress(event.target.value);
+});
+
 qtyPlus?.addEventListener("click", () => {
   const current = parseInt(orderQuantity.value || "1", 10);
   orderQuantity.value = current + 1;
@@ -1109,6 +1126,21 @@ cartItems?.addEventListener("click", event => {
   if (action === "increase") changeCartQty(index, 1);
   if (action === "decrease") changeCartQty(index, -1);
   if (action === "remove") removeCartItem(index);
+});
+
+cartBranchSelect?.addEventListener("change", event => {
+  saveCartBranch(event.target.value);
+});
+
+cartOrderType?.addEventListener("change", event => {
+  saveCartOrderType(event.target.value);
+  toggleCartDeliveryFields();
+});
+
+cartUseCurrentLocation?.addEventListener("change", handleCartCurrentLocationToggle);
+
+cartDeliveryAddress?.addEventListener("input", event => {
+  saveCartDeliveryAddress(event.target.value);
 });
 
 function handleCartCurrentLocationToggle() {
