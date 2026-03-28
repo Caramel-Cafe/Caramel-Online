@@ -113,6 +113,33 @@
   </div>
 </div>
 
+<div id="cartQuickModal" class="hidden">
+  <div class="modal-backdrop" id="cartQuickBackdrop"></div>
+
+  <div class="order-form-modal quick-cart-modal">
+    <button type="button" class="modal-close" id="closeCartQuickModal">×</button>
+
+    <h3>Customize before adding</h3>
+
+    <div id="cartQuickSummary" class="order-summary"></div>
+
+    <div class="form-group">
+      <label>Accompaniment</label>
+      <div id="cartQuickAccompanimentOptions" class="accompaniment-options"></div>
+      <input type="hidden" id="cartQuickAccompaniment" value="None">
+    </div>
+
+    <div class="form-group">
+      <label>Special instructions</label>
+      <textarea id="cartQuickNote" placeholder="Optional note..."></textarea>
+    </div>
+
+    <button type="button" id="confirmAddToCartBtn" class="menu-order-btn">
+      Add to Cart
+    </button>
+  </div>
+</div>
+        
 <div class="hero-visual reveal reveal-scale delay-3">
   <div class="hero-card floating-card">
     <div class="hero-card-top">
