@@ -1296,7 +1296,6 @@ function openOrderForm(item) {
   orderFormBackdrop.classList.remove("hidden");
   setBodyLock(true);
 }
-}
 
 function submitSingleOrder() {
   if (!selectedOrderItem) return;
