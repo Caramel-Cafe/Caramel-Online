@@ -1499,6 +1499,45 @@ body.light-mode .cart-branch select option {
   background: #ffffff;
   color: #21150d;
 }
+.cart-order-type,
+.cart-delivery-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.cart-order-type label,
+.cart-delivery-wrap label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.cart-order-type select {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+    rgba(12, 18, 28, 0.92);
+  color: var(--text);
+  padding: 0 44px 0 14px;
+  outline: none;
+}
+
+.current-location-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.current-location-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
 
 /* mobile bottom nav */
 .mobile-bottom-nav {
