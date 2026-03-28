@@ -2533,3 +2533,31 @@ body.light-mode .order-location-meta {
 .preview-cards.fade-out {
   opacity: 0;
 }
+.cart-item-accompaniment {
+  margin: 10px 0 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.cart-inline-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.cart-accompaniment-select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  padding: 0 12px;
+  outline: none;
+}
+
+body.light-mode .cart-accompaniment-select {
+  border-color: rgba(97, 67, 45, 0.08);
+  background: rgba(255,255,255,0.88);
+  color: #21150d;
+}
