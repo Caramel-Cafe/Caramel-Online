@@ -293,25 +293,29 @@ function fillDeliveryAddressFromCurrentLocation() {
     return;
   }
 
-  deliveryAddress.value = "Getting your current location...";
+  deliveryAddress.value = "Getting your location...";
 
   navigator.geolocation.getCurrentPosition(
     position => {
       const { latitude, longitude } = position.coords;
-      deliveryAddress.value = `Current location: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+
+      const mapLink = `https://maps.google.com/?q=${latitude},${longitude}`;
+
+      deliveryAddress.value = `📍${mapLink}`;
       deliveryAddress.disabled = true;
     },
     error => {
       deliveryAddress.value = "";
       deliveryAddress.disabled = false;
       useCurrentLocation.checked = false;
-      alert("Could not get your current location. Please type your address manually.");
-      console.log("Current location error:", error.message);
+
+      alert("Please allow location access or enter manually.");
+      console.log("Location error:", error.message);
     },
     {
       enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 300000
+      timeout: 15000, // ⬅️ important for iPhone
+      maximumAge: 0
     }
   );
 }
@@ -320,7 +324,10 @@ function handleCurrentLocationToggle() {
   if (!useCurrentLocation || !deliveryAddress) return;
 
   if (useCurrentLocation.checked) {
-    fillDeliveryAddressFromCurrentLocation();
+    // slight delay improves Safari reliability
+    setTimeout(() => {
+      fillDeliveryAddressFromCurrentLocation();
+    }, 300);
   } else {
     deliveryAddress.disabled = false;
     deliveryAddress.value = "";
@@ -850,7 +857,7 @@ function submitSingleOrder() {
     `Price: ${formatPrice(selectedOrderItem.price)}\n` +
     `Quantity: ${quantity}\n` +
     `Order Type: ${type}\n` +
-    `Delivery Address: ${type === "Delivery" ? address : "N/A"}\n` +
+    `Delivery Address: ${address}\n` +
     `Accompaniment: ${accompaniment}\n` +
     `Special instructions: ${note || "None"}\n`
   );
