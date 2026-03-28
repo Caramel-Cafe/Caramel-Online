@@ -1582,11 +1582,22 @@ function submitSingleOrder() {
   closeOrderForm();
 }
 
-if (!isBranchOpen(selectedCartBranch)) {
-  alert(`${selectedCartBranch} is currently closed. Please choose another open branch.`);
-  cartBranchSelect.focus();
-  return;
+function populateBranches() {
+  if (!orderBranch) return;
+
+  orderBranch.innerHTML = `
+    <option value="" selected disabled>Select branch</option>
+    ${orderContacts.map(contact => {
+      const open = isBranchOpen(contact.name);
+      return `
+        <option value="${contact.name}" ${open ? "" : "disabled"}>
+          ${contact.name} ${getBranchStatusText(contact.name)}
+        </option>
+      `;
+    }).join("")}
+  `;
 }
+
 
 function checkoutCart() {
   if (!cart.length) return;
