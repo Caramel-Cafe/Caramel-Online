@@ -252,6 +252,30 @@ function toggleDeliveryAddress() {
 
 orderType?.addEventListener("change", toggleDeliveryAddress);
 
+function initAutocomplete() {
+  const input = document.getElementById("cartDeliveryAddress");
+
+  if (!input) return;
+
+  const autocomplete = new google.maps.places.Autocomplete(input);
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+
+    if (!place.geometry) return;
+
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+
+    const mapLink = `https://maps.google.com/?q=${lat},${lng}`;
+
+    saveCartDeliveryAddress(mapLink);
+    updateCartDeliveryPricing();
+  });
+}
+
+window.addEventListener("load", initAutocomplete);
+
 function openSidebar() {
   sidebar.classList.add("open");
   sidebarOverlay.classList.add("show");
