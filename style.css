@@ -2520,3 +2520,11 @@ body.light-mode .order-location-suggestion:hover {
 body.light-mode .order-location-meta {
   color: #7a6b5f;
 }
+
+.preview-cards {
+  transition: opacity 0.3s ease;
+}
+
+.preview-cards.fade-out {
+  opacity: 0;
+}
