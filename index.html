@@ -243,6 +243,29 @@
     </select>
   </div>
 
+  <div class="cart-order-type">
+    <label for="cartOrderType">Order Type</label>
+    <select id="cartOrderType">
+      <option value="" selected disabled>Select order type</option>
+      <option value="Pickup">Pickup</option>
+      <option value="Delivery">Delivery</option>
+    </select>
+  </div>
+
+  <div class="cart-delivery-wrap hidden" id="cartDeliveryWrap">
+    <label class="current-location-check">
+      <input type="checkbox" id="cartUseCurrentLocation">
+      <span>Use my current location</span>
+    </label>
+
+    <textarea
+      id="cartDeliveryAddress"
+      class="cart-note-input"
+      rows="3"
+      placeholder="Enter delivery location..."
+    ></textarea>
+  </div>
+
   <div class="cart-footer-actions">
     <button id="clearCartBtn" class="secondary-btn" type="button">Clear Cart</button>
     <button id="checkoutCartBtn" class="primary-btn" type="button">
