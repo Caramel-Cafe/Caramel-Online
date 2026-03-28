@@ -2218,3 +2218,59 @@ body.light-mode .mini-card:hover {
   height: 18px;
   accent-color: var(--accent);
 }
+
+body.light-mode select,
+body.light-mode textarea,
+body.light-mode input {
+  background: #ffffff;
+  color: #111;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* dropdown options */
+body.light-mode select option {
+  background: #ffffff;
+  color: #111;
+}
+body.light-mode select {
+  background-image: none !important;
+}
+body.light-mode .cart-drawer-panel,
+body.light-mode .order-form-modal {
+  background: #ffffff;
+  color: #111;
+  border: 1px solid #eee;
+}
+body.light-mode .order-field span,
+body.light-mode label {
+  color: #444;
+}
+body.light-mode .primary-btn {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #1f1207;
+}
+
+body.light-mode .secondary-btn {
+  background: #f3f4f6;
+  color: #111;
+}
+body.light-mode .glass,
+body.light-mode .glass-soft {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+select,
+input,
+textarea {
+  transition: all 0.2s ease;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #c08457;
+  box-shadow: 0 0 0 3px rgba(192,132,87,0.15);
+}
