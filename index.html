@@ -329,11 +329,16 @@
     <span>Use my current location</span>
   </label>
 
-  <textarea
+<div class="order-location-picker">
+  <input
     id="deliveryAddress"
-    rows="3"
-    placeholder="Enter delivery location..."
-  ></textarea>
+    class="order-location-input"
+    type="text"
+    placeholder="Search delivery location..."
+    autocomplete="off"
+  />
+  <div id="orderLocationSuggestions" class="order-location-suggestions hidden"></div>
+</div>
 </div>
 
   <div class="order-delivery-summary hidden" id="orderDeliverySummary">
