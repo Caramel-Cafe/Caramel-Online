@@ -47,6 +47,15 @@ const orderType = document.getElementById("orderType");
 const deliveryAddressWrap = document.getElementById("deliveryAddressWrap");
 const deliveryAddress = document.getElementById("deliveryAddress");
 const useCurrentLocation = document.getElementById("useCurrentLocation");
+const cartDeliverySummary = document.getElementById("cartDeliverySummary");
+const cartDeliveryDistance = document.getElementById("cartDeliveryDistance");
+const cartDeliveryFee = document.getElementById("cartDeliveryFee");
+const cartGrandTotal = document.getElementById("cartGrandTotal");
+
+const orderDeliverySummary = document.getElementById("orderDeliverySummary");
+const orderDeliveryDistance = document.getElementById("orderDeliveryDistance");
+const orderDeliveryFee = document.getElementById("orderDeliveryFee");
+const orderGrandTotal = document.getElementById("orderGrandTotal");
 
 const orderContacts = [
   { name: "Acacia", number: "256794417777", lat: 0.3380, lng: 32.6090 },
@@ -120,6 +129,11 @@ let activeMobileButton = null;
 let searchTerm = "";
 let cart = JSON.parse(localStorage.getItem("caramel-cart")) || [];
 let selectedOrderItem = null;
+let selectedCartDeliveryDistanceKm = null;
+let selectedCartDeliveryFee = 0;
+
+let selectedOrderDeliveryDistanceKm = null;
+let selectedOrderDeliveryFee = 0;
 
 function formatPrice(value) {
   return `UGX ${Number(value).toLocaleString()}`;
@@ -186,6 +200,7 @@ function toggleCartDeliveryFields() {
     cartDeliveryAddress.value = "";
     cartDeliveryAddress.disabled = false;
     saveCartDeliveryAddress("");
+    updateCartDeliveryPricing();
   }
 }
 
@@ -316,6 +331,123 @@ function getDistanceKm(lat1, lng1, lat2, lng2) {
   return R * c;
 }
 
+function extractLatLngFromGoogleMapsLink(value) {
+  if (!value) return null;
+
+  const text = value.trim();
+
+  const qMatch = text.match(/[?&]q=(-?\d+\.?\d*),\s*(-?\d+\.?\d*)/i);
+  if (qMatch) {
+    return {
+      lat: Number(qMatch[1]),
+      lng: Number(qMatch[2])
+    };
+  }
+
+  const atMatch = text.match(/@(-?\d+\.?\d*),\s*(-?\d+\.?\d*)/i);
+  if (atMatch) {
+    return {
+      lat: Number(atMatch[1]),
+      lng: Number(atMatch[2])
+    };
+  }
+
+  const plainMatch = text.match(/(-?\d+\.?\d*),\s*(-?\d+\.?\d*)/);
+  if (plainMatch) {
+    return {
+      lat: Number(plainMatch[1]),
+      lng: Number(plainMatch[2])
+    };
+  }
+
+  return null;
+}
+
+function getDeliveryFee(distanceKm) {
+  if (distanceKm <= 3) return 3000;
+  if (distanceKm <= 6) return 5000;
+  if (distanceKm <= 10) return 8000;
+  return null;
+}
+function updateCartDeliveryPricing() {
+  if (!cartDeliverySummary || !cartDeliveryDistance || !cartDeliveryFee || !cartGrandTotal) return;
+
+  const cartSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  selectedCartDeliveryDistanceKm = null;
+  selectedCartDeliveryFee = 0;
+
+  if (selectedCartOrderType !== "Delivery") {
+    cartDeliverySummary.classList.add("hidden");
+    cartDeliveryDistance.textContent = "—";
+    cartDeliveryFee.textContent = "—";
+    cartGrandTotal.textContent = formatPrice(cartSubtotal);
+    return;
+  }
+
+  const branch = orderContacts.find(item => item.name === selectedCartBranch);
+  const location = extractLatLngFromGoogleMapsLink(selectedCartDeliveryAddress);
+
+  if (!branch || !location) {
+    cartDeliverySummary.classList.remove("hidden");
+    cartDeliveryDistance.textContent = "Enter location";
+    cartDeliveryFee.textContent = "—";
+    cartGrandTotal.textContent = formatPrice(cartSubtotal);
+    return;
+  }
+
+  const distanceKm = getDistanceKm(branch.lat, branch.lng, location.lat, location.lng);
+  const fee = getDeliveryFee(distanceKm);
+
+  selectedCartDeliveryDistanceKm = distanceKm;
+  selectedCartDeliveryFee = fee || 0;
+
+  cartDeliverySummary.classList.remove("hidden");
+  cartDeliveryDistance.textContent = `${distanceKm.toFixed(1)} km`;
+  cartDeliveryFee.textContent = fee === null ? "To be confirmed" : formatPrice(fee);
+  cartGrandTotal.textContent = fee === null ? `${formatPrice(cartSubtotal)} + fee confirm` : formatPrice(cartSubtotal + fee);
+}
+
+function updateOrderDeliveryPricing() {
+  if (!orderDeliverySummary || !orderDeliveryDistance || !orderDeliveryFee || !orderGrandTotal || !selectedOrderItem) return;
+
+  const quantity = Math.max(1, Number(orderQuantity.value) || 1);
+  const subtotal = selectedOrderItem.price * quantity;
+
+  selectedOrderDeliveryDistanceKm = null;
+  selectedOrderDeliveryFee = 0;
+
+  if (orderType.value !== "Delivery") {
+    orderDeliverySummary.classList.add("hidden");
+    orderDeliveryDistance.textContent = "—";
+    orderDeliveryFee.textContent = "—";
+    orderGrandTotal.textContent = formatPrice(subtotal);
+    return;
+  }
+
+  const branch = orderContacts.find(item => item.name === orderBranch.value);
+  const location = extractLatLngFromGoogleMapsLink(deliveryAddress.value);
+
+  if (!branch || !location) {
+    orderDeliverySummary.classList.remove("hidden");
+    orderDeliveryDistance.textContent = "Enter location";
+    orderDeliveryFee.textContent = "—";
+    orderGrandTotal.textContent = formatPrice(subtotal);
+    return;
+  }
+
+  const distanceKm = getDistanceKm(branch.lat, branch.lng, location.lat, location.lng);
+  const fee = getDeliveryFee(distanceKm);
+
+  selectedOrderDeliveryDistanceKm = distanceKm;
+  selectedOrderDeliveryFee = fee || 0;
+
+  orderDeliverySummary.classList.remove("hidden");
+  orderDeliveryDistance.textContent = `${distanceKm.toFixed(1)} km`;
+  orderDeliveryFee.textContent = fee === null ? "To be confirmed" : formatPrice(fee);
+  orderGrandTotal.textContent = fee === null ? `${formatPrice(subtotal)} + fee confirm` : formatPrice(subtotal + fee);
+}
+
 function fillDeliveryAddressFromCurrentLocation() {
   if (!navigator.geolocation || !deliveryAddress) {
     alert("Location is not supported on this device.");
@@ -336,6 +468,7 @@ function fillDeliveryAddressFromCurrentLocation() {
 
       deliveryAddress.value = mapLink;
       deliveryAddress.disabled = true;
+      updateOrderDeliveryPricing();
     },
     error => {
       deliveryAddress.value = "";
@@ -808,6 +941,7 @@ function fillCartDeliveryAddressFromCurrentLocation() {
       cartDeliveryAddress.value = mapLink;
       cartDeliveryAddress.disabled = true;
       saveCartDeliveryAddress(mapLink);
+      updateCartDeliveryPricing();
     },
     error => {
       cartDeliveryAddress.value = "";
@@ -898,6 +1032,10 @@ function renderAccompanimentOptions(category) {
 function openOrderForm(item) {
   selectedOrderItem = item;
 
+selectedOrderDeliveryDistanceKm = null;
+selectedOrderDeliveryFee = 0;
+updateOrderDeliveryPricing();
+  
   orderFormSummary.innerHTML = `
     <strong>Item:</strong> ${item.name}<br>
     <strong>Category:</strong> ${item.category}<br>
@@ -987,6 +1125,7 @@ function checkoutCart() {
 
   if (!selectedCartBranch) {
     alert("Please select a branch before checkout.");
+    cartBranchSelect?.focus();
     return;
   }
 
@@ -1008,11 +1147,31 @@ function checkoutCart() {
     return;
   }
 
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const deliveryFeeText =
+    selectedCartOrderType === "Delivery"
+      ? (selectedCartDeliveryDistanceKm !== null
+          ? (selectedCartDeliveryFee
+              ? formatPrice(selectedCartDeliveryFee)
+              : "To be confirmed")
+          : "To be confirmed")
+      : "N/A";
+
+  const grandTotalText =
+    selectedCartOrderType === "Delivery"
+      ? (selectedCartDeliveryDistanceKm !== null && selectedCartDeliveryFee
+          ? formatPrice(subtotal + selectedCartDeliveryFee)
+          : `${formatPrice(subtotal)} + delivery fee confirm`)
+      : formatPrice(subtotal);
+
   const messageLines = [
     `Hello ${branchContact.name}, I would like to order:`,
     "",
     `Order Type: ${selectedCartOrderType}`,
     `Delivery Address: ${selectedCartOrderType === "Delivery" ? selectedCartDeliveryAddress : "N/A"}`,
+    `Distance: ${selectedCartOrderType === "Delivery" && selectedCartDeliveryDistanceKm !== null ? `${selectedCartDeliveryDistanceKm.toFixed(1)} km` : "N/A"}`,
+    `Delivery Fee: ${deliveryFeeText}`,
     ""
   ];
 
@@ -1031,7 +1190,8 @@ function checkoutCart() {
 
   messageLines.push(
     `Total Items: ${cart.reduce((sum, item) => sum + item.quantity, 0)}`,
-    `Total Price: ${formatPrice(cart.reduce((sum, item) => sum + item.price * item.quantity, 0))}`
+    `Subtotal: ${formatPrice(subtotal)}`,
+    `Grand Total: ${grandTotalText}`
   );
 
   const message = encodeURIComponent(messageLines.join("\n"));
@@ -1142,6 +1302,38 @@ cartUseCurrentLocation?.addEventListener("change", handleCartCurrentLocationTogg
 cartDeliveryAddress?.addEventListener("input", event => {
   saveCartDeliveryAddress(event.target.value);
 });
+
+cartBranchSelect?.addEventListener("change", event => {
+  saveCartBranch(event.target.value);
+  updateCartDeliveryPricing();
+});
+
+cartOrderType?.addEventListener("change", event => {
+  saveCartOrderType(event.target.value);
+  toggleCartDeliveryFields();
+});
+
+cartDeliveryAddress?.addEventListener("input", event => {
+  saveCartDeliveryAddress(event.target.value);
+  updateCartDeliveryPricing();
+});
+
+cartOrderType.addEventListener("change", () => {
+  if (cartOrderType.value === "Delivery") {
+    cartDeliveryWrap.classList.remove("hidden");
+  } else {
+    cartDeliveryWrap.classList.add("hidden");
+  }
+});
+
+orderType.addEventListener("change", () => {
+  cartOrderType.value = orderType.value;
+});
+
+orderBranch?.addEventListener("change", updateOrderDeliveryPricing);
+orderQuantity?.addEventListener("input", updateOrderDeliveryPricing);
+deliveryAddress?.addEventListener("input", updateOrderDeliveryPricing);
+orderType?.addEventListener("change", updateOrderDeliveryPricing);
 
 function handleCartCurrentLocationToggle() {
   if (!cartUseCurrentLocation || !cartDeliveryAddress) return;
