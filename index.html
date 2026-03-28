@@ -279,22 +279,29 @@
     </div>
   </label>
 
-  <label class="order-field">
-    <span>Order Type</span>
-    <select id="orderType">
-      <option value="Pickup">Pickup</option>
-      <option value="Delivery">Delivery</option>
-    </select>
+<label class="order-field">
+  <span>Order Type</span>
+  <select id="orderType">
+    <option value="" selected disabled>Select order type</option>
+    <option value="Pickup">Pickup</option>
+    <option value="Delivery">Delivery</option>
+  </select>
+</label>
+
+<div class="order-field hidden" id="deliveryAddressWrap">
+  <span>Delivery Address</span>
+
+  <label class="current-location-check">
+    <input type="checkbox" id="useCurrentLocation">
+    <span>Use my current location</span>
   </label>
 
-  <label class="order-field hidden" id="deliveryAddressWrap">
-    <span>Delivery Address</span>
-    <textarea
-      id="deliveryAddress"
-      rows="3"
-      placeholder="Enter delivery location..."
-    ></textarea>
-  </label>
+  <textarea
+    id="deliveryAddress"
+    rows="3"
+    placeholder="Enter delivery location..."
+  ></textarea>
+</div>
 
   <label class="order-field">
     <span>Accompaniment</span>
