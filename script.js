@@ -465,7 +465,9 @@ function extractLatLngFromGoogleMapsLink(value) {
 function getDeliveryFee(distanceKm) {
   if (distanceKm <= 3) return 3000;
   if (distanceKm <= 6) return 5000;
-  if (distanceKm <= 10) return 8000;
+  if (distanceKm <= 10) return 7000;
+  if (distanceKm <= 15) return 15000;
+  if (distanceKm <= 20) return 20000;
   return null;
 }
 function updateCartDeliveryPricing() {
