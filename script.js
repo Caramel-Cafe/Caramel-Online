@@ -65,6 +65,35 @@ const orderContacts = [
   { name: "Kansanga", number: "256709410410", lat: 0.3000, lng: 32.6100 }
 ];
 
+const branchHours = {
+  Acacia: {
+    weekdays: { open: "08:00", close: "23:00" },
+    weekends: { open: "08:00", close: "23:59" }
+  },
+  Munyonyo: {
+    weekdays: { open: "08:00", close: "23:00" },
+    weekends: { open: "08:00", close: "23:59" }
+  },
+  Lubowa: {
+    weekdays: { open: "08:00", close: "22:00" },
+    weekends: { open: "08:00", close: "23:00" }
+  },
+  Ntinda: {
+    weekdays: { open: "08:00", close: "22:00" },
+    weekends: { open: "08:00", close: "23:00" }
+  },
+  Naalya: {
+    weekdays: { open: "08:00", close: "22:00" },
+    weekends: { open: "08:00", close: "23:00" }
+  },
+  Kansanga: {
+    weekdays: { open: "08:00", close: "22:00" },
+    weekends: { open: "08:00", close: "23:00" }
+  }
+};
+
+let orderActionMode = "whatsapp"; // "whatsapp" | "cart"
+
 const menuGroups = {
   "Main Menu": [
     "Starters",
@@ -120,6 +149,8 @@ const cartDeliveryWrap = document.getElementById("cartDeliveryWrap");
 const cartUseCurrentLocation = document.getElementById("cartUseCurrentLocation");
 const cartDeliveryAddress = document.getElementById("cartDeliveryAddress");
 const orderLocationSuggestions = document.getElementById("orderLocationSuggestions");
+const branchToast = document.getElementById("branchToast");
+let branchToastTimeout = null;
 let selectedOrderPlaceData = null;
 let selectedCartOrderType = localStorage.getItem("caramel-cart-order-type") || "";
 let selectedCartDeliveryAddress = localStorage.getItem("caramel-cart-delivery-address") || "";
@@ -134,6 +165,59 @@ let selectedCartDeliveryFee = 0;
 
 let selectedOrderDeliveryDistanceKm = null;
 let selectedOrderDeliveryFee = 0;
+
+function timeToMinutes(value) {
+  const [h, m] = value.split(":").map(Number);
+  return (h * 60) + m;
+}
+
+function getBranchSchedule(branchName) {
+  const branch = branchHours[branchName];
+  if (!branch) return null;
+
+  const now = new Date();
+  const day = now.getDay(); // 0 Sunday, 6 Saturday
+  const isWeekend = day === 0 || day === 6;
+
+  return isWeekend ? branch.weekends : branch.weekdays;
+}
+
+function isBranchOpen(branchName) {
+  const schedule = getBranchSchedule(branchName);
+  if (!schedule) return true;
+
+  const now = new Date();
+  const currentMinutes = (now.getHours() * 60) + now.getMinutes();
+  const openMinutes = timeToMinutes(schedule.open);
+  const closeMinutes = timeToMinutes(schedule.close);
+
+  return currentMinutes >= openMinutes && currentMinutes <= closeMinutes;
+}
+
+function getBranchStatusText(branchName) {
+  const schedule = getBranchSchedule(branchName);
+  if (!schedule) return "Open";
+
+  return isBranchOpen(branchName)
+    ? `Open now • closes ${schedule.close}`
+    : `Closed now • opens ${schedule.open}`;
+}
+
+function showBranchToast(message) {
+  if (!branchToast) return;
+
+  branchToast.textContent = message;
+  branchToast.classList.remove("hidden");
+  branchToast.classList.add("show");
+
+  clearTimeout(branchToastTimeout);
+  branchToastTimeout = setTimeout(() => {
+    branchToast.classList.remove("show");
+    setTimeout(() => {
+      branchToast.classList.add("hidden");
+    }, 250);
+  }, 2500);
+}
 
 function formatPrice(value) {
   return `UGX ${Number(value).toLocaleString()}`;
@@ -202,21 +286,6 @@ function toggleCartDeliveryFields() {
     saveCartDeliveryAddress("");
     updateCartDeliveryPricing();
   }
-}
-
-function populateCartBranches() {
-  if (!cartBranchSelect) return;
-
-  cartBranchSelect.innerHTML = `
-    <option value="">Select branch</option>
-    ${orderContacts
-      .map(contact => `
-        <option value="${contact.name}" ${selectedCartBranch === contact.name ? "selected" : ""}>
-          ${contact.name}
-        </option>
-      `)
-      .join("")}
-  `;
 }
 
 function saveCartBranch(value) {
@@ -689,6 +758,12 @@ function findNearestBranch(userLat, userLng) {
 function suggestNearestBranch() {
   if (!navigator.geolocation) return;
 
+  const hasManualBranch =
+    selectedCartBranch ||
+    (orderBranch && orderBranch.value);
+
+  if (hasManualBranch) return;
+
   navigator.geolocation.getCurrentPosition(
     position => {
       const { latitude, longitude } = position.coords;
@@ -706,6 +781,8 @@ function suggestNearestBranch() {
       if (orderBranch && !orderBranch.value) {
         orderBranch.value = nearest.name;
       }
+
+      showBranchToast(`Nearest branch selected: ${nearest.name}`);
     },
     error => {
       console.log("Location not available:", error.message);
@@ -913,14 +990,8 @@ menuGrid?.addEventListener("click", event => {
       return;
     }
 
-    addToCart({
-      ...item,
-      quantity: 1,
-      accompaniment: "None",
-      note: "",
-      branch: ""
-    });
-    return;
+openOrderForm(item, "cart");
+return;
   }
 
   const orderBtn = event.target.closest(".order-trigger");
@@ -930,7 +1001,7 @@ menuGrid?.addEventListener("click", event => {
       alert("This breakfast item with a drink is available in the morning only.");
       return;
     }
-    openOrderForm(item);
+    openOrderForm(item, "whatsapp");
   }
 });
 
@@ -1056,12 +1127,21 @@ cartItems.innerHTML = cart
       <img src="${item.image || "https://via.placeholder.com/200x200?text=Menu"}" alt="${item.name}">
       <div>
         <p class="cart-item-name">${item.name}</p>
-        <div class="cart-item-meta">
-          ${formatPrice(item.price)} • Qty ${item.quantity}<br>
-          ${item.branch ? `Branch: ${item.branch}<br>` : ""}
-          ${item.accompaniment ? `Accompaniment: ${item.accompaniment}<br>` : ""}
-        </div>
+<div class="cart-item-meta">
+  ${formatPrice(item.price)} • Qty ${item.quantity}<br>
+  ${item.branch ? `Branch: ${item.branch}<br>` : ""}
+</div>
 
+<div class="cart-item-accompaniment">
+  <label class="cart-inline-label">Accompaniment</label>
+  <select class="cart-accompaniment-select" data-index="${index}">
+    ${getAccompaniments(item.category).map(option => `
+      <option value="${option}" ${item.accompaniment === option ? "selected" : ""}>
+        ${option}
+      </option>
+    `).join("")}
+  </select>
+</div>
         <div class="cart-item-note">
           <textarea
             class="cart-note-input"
@@ -1093,6 +1173,20 @@ toggleCartDeliveryFields();
   
 }
 
+function updateCartAccompaniment(index, value) {
+  if (!cart[index]) return;
+  cart[index].accompaniment = value || "None";
+  saveCart();
+  updateCartUI();
+}
+
+cartItems?.addEventListener("change", event => {
+  const select = event.target.closest(".cart-accompaniment-select");
+  if (!select) return;
+
+  const index = Number(select.dataset.index);
+  updateCartAccompaniment(index, select.value);
+});
 
 function handleOrderLocationSearch() {
   if (!deliveryAddress || !orderLocationSuggestions) return;
@@ -1218,12 +1312,23 @@ function closeCart() {
   }
 }
 
-function populateBranches() {
-  orderBranch.innerHTML = `
-    <option value="" selected disabled>Select branch</option>
-    ${orderContacts
-      .map(contact => `<option value="${contact.name}">${contact.name}</option>`)
-      .join("")}
+function populateCartBranches() {
+  if (!cartBranchSelect) return;
+
+  cartBranchSelect.innerHTML = `
+    <option value="">Select branch</option>
+    ${orderContacts.map(contact => {
+      const open = isBranchOpen(contact.name);
+      return `
+        <option
+          value="${contact.name}"
+          ${selectedCartBranch === contact.name ? "selected" : ""}
+          ${open ? "" : "disabled"}
+        >
+          ${contact.name} ${getBranchStatusText(contact.name)}
+        </option>
+      `;
+    }).join("")}
   `;
 }
 
@@ -1330,10 +1435,10 @@ deliveryAddress?.addEventListener("focus", () => {
   handleOrderLocationSearch();
 });
 
-function openOrderForm(item) {
+function openOrderForm(item, mode = "whatsapp") {
   selectedOrderItem = item;
+  orderActionMode = mode;
 
-  // always close cart first so layers do not clash
   closeCart();
   closeSidebar();
   closeMobileCategoryDropdown();
@@ -1344,7 +1449,12 @@ function openOrderForm(item) {
   orderFormSummary.innerHTML = `
     <strong>Item:</strong> ${item.name}<br>
     <strong>Category:</strong> ${item.category}<br>
-    <strong>Price:</strong> ${formatPrice(item.price)}
+    <strong>Price:</strong> ${formatPrice(item.price)}<br>
+    <strong>Status:</strong> ${
+      mode === "cart"
+        ? "Choose quantity, accompaniment, and note"
+        : "Complete order details"
+    }
   `;
 
   orderQuantity.value = 1;
@@ -1364,6 +1474,9 @@ function openOrderForm(item) {
   toggleDeliveryAddress();
   updateOrderDeliveryPricing();
 
+  continueOrderBtn.textContent =
+    mode === "cart" ? "Add to Cart" : "Order on WhatsApp";
+
   orderFormModal.classList.remove("hidden");
   orderFormBackdrop.classList.remove("hidden");
   setBodyLock(true);
@@ -1372,15 +1485,35 @@ function openOrderForm(item) {
 function submitSingleOrder() {
   if (!selectedOrderItem) return;
 
-  const branchName = orderBranch.value;
   const quantity = Math.max(1, Number(orderQuantity.value) || 1);
   const accompaniment = orderAccompaniment.value || "None";
   const note = orderNote.value.trim();
+
+  if (orderActionMode === "cart") {
+    addToCart({
+      ...selectedOrderItem,
+      quantity,
+      accompaniment,
+      note,
+      branch: ""
+    });
+
+    closeOrderForm();
+    return;
+  }
+
+  const branchName = orderBranch.value;
   const type = orderType.value;
   const address = deliveryAddress.value.trim();
 
   if (!branchName) {
     alert("Please select a branch before ordering.");
+    orderBranch.focus();
+    return;
+  }
+
+  if (!isBranchOpen(branchName)) {
+    alert(`${branchName} is currently closed. Please choose another open branch.`);
     orderBranch.focus();
     return;
   }
@@ -1402,6 +1535,9 @@ function submitSingleOrder() {
     alert("Selected branch is invalid.");
     return;
   }
+
+  // keep the rest of your WhatsApp message code below this point unchanged
+}
 
   const subtotal = selectedOrderItem.price * quantity;
 
@@ -1458,6 +1594,11 @@ function checkoutCart() {
     cartBranchSelect?.focus();
     return;
   }
+  if (!isBranchOpen(selectedCartBranch)) {
+  alert(`${selectedCartBranch} is currently closed. Please choose another open branch.`);
+  cartBranchSelect.focus();
+  return;
+}
 
   if (!selectedCartOrderType) {
     alert("Please choose Pickup or Delivery.");
