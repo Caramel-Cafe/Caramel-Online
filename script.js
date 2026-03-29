@@ -632,13 +632,16 @@ function updateCartDeliveryPricing() {
   selectedCartDeliveryDistanceKm = null;
   selectedCartDeliveryFee = 0;
 
-  if (selectedCartOrderType !== "Delivery") {
-    cartDeliverySummary.classList.add("hidden");
-    cartDeliveryDistance.textContent = "—";
-    cartDeliveryFee.textContent = "—";
-    cartGrandTotal.textContent = formatPrice(cartSubtotal);
-    return;
-  }
+if (selectedCartOrderType !== "Delivery") {
+  cartDeliverySummary.classList.remove("hidden");
+  cartDeliverySummary.classList.add("pickup-mode");
+  cartDeliveryDistance.textContent = "—";
+  cartDeliveryFee.textContent = "—";
+  cartGrandTotal.textContent = formatPrice(cartSubtotal);
+  return;
+}
+
+cartDeliverySummary.classList.remove("pickup-mode");
 
 const branch = orderContacts.find(item => item.name === selectedCartBranch);
 const location = selectedCartPlaceData
@@ -676,11 +679,14 @@ function updateOrderDeliveryPricing() {
 
 if (orderType.value !== "Delivery") {
   orderDeliverySummary.classList.remove("hidden");
-  orderDeliveryDistance.textContent = "Pickup";
-  orderDeliveryFee.textContent = formatPrice(0);
+  orderDeliverySummary.classList.add("pickup-mode");
+  orderDeliveryDistance.textContent = "—";
+  orderDeliveryFee.textContent = "—";
   orderGrandTotal.textContent = formatPrice(subtotal);
   return;
 }
+
+orderDeliverySummary.classList.remove("pickup-mode");
 
 const branch = orderContacts.find(item => item.name === orderBranch.value);
 const location = selectedOrderPlaceData
