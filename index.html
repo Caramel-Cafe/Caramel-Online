@@ -287,9 +287,22 @@
 
 <!-- ✅ OUTSIDE -->
 <div class="cart-delivery-summary hidden" id="cartDeliverySummary">
-  <div><strong>Distance:</strong> <span id="cartDeliveryDistance">—</span></div>
-  <div><strong>Delivery Fee:</strong> <span id="cartDeliveryFee">—</span></div>
-  <div><strong>Total + Delivery:</strong> <span id="cartGrandTotal">—</span></div>
+  <div class="delivery-meta-row">
+    <div class="delivery-meta-box">
+      <span class="delivery-meta-label">Distance</span>
+      <span class="delivery-meta-value" id="cartDeliveryDistance">—</span>
+    </div>
+
+    <div class="delivery-meta-box">
+      <span class="delivery-meta-label">Fee</span>
+      <span class="delivery-meta-value" id="cartDeliveryFee">—</span>
+    </div>
+  </div>
+
+  <div class="delivery-total-row">
+    <span class="delivery-total-label">Total</span>
+    <span class="delivery-total-value" id="cartGrandTotal">—</span>
+  </div>
 </div>
 
 <!-- ✅ OUTSIDE -->
@@ -358,10 +371,23 @@
 </div>
 </div>
 
-  <div class="order-delivery-summary hidden" id="orderDeliverySummary">
-  <div><strong>Distance:</strong> <span id="orderDeliveryDistance">—</span></div>
-  <div><strong>Delivery Fee:</strong> <span id="orderDeliveryFee">—</span></div>
-  <div><strong>Total + Delivery:</strong> <span id="orderGrandTotal">—</span></div>
+<div class="order-delivery-summary hidden" id="orderDeliverySummary">
+  <div class="delivery-meta-row">
+    <div class="delivery-meta-box">
+      <span class="delivery-meta-label">Distance</span>
+      <span class="delivery-meta-value" id="orderDeliveryDistance">—</span>
+    </div>
+
+    <div class="delivery-meta-box">
+      <span class="delivery-meta-label">Fee</span>
+      <span class="delivery-meta-value" id="orderDeliveryFee">—</span>
+    </div>
+  </div>
+
+  <div class="delivery-total-row">
+    <span class="delivery-total-label">Total</span>
+    <span class="delivery-total-value" id="orderGrandTotal">—</span>
+  </div>
 </div>
 
   <label class="order-field">
