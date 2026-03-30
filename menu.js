@@ -31,7 +31,8 @@ const menuItems = [
     price: 29000,
     description: "Plain Yoghurt, Banana & Pineapple, Granola, Honey & Cashew Nuts/Gnuts",
     tag: "Best Seller",
-    image: "images/Muesli.webp"
+    image: "images/Muesli.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
@@ -39,7 +40,8 @@ const menuItems = [
     price: 31000,
     description: "freshly made waffles served with seasonal fruits and maple syrup, garnished with icing sugar.",
     tag: "Best Seller",
-    image: "images/Belgian Waffle.webp"
+    image: "images/Belgian Waffle.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
@@ -47,64 +49,74 @@ const menuItems = [
     price: 31000,
     description: "freshly made Pancakes served with seasonal fruits and maple syrup, garnished with icing sugar.",
     tag: "Best Seller",
-    image: "images/American Pancake.webp"
+    image: "images/American Pancake.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "NORWEGIAN CROISSANT",
     price: 37000,
     description: "Butter croissant, smoked salmon, poached egg and hollandaise sauce served with salad.",
-    image: "images/Norwegian Croissant.webp"
+    image: "images/Norwegian Croissant.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "THE SIMPLE ONE",
     price: 32000,
     description: "Omelette of 2 eggs, Tuna and Fresh salad served with bread, butter and Jam.",
-    image: "images/The Simple One.webp"
+    image: "images/The Simple One.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "SAMO-MASAI",
     price: 36000,
     description: "Pair of samosa, Spanish omelette, sweet and spicy potatoes and garden salad.",
-    image: "images/Samo-Masai.webp"
+    image: "images/Samo-Masai.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "CARAMEL COMBO 2",
     price: 35000,
     description: "Potato wedges, Beef, Chicken strips, two eggs (of your choice), Avocado, chopped salad and one beef sausage, salad, baked beans and sliced bread.",
-    image: "images/Combo 2.webp"
+    image: "images/Combo 2.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "RANCHERS BREAKFAST",
     price: 36000,
     description: "Two fried eggs, two beef sausages, beans, beef bacon, grilled tomatoes & fresh avocado.",
-    image: "images/Ranchers.webp"
+    image: "images/Ranchers.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "GIANT SALMON OMELETTE",
     price: 39000,
     description: "Four eggs, smoked salmon cream cheese and chives, Served with fresh tomatoes and avocado, bread butter and jam, house coffe or black tea.",
-    image: "images/Giant Salmon.webp"
+    image: "images/Giant Salmon.webp",
+    breakfastWithDrink: true
   },
   {
     category: "Breakfast Menu",
     name: "SICILIAN BREAKFAST",
     price: 36000,
     description: "beef bacon, Potatoes and onion cooked in olive oil with 2 sunny side eggs and avocado cubes.",
-    image: "images/Sicilian Breakfast.webp"
+    image: "images/Sicilian Breakfast.webp",
+    breakfastWithDrink: true
   },
+
+                                     //Starters//
 
   {
     category: "Starters",
     name: "FALAFEL & HUMMUS",
     price: 31000,
     description: "Served with chilli sauce, olives & freshly baked focaccia bread.",
-    image: "images/Falafel and Humus.webp"
+    image: "images/Falafel and Humus.webp",
   },
   {
     category: "Starters",
