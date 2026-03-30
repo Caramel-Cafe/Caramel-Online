@@ -1023,7 +1023,7 @@ function filterMenu() {
 function createCard(item) {
   const allowed = canOrderItem(item);
   const blockedText = isBreakfastWithDrinkItem(item)
-    ? "No accompaniment for this item."
+    ? " "
     : "";
 
   return `
@@ -1458,7 +1458,7 @@ function renderAccompanimentOptions(item) {
 
     orderAccompanimentOptions.innerHTML = `
       <div class="small-inline-note">
-        Served with drink in morning only. No accompaniment selection needed.
+        No drinks from 11:00 am
       </div>
     `;
     return;
