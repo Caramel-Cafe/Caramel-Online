@@ -1049,7 +1049,6 @@ function createCard(item) {
         ${blockedText ? `<p class="menu-desc" style="margin-top:8px;color:#ff9b9b;">${blockedText}</p>` : ""}
 
         <div class="menu-footer">
-          ${item.tag ? `<span class="menu-tag">${item.tag}</span>` : ""}
 
           <div class="menu-actions">
             <button
