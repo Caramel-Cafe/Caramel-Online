@@ -1020,9 +1020,10 @@ function filterMenu() {
   });
 }
 
-const blockedText =
-  isBreakfastWithDrinkItem(item)
-    ? "No drinks at this time."
+function createCard(item) {
+  const allowed = canOrderItem(item);
+  const blockedText = isBreakfastWithDrinkItem(item)
+    ? "No accompaniment for this item."
     : "";
 
   return `
