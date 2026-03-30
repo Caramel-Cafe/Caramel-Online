@@ -809,6 +809,14 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       heroContainer.appendChild(div);
     });
+
+      document.getElementById("surpriseBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const randomItem = menuItems[Math.floor(Math.random() * menuItems.length)];
+
+    openOrderForm(randomItem);
+  });
   }
 
   renderHeroItems();
