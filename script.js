@@ -1019,12 +1019,10 @@ function filterMenu() {
   });
 }
 
-function createCard(item) {
-  const allowed = canOrderItem(item);
-  const blockedText =
-    item.category === "Breakfast Menu" && item.breakfastWithDrink && !allowed
-      ? "Available with drink in morning only"
-      : "";
+const blockedText =
+  isBreakfastWithDrinkItem(item)
+    ? "No drinks at this time."
+    : "";
 
   return `
     <article class="menu-card reveal-card">
