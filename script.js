@@ -149,12 +149,13 @@ const mobileNavConfig = [
 const accompanimentOptions = {
   Coffee: ["None", "No sugar", "Extra hot", "Oat milk", "Takeaway"],
   Tea: ["None", "No sugar", "Extra hot", "Takeaway"],
-  Burgers: ["None", "Fries", "Salad", "Extra sauce", "Takeaway"],
-  Pizzeria: ["None", "Extra cheese", "Chili flakes", "Ketchup", "Takeaway"],
-  "Fresh Juice": ["None", "No ice", "Less sugar", "Takeaway"],
-  Smoothies: ["None", "No ice", "Less sugar", "Takeaway"],
-  Milkshake: ["None", "No ice", "Takeaway"],
-  Default: ["None", "Takeaway"]
+  Burgers: ["None", "Fries", "Salad" ],
+  Sandwich: ["None", "Fries", "Salad" ],
+  Pizzeria: ["None" ],
+  "Fresh Juice": ["None" ],
+  Smoothies: ["None" ],
+  Milkshake: ["None", "Cream on Top" ],
+  Default: ["None" ]
 };
 const cartOrderType = document.getElementById("cartOrderType");
 const cartDeliveryWrap = document.getElementById("cartDeliveryWrap");
