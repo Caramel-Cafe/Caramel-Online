@@ -50,6 +50,8 @@ const cartDeliverySummary = document.getElementById("cartDeliverySummary");
 const cartDeliveryDistance = document.getElementById("cartDeliveryDistance");
 const cartDeliveryFee = document.getElementById("cartDeliveryFee");
 const cartGrandTotal = document.getElementById("cartGrandTotal");
+const orderAccompanimentField = document.getElementById("orderAccompanimentField");
+const orderAccompanimentLabel = document.getElementById("orderAccompanimentLabel");
 
 const orderDeliverySummary = document.getElementById("orderDeliverySummary");
 const orderDeliveryDistance = document.getElementById("orderDeliveryDistance");
@@ -390,6 +392,10 @@ function canOrderItem(item) {
     return isMorningBreakfastAllowed();
   }
   return true;
+}
+
+function isBreakfastWithDrinkItem(item) {
+  return item?.category === "Breakfast Menu" && item?.breakfastWithDrink;
 }
 
 function toggleDeliveryAddress() {
@@ -1082,13 +1088,17 @@ menuGrid?.addEventListener("click", event => {
       return;
     }
 
-addToCart({
-  ...item,
-  quantity: 1,
-  accompaniment: "None",
-  note: "",
-  branch: ""
-});
+if (isBreakfastWithDrinkItem(item)) {
+  addToCart({
+    ...item,
+    quantity: 1,
+    accompaniment: "Not applicable",
+    note: "",
+    branch: ""
+  });
+} else {
+  openOrderForm(item, "cart");
+}
 return;
   }
 
@@ -1230,16 +1240,25 @@ cartItems.innerHTML = cart
   ${item.branch ? `Branch: ${item.branch}<br>` : ""}
 </div>
 
-<div class="cart-item-accompaniment">
-  <label class="cart-inline-label">Accompaniment</label>
-  <select class="cart-accompaniment-select" data-index="${index}">
-    ${getAccompaniments(item.category).map(option => `
-      <option value="${option}" ${item.accompaniment === option ? "selected" : ""}>
-        ${option}
-      </option>
-    `).join("")}
-  </select>
-</div>
+${isBreakfastWithDrinkItem(item) ? `
+  <div class="cart-item-accompaniment">
+    <label class="cart-inline-label">Note</label>
+    <div class="cart-static-note">
+      Comes with drink in morning only. No accompaniment.
+    </div>
+  </div>
+` : `
+  <div class="cart-item-accompaniment">
+    <label class="cart-inline-label">Accompaniment</label>
+    <select class="cart-accompaniment-select" data-index="${index}">
+      ${getAccompaniments(item.category).map(option => `
+        <option value="${option}" ${item.accompaniment === option ? "selected" : ""}>
+          ${option}
+        </option>
+      `).join("")}
+    </select>
+  </div>
+`}
         <div class="cart-item-note">
           <textarea
             class="cart-note-input"
@@ -1430,8 +1449,29 @@ function populateCartBranches() {
   `;
 }
 
-function renderAccompanimentOptions(category) {
-  const options = getAccompaniments(category);
+function renderAccompanimentOptions(item) {
+  if (!orderAccompanimentOptions || !orderAccompaniment) return;
+
+  if (isBreakfastWithDrinkItem(item)) {
+    orderAccompaniment.value = "Not applicable";
+
+    if (orderAccompanimentLabel) {
+      orderAccompanimentLabel.textContent = "Note";
+    }
+
+    orderAccompanimentOptions.innerHTML = `
+      <div class="small-inline-note">
+        Served with drink in morning only. No accompaniment selection needed.
+      </div>
+    `;
+    return;
+  }
+
+  if (orderAccompanimentLabel) {
+    orderAccompanimentLabel.textContent = "Accompaniment";
+  }
+
+  const options = getAccompaniments(item.category);
 
   orderAccompanimentOptions.innerHTML = options
     .map(option => `
@@ -1449,16 +1489,15 @@ function renderAccompanimentOptions(category) {
 
   orderAccompanimentOptions.querySelectorAll(".accompaniment-chip").forEach(chip => {
     chip.addEventListener("click", () => {
-      orderAccompanimentOptions.querySelectorAll(".accompaniment-chip").forEach(btn => {
-        btn.classList.remove("active");
-      });
+      orderAccompanimentOptions
+        .querySelectorAll(".accompaniment-chip")
+        .forEach(btn => btn.classList.remove("active"));
 
       chip.classList.add("active");
       orderAccompaniment.value = chip.dataset.value;
     });
   });
 }
-
 function renderOrderLocationSuggestions(matches) {
   if (!orderLocationSuggestions) return;
 
@@ -1558,7 +1597,7 @@ function openOrderForm(item, mode = "whatsapp") {
   orderQuantity.value = 1;
   orderNote.value = "";
   populateBranches();
-  renderAccompanimentOptions(item.category);
+  renderAccompanimentOptions(item);
 
   if (orderType) orderType.value = "";
   if (deliveryAddress) {
@@ -1584,7 +1623,9 @@ function submitSingleOrder() {
   if (!selectedOrderItem) return;
 
   const quantity = Math.max(1, Number(orderQuantity.value) || 1);
-  const accompaniment = orderAccompaniment.value || "None";
+  const accompaniment = isBreakfastWithDrinkItem(selectedOrderItem)
+  ? "Not applicable"
+  : (orderAccompaniment.value || "None");
   const note = orderNote.value.trim();
 
   if (orderActionMode === "cart") {
