@@ -1079,17 +1079,6 @@ function createCard(item) {
   `;
 }
 
-.small-inline-note,
-.cart-static-note {
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: #ffb3a7;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 10px 12px;
-  border-radius: 14px;
-}
-
 menuGrid?.addEventListener("click", event => {
   const addBtn = event.target.closest(".add-cart-trigger");
   if (addBtn) {
