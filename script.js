@@ -388,9 +388,6 @@ function isMorningBreakfastAllowed() {
 }
 
 function canOrderItem(item) {
-  if (item.category === "Breakfast Menu" && item.breakfastWithDrink) {
-    return isMorningBreakfastAllowed();
-  }
   return true;
 }
 
