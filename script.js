@@ -157,7 +157,7 @@ const accompanimentOptions = {
   "Main Course (Chicken)": ["None", "Brown Enjera", "Plantain", "fries", "Garden Salad", "Mashed Potatoes", "Pita Bread", "Potato Wedges", "Rice Plain", "Spinach", "Steamed Veg", "Sweet chilli Wedges", "White Enjera"],
   "Main Course (Fish)": ["None", "Brown Enjera", "Plantain", "fries", "Garden Salad", "Mashed Potatoes", "Pita Bread", "Potato Wedges", "Rice Plain", "Spinach", "Steamed Veg", "Sweet chilli Wedges", "White Enjera"],
   "Habesha": ["None", "Brown Enjera", "Plantain", "fries", "Garden Salad", "Mashed Potatoes", "Pita Bread", "Potato Wedges", "Rice Plain", "Spinach", "Steamed Veg", "Sweet chilli Wedges", "White Enjera"],
-  "Pasta",["Penne", "Spaghetti" ],
+  "Pasta": ["Penne", "Spaghetti" ],
   Default: ["None" ]
 };
 const cartOrderType = document.getElementById("cartOrderType");
