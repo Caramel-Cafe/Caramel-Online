@@ -147,16 +147,17 @@ const mobileNavConfig = [
 ];
 
 const accompanimentOptions = {
-  Coffee: ["None", "No sugar", "Extra hot", "Oat milk", "Takeaway"],
-  Tea: ["None", "No sugar", "Extra hot", "Takeaway"],
+  Coffee: ["None", "2 Sugar", "Honey", ],
+  Tea: ["None", "2 Sugar", "Honey", ],
   Burgers: ["None", "Fries", "Salad" ],
   Sandwich: ["None", "Fries", "Salad" ],
-  Pizzeria: ["None" ],
-  "Fresh Juice": ["None" ],
   Smoothies: ["None" ],
   Milkshake: ["None", "Cream on Top" ],
-  "Main Course (Beef)": ["None", "Cream on Top" ],
-  
+  "Main Course (Beef)": ["None", "Brown Enjera", "Plantain", "fries", "Garden Salad", "Mashed Potatoes", "Pita Bread", "Potato Wedges", "Rice Plain", "Spinach", "Steamed Veg", "Sweet chilli Wedges", "White Enjera"],
+  "Main Course (Chicken)": ["None", "Brown Enjera", "Plantain", "fries", "Garden Salad", "Mashed Potatoes", "Pita Bread", "Potato Wedges", "Rice Plain", "Spinach", "Steamed Veg", "Sweet chilli Wedges", "White Enjera"],
+  "Main Course (Fish)": ["None", "Brown Enjera", "Plantain", "fries", "Garden Salad", "Mashed Potatoes", "Pita Bread", "Potato Wedges", "Rice Plain", "Spinach", "Steamed Veg", "Sweet chilli Wedges", "White Enjera"],
+  "Habesha": ["None", "Brown Enjera", "Plantain", "fries", "Garden Salad", "Mashed Potatoes", "Pita Bread", "Potato Wedges", "Rice Plain", "Spinach", "Steamed Veg", "Sweet chilli Wedges", "White Enjera"],
+  "Pasta",["Penne", "Spaghetti" ],
   Default: ["None" ]
 };
 const cartOrderType = document.getElementById("cartOrderType");
