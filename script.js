@@ -668,11 +668,12 @@ const location = selectedCartPlaceData
   const fee = getDeliveryFee(distanceKm);
 
   selectedCartDeliveryDistanceKm = distanceKm;
-  selectedCartDeliveryFee = fee || 0;
+  selectedCartDeliveryFee = fee !== null ? fee : 0;
 
   cartDeliverySummary.classList.remove("hidden");
   cartDeliveryDistance.textContent = `${distanceKm.toFixed(1)} km`;
-  cartDeliveryFee.textContent = fee === null ? "To be confirmed" : formatPrice(fee);
+  cartDeliveryFee.textContent =
+  fee === null ? "To be confirmed" : `UGX ${fee.toFixed(2)}`;
   cartGrandTotal.textContent = fee === null ? `${formatPrice(cartSubtotal)} + fee confirm` : formatPrice(cartSubtotal + fee);
 }
 
@@ -717,7 +718,8 @@ const location = selectedOrderPlaceData
 
   orderDeliverySummary.classList.remove("hidden");
   orderDeliveryDistance.textContent = `${distanceKm.toFixed(1)} km`;
-  orderDeliveryFee.textContent = fee === null ? "To be confirmed" : formatPrice(fee);
+  orderDeliveryFee.textContent =
+  fee === null ? "To be confirmed" : `UGX ${fee.toFixed(2)}`;
   orderGrandTotal.textContent = fee === null ? `${formatPrice(subtotal)} + fee confirm` : formatPrice(subtotal + fee);
 }
 
