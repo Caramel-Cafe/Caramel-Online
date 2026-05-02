@@ -2756,7 +2756,7 @@ body.light-mode .branch-toast {
 }
 
 /* ✅ PHONE SIZE FIX: modals, cart, buttons, text */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
 
   /* Order modal */
   .order-form-modal {
@@ -2929,4 +2929,81 @@ body.light-mode .branch-toast {
   .cart-item > div {
     min-height: auto;
   }
+}
+
+@media (max-width: 768px) {
+
+  .order-form-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
+    padding: 10px !important;
+    border-radius: 18px 18px 0 0 !important;
+  }
+
+  .order-picker-head h3,
+  .cart-header h3 {
+    font-size: 1.25rem !important;
+  }
+
+  .order-form-summary {
+    font-size: 0.82rem !important;
+    padding: 10px !important;
+  }
+
+  .order-field span,
+  .cart-branch label,
+  .cart-order-type label {
+    font-size: 0.82rem !important;
+  }
+
+  .order-field select,
+  .cart-branch select,
+  .cart-order-type select,
+  .order-location-input,
+  .cart-location-input,
+  #orderQuantity {
+    min-height: 44px !important;
+    height: 44px !important;
+    font-size: 0.9rem !important;
+    border-radius: 14px !important;
+  }
+
+  .qty-btn {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.1rem !important;
+  }
+
+  textarea,
+  #orderNote,
+  .cart-note-input {
+    min-height: 70px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .primary-btn,
+  .secondary-btn,
+  .menu-order-btn {
+    min-height: 46px !important;
+    font-size: 0.92rem !important;
+  }
+
+  .cart-item {
+    min-height: auto !important;
+    padding: 10px !important;
+  }
+
+  .cart-item img {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .cart-item-name {
+    font-size: 0.92rem !important;
+  }
+
 }
