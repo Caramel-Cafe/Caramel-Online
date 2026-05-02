@@ -80,7 +80,7 @@ const orderContacts = [
 const branchHours = {
   Acacia: {
     weekdays: { open: "08:00", close: "23:00" },
-    weekends: { open: "08:00", close: "23:59" }
+    weekends: { open: "08:00", close: "23:00" }
   },
   Munyonyo: {
     weekdays: { open: "08:00", close: "23:00" },
