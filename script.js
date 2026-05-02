@@ -1105,7 +1105,7 @@ if (isBreakfastWithDrinkItem(item)) {
     branch: ""
   });
 } else {
-  openOrderForm(item, "cart");
+  openCartQuickModal(item);
 }
 return;
   }
