@@ -70,7 +70,7 @@ let selectedCartQuickItem = null;
 
 const orderContacts = [
   { name: "Acacia", number: "256794417777", lat: 0.31367, lng: 32.58111 },
-  { name: "Munyonyo", number: "256759859795", lat: 0.29034, lng: 32.62073 },
+  { name: "Munyonyo", number: "256759859795", lat: 0.2503565927723855, lng: 32.62370824813844 },
   { name: "Lubowa", number: "256709769548", lat: 0.31784, lng: 32.58264 },
   { name: "Ntinda", number: "256766550001", lat: 0.31254, lng: 32.58587 },
   { name: "Naalya", number: "256781800800", lat: 0.30718, lng: 32.61492 },
@@ -624,6 +624,7 @@ function extractLatLngFromGoogleMapsLink(value) {
 }
 
 function getDeliveryFee(distanceKm) {
+  if (distanceKm <= 2) return 0;
   if (distanceKm <= 3) return 3000;
   if (distanceKm <= 6) return 5000;
   if (distanceKm <= 10) return 7000;
