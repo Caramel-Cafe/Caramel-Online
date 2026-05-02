@@ -1794,21 +1794,22 @@ function checkoutCart() {
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const deliveryFeeText =
-    selectedCartOrderType === "Delivery"
-      ? (selectedCartDeliveryDistanceKm !== null
-          ? (selectedCartDeliveryFee
-              ? formatPrice(selectedCartDeliveryFee)
-              : "To be confirmed")
-          : "To be confirmed")
-      : "N/A";
+const deliveryFeeText =
+  selectedCartOrderType === "Delivery"
+    ? (selectedCartDeliveryDistanceKm !== null
+        ? `UGX ${Number(selectedCartDeliveryFee).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })}`
+        : "To be confirmed")
+    : "N/A";
 
-  const grandTotalText =
-    selectedCartOrderType === "Delivery"
-      ? (selectedCartDeliveryDistanceKm !== null && selectedCartDeliveryFee
-          ? formatPrice(subtotal + selectedCartDeliveryFee)
-          : `${formatPrice(subtotal)} + delivery fee confirm`)
-      : formatPrice(subtotal);
+const grandTotalText =
+  selectedCartOrderType === "Delivery"
+    ? (selectedCartDeliveryDistanceKm !== null
+        ? formatPrice(subtotal + selectedCartDeliveryFee)
+        : `${formatPrice(subtotal)} + delivery fee confirm`)
+    : formatPrice(subtotal);
 
 const messageLines = [
   `Hello ${branchContact.name}, I would like to order:`,
