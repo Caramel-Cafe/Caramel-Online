@@ -714,7 +714,7 @@ const location = selectedOrderPlaceData
   const fee = getDeliveryFee(distanceKm);
 
   selectedOrderDeliveryDistanceKm = distanceKm;
-  selectedOrderDeliveryFee = fee || 0;
+  selectedOrderDeliveryFee = fee !== null ? fee : 0;
 
   orderDeliverySummary.classList.remove("hidden");
   orderDeliveryDistance.textContent = `${distanceKm.toFixed(1)} km`;
