@@ -190,24 +190,37 @@ const customDeliveryPlaces = [
   { name: "Namboole Stadium", address: "Bweyogerere, Wakiso", lat: 0.3470, lng: 32.6500 },
   { name: "Makerere Sports Ground", address: "Makerere, Kampala", lat: 0.3330, lng: 32.5660 },
 
-  //Hotels//
-    { name: "Kampala Serena Hotel", address: "Kintu Road, Kampala", lat: 0.3136, lng: 32.5897 },
-  { name: "Sheraton Kampala Hotel", address: "Ternan Avenue, Kampala", lat: 0.3147, lng: 32.5890 },
-  { name: "Speke Hotel", address: "Nile Avenue, Kampala", lat: 0.3140, lng: 32.5820 },
-  { name: "Fairway Hotel", address: "Kafu Road, Kampala", lat: 0.3180, lng: 32.5810 },
-  { name: "Protea Hotel Kololo", address: "Kololo, Kampala", lat: 0.3305, lng: 32.5910 },
+// Hotels (corrected)
 
-  { name: "Forest Cottages", address: "Naguru, Kampala", lat: 0.3410, lng: 32.6120 },
-  { name: "Arcadia Suites", address: "Kololo, Kampala", lat: 0.3330, lng: 32.5900 },
-  { name: "Golf Course Hotel", address: "Kololo, Kampala", lat: 0.3290, lng: 32.5900 },
-  { name: "Dolphin Suites", address: "Bugolobi, Kampala", lat: 0.3200, lng: 32.6250 },
-  { name: "Le Petit Village Hotel", address: "Bugolobi, Kampala", lat: 0.3190, lng: 32.6240 },
+{ name: "Kampala Serena Hotel", address: "Kintu Road, Kampala", lat: 0.313611, lng: 32.589681 },
 
-  { name: "Latitude 0 Degrees", address: "Makindye, Kampala", lat: 0.2800, lng: 32.6000 },
-  { name: "Cassia Lodge", address: "Buziga, Kampala", lat: 0.2795, lng: 32.6130 },
-  { name: "Speke Resort Munyonyo", address: "Munyonyo, Kampala", lat: 0.2450, lng: 32.6300 },
-  { name: "Lake Victoria Serena Resort", address: "Kigo, Wakiso", lat: 0.2500, lng: 32.5500 },
-  { name: "Imperial Royale Hotel", address: "Nakasero, Kampala", lat: 0.3150, lng: 32.5800 },
+{ name: "Sheraton Kampala Hotel", address: "Ternan Avenue, Kampala", lat: 0.314708, lng: 32.588998 },
+
+{ name: "Speke Hotel", address: "Nile Avenue, Kampala", lat: 0.313947, lng: 32.582204 },
+
+{ name: "Fairway Hotel", address: "Kafu Road, Kampala", lat: 0.317868, lng: 32.581095 },
+
+{ name: "Protea Hotel Kololo", address: "Kololo, Kampala", lat: 0.330473, lng: 32.590987 },
+
+{ name: "Forest Cottages", address: "Naguru, Kampala", lat: 0.341166, lng: 32.612325 },
+
+{ name: "Arcadia Suites", address: "Kololo, Kampala", lat: 0.333227, lng: 32.590412 },
+
+{ name: "Golf Course Hotel", address: "Kololo, Kampala", lat: 0.329018, lng: 32.590214 },
+
+{ name: "Dolphin Suites", address: "Bugolobi, Kampala", lat: 0.320332, lng: 32.624936 },
+
+{ name: "Le Petit Village Hotel", address: "Bugolobi, Kampala", lat: 0.318934, lng: 32.623957 },
+
+{ name: "Latitude 0 Degrees", address: "Makindye, Kampala", lat: 0.279716, lng: 32.600441 },
+
+{ name: "Cassia Lodge", address: "Buziga, Kampala", lat: 0.279532, lng: 32.612836 },
+
+{ name: "Speke Resort Munyonyo", address: "Munyonyo, Kampala", lat: 0.244746, lng: 32.629773 },
+
+{ name: "Lake Victoria Serena Resort", address: "Kigo, Wakiso", lat: 0.249826, lng: 32.551268 },
+
+{ name: "Imperial Royale Hotel", address: "Nakasero, Kampala", lat: 0.315168, lng: 32.580561 },
 
   //Apartment//
     { name: "Kololo Heights Apartments", address: "Kololo, Kampala", lat: 0.3320, lng: 32.5900 },
