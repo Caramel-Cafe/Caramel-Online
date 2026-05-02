@@ -1105,7 +1105,7 @@ if (isBreakfastWithDrinkItem(item)) {
     branch: ""
   });
 } else {
-  openCartQuickModal(item);
+  openOrderForm(item, "cart");
 }
 return;
   }
@@ -1591,16 +1591,28 @@ function openOrderForm(item, mode = "whatsapp") {
   selectedOrderDeliveryDistanceKm = null;
   selectedOrderDeliveryFee = 0;
 
-  orderFormSummary.innerHTML = `
-    <strong>Item:</strong> ${item.name}<br>
-    <strong>Category:</strong> ${item.category}<br>
-    <strong>Price:</strong> ${formatPrice(item.price)}<br>
-    <strong>Status:</strong> ${
-      mode === "cart"
-        ? "Choose quantity, accompaniment, and note"
-        : "Complete order details"
-    }
-  `;
+orderFormSummary.innerHTML = `
+  <strong>Item:</strong> ${item.name}<br>
+  <strong>Category:</strong> ${item.category}<br>
+  <strong>Price:</strong> ${formatPrice(item.price)}<br>
+  <strong>Status:</strong> ${
+    mode === "cart"
+      ? "Choose quantity, accompaniment, and note"
+      : "Complete order details"
+  }
+`;
+
+const branchField = orderBranch?.closest(".order-field");
+const orderTypeField = orderType?.closest(".order-field");
+
+if (mode === "cart") {
+  branchField?.classList.add("hidden");
+  orderTypeField?.classList.add("hidden");
+  deliveryAddressWrap?.classList.add("hidden");
+} else {
+  branchField?.classList.remove("hidden");
+  orderTypeField?.classList.remove("hidden");
+}
 
   orderQuantity.value = 1;
   orderNote.value = "";
