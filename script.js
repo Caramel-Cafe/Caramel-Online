@@ -155,6 +155,8 @@ const accompanimentOptions = {
   "Fresh Juice": ["None" ],
   Smoothies: ["None" ],
   Milkshake: ["None", "Cream on Top" ],
+  "Main Course (Beef)": ["None", "Cream on Top" ],
+  
   Default: ["None" ]
 };
 const cartOrderType = document.getElementById("cartOrderType");
