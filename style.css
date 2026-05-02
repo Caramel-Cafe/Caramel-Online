@@ -300,14 +300,32 @@ body.light-mode .glass-soft {
 
 .hamburger-btn span {
   display: block;
-  width: 22px;
-  height: 2px;
+  width: 24px;
+  height: 2.5px;
   border-radius: 999px;
   background: currentColor;
+  transition: transform 0.28s ease, opacity 0.2s ease;
+}
+
+.hamburger-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
 .hamburger-btn:hover {
   transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(212, 154, 97, 0.25);
+}
+
+.hamburger-btn:active {
+  transform: scale(0.95);
 }
 
 .theme-toggle {
