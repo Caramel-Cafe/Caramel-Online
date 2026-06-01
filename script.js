@@ -135,6 +135,7 @@ const menuGroups = {
     "Bakery": [
     "Cookies",
     "Pastries"
+    "Bread"
   ]
 };
 
