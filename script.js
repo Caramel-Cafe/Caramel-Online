@@ -132,9 +132,10 @@ const menuGroups = {
     "Mocktails",
     "Cocktails"
   ],
-    "Bakery": [
+    "Pastries": [
     "Cookies",
-    "Pastries"
+    "Cream Cake"
+    "Dry Cake"
     "Bread"
   ]
 };
