@@ -134,8 +134,8 @@ const menuGroups = {
   ],
     "Pastries": [
     "Cookies",
-    "Cream Cake"
-    "Dry Cake"
+    "Cream Cake",
+    "Dry Cake",
     "Bread"
   ]
 };
